@@ -1,0 +1,10 @@
+node_modules
+dist
+.vite
+_frames
+*.mov
+IMG_7120.mov
+.env
+.env.*
+*.local
+.DS_Store
