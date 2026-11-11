@@ -102,6 +102,7 @@ function Play({
   const { recordAnswer } = useStore();
   const recordRef = useRef(recordAnswer);
   const profileRef = useRef(profileId);
+  const shellRef = useRef<HTMLDivElement>(null);
   const fieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const first = items[0];
@@ -140,21 +141,32 @@ function Play({
     if (canSpeak()) window.speechSynthesis.cancel();
   }, []);
 
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+    const blockSelect = (event: Event) => {
+      if (event.cancelable) event.preventDefault();
+    };
+    shell.addEventListener("pointerdown", blockSelect);
+    shell.addEventListener("touchstart", blockSelect, { passive: false });
+    return () => {
+      shell.removeEventListener("pointerdown", blockSelect);
+      shell.removeEventListener("touchstart", blockSelect);
+    };
+  }, []);
+
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       {fellBack && (
         <p className="mb-2 shrink-0 text-sm text-stone-600 dark:text-stone-300">Keine Wörter fällig. Diese Runde enthält alle Wörter der Auswahl.</p>
       )}
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-[#07111c] text-white">
+      <div ref={shellRef} className="game-surface flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-[#07111c] text-white">
+        <style>{GAME_SURFACE_CSS}</style>
         <Hud hud={hud} />
-        <div
-          ref={fieldRef}
-          className="relative min-h-0 flex-1 touch-none select-none overflow-hidden"
-          aria-label="Spielfeld"
-        >
+        <Prompt beat={beat} />
+        <div ref={fieldRef} className="relative min-h-0 flex-1 overflow-hidden" aria-label="Spielfeld">
           <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 block h-full w-full" aria-hidden="true" />
         </div>
-        <Prompt beat={beat} />
       </div>
     </div>
   );
@@ -212,9 +224,19 @@ function Heart({ filled }: { filled: boolean }) {
   );
 }
 
+const GAME_SURFACE_CSS = `
+.game-surface, .game-surface * {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
+}
+`;
+
 function Prompt({ beat }: { beat: SpaceBeat }) {
   return (
-    <div className="relative flex min-h-[4.75rem] shrink-0 items-center justify-center bg-[#1c2330] px-3 py-2.5">
+    <div className="shrink-0 px-3 pb-2 pt-1">
       <p
         lang={beat.promptLang === "la" ? "la" : "de"}
         className="w-full text-center text-[1.85rem] font-bold leading-tight text-white [overflow-wrap:anywhere]"

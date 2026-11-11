@@ -92,6 +92,7 @@ const SHIP_R = 15;
 const TAP_SLOP = 18;
 const TAP_MS = 380;
 const SHIP_MAX_SPEED = 220;
+const FALL_SCALE = 0.7;
 const FEEDBACK_TIME = 1.2;
 const MAX_ASTEROIDS = 2;
 const INVULN_TIME = 0.85;
@@ -334,7 +335,7 @@ export function startWeltraum(options: {
         x: lane,
         y: -stack - offset,
         r: radius,
-        vy: 82,
+        vy: 82 * FALL_SCALE,
         lines: metrics.lines,
         fontPx: metrics.fontPx,
         labelW: metrics.labelW,
@@ -397,7 +398,7 @@ export function startWeltraum(options: {
       x,
       y: -r - 6,
       vx: (Math.random() - 0.5) * 16,
-      vy: 58 + Math.random() * 26,
+      vy: (58 + Math.random() * 26) * FALL_SCALE,
       r,
       rot: Math.random() * Math.PI * 2,
       spin: (Math.random() - 0.5) * 1.1,
@@ -896,7 +897,11 @@ export function startWeltraum(options: {
 
   const observer = new ResizeObserver(() => resize());
   observer.observe(field);
+  const blockSelect = (event: Event) => {
+    if (event.cancelable) event.preventDefault();
+  };
   field.addEventListener("pointerdown", onDown);
+  field.addEventListener("touchstart", blockSelect, { passive: false });
   window.addEventListener("pointermove", onMove);
   window.addEventListener("pointerup", onUp);
   window.addEventListener("pointercancel", onCancel);
@@ -913,6 +918,7 @@ export function startWeltraum(options: {
     cancelAnimationFrame(raf);
     observer.disconnect();
     field.removeEventListener("pointerdown", onDown);
+    field.removeEventListener("touchstart", blockSelect);
     window.removeEventListener("pointermove", onMove);
     window.removeEventListener("pointerup", onUp);
     window.removeEventListener("pointercancel", onCancel);
