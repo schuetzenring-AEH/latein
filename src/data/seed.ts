@@ -1,6 +1,7 @@
 import type { Vocab } from "../types";
+import { EXTRA_VOCAB } from "./extra";
 
-/** Aus vokabeln.md. Ausgelassen: Lektion 11 „contendere, contendō“, deutsche Bedeutung abgeschnitten („behaup…“). */
+/** Lektionen 1–10 und der Anfang von Lektion 11 aus vokabeln.md. Die späteren Lektionen stehen in extra.ts. */
 export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l1-1",
@@ -1557,3 +1558,5 @@ export const SEED_VOCAB: Vocab[] = [
     "deutsch": "im Sinn haben"
   }
 ];
+
+SEED_VOCAB.push(...EXTRA_VOCAB);

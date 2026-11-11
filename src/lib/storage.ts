@@ -1,3 +1,4 @@
+import { EXTRA_VOCAB } from "../data/extra";
 import { SEED_VOCAB } from "../data/seed";
 import type { Profile, ProgressEntry, ProgressMap, Vocab } from "../types";
 
@@ -10,7 +11,12 @@ const KEYS = {
   active: "latein.activeProfile",
   progress: "latein.progress",
   theme: "latein.theme",
+  seedRevision: "latein.seedRevision",
 } as const;
+
+/** Bump when new seed ids should be merged into an existing browser cache. */
+export const SEED_REVISION = 2;
+const NEW_SEED_IDS = new Set(EXTRA_VOCAB.map((item) => item.id));
 
 export type ThemeChoice = "light" | "dark";
 
@@ -67,17 +73,29 @@ function isProgress(value: unknown): value is ProgressEntry {
     && typeof item.updatedAt === "string";
 }
 
+function mergeNewLessons(existing: Vocab[]): Vocab[] {
+  const storedRevision = Number(read(KEYS.seedRevision) || "0");
+  if (storedRevision >= SEED_REVISION) return existing;
+  const ids = new Set(existing.map((item) => item.id));
+  const additions = SEED_VOCAB.filter((item) => NEW_SEED_IDS.has(item.id) && !ids.has(item.id));
+  const next = additions.length > 0 ? [...existing, ...additions] : existing;
+  writeStored(KEYS.vocab, JSON.stringify(next));
+  writeStored(KEYS.seedRevision, String(SEED_REVISION));
+  return next;
+}
+
 export function loadVocab(): Vocab[] {
   const raw = read(KEYS.vocab);
   if (raw === null) {
     const seed = freshSeed();
     writeStored(KEYS.vocab, JSON.stringify(seed));
+    writeStored(KEYS.seedRevision, String(SEED_REVISION));
     return seed;
   }
   try {
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return freshSeed();
-    return parsed.filter(isVocab);
+    return mergeNewLessons(parsed.filter(isVocab));
   } catch {
     return freshSeed();
   }
