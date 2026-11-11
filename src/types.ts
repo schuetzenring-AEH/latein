@@ -28,7 +28,7 @@ export type Profile = {
 
 export type Direction = "l2d" | "d2l";
 
-export type Variant = "mc" | "input" | "spelling";
+export type Variant = "mc" | "input" | "spelling" | "space";
 
 export type RoundSetup = {
   lektionIds: number[];

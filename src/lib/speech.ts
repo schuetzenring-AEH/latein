@@ -7,15 +7,21 @@ export function speakableLatin(form: string): string {
   return stripped || form;
 }
 
-export function speakLatin(form: string): void {
+export function speakText(text: string, lang: "la" | "de"): void {
   if (!canSpeak()) return;
   try {
-    const utterance = new SpeechSynthesisUtterance(speakableLatin(form));
-    utterance.lang = "la";
+    const spoken = lang === "la" ? speakableLatin(text) : text.trim();
+    if (!spoken) return;
+    const utterance = new SpeechSynthesisUtterance(spoken);
+    utterance.lang = lang === "la" ? "la" : "de-DE";
     utterance.rate = 0.92;
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(utterance);
   } catch {
-    // Speech can fail without a voice. The quiz still works.
+    // Speech can fail without a voice. The quiz and the game still run.
   }
+}
+
+export function speakLatin(form: string): void {
+  speakText(form, "la");
 }

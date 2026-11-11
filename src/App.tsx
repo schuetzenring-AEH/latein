@@ -5,6 +5,7 @@ import { StoreProvider } from "./context/Store";
 import { AdminPage } from "./pages/AdminPage";
 import { QuizPage } from "./pages/QuizPage";
 import { SetupPage } from "./pages/SetupPage";
+import { SpacePage } from "./pages/SpacePage";
 import { StatsPage } from "./pages/StatsPage";
 
 const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
@@ -18,6 +19,7 @@ export function App() {
             <Routes>
               <Route path="/" element={<SetupPage />} />
               <Route path="/quiz" element={<QuizPage />} />
+              <Route path="/weltraum" element={<SpacePage />} />
               <Route path="/statistik" element={<StatsPage />} />
               <Route path="/woerter" element={<AdminPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />

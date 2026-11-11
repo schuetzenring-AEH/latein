@@ -10,7 +10,7 @@ const links = [
 ];
 
 function linkActive(path: string, current: string): boolean {
-  if (path === "/") return current === "/" || current.startsWith("/quiz");
+  if (path === "/") return current === "/" || current.startsWith("/quiz") || current.startsWith("/weltraum");
   return current === path || current.startsWith(`${path}/`);
 }
 
@@ -30,6 +30,7 @@ export function Layout({ children }: { children: ReactNode }) {
   const [adding, setAdding] = useState(false);
   const [name, setName] = useState("");
   const active = store.profiles.find((profile) => profile.id === store.activeProfileId);
+  const playing = location.pathname === "/weltraum";
 
   function createProfile(event: FormEvent) {
     event.preventDefault();
@@ -39,8 +40,11 @@ export function Layout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-dvh bg-stone-100 text-stone-900 dark:bg-stone-950 dark:text-stone-100">
-      <header className="border-b border-stone-200 bg-stone-100/95 backdrop-blur dark:border-stone-800 dark:bg-stone-950/95">
+    <div className={cx(
+      "bg-stone-100 text-stone-900 dark:bg-stone-950 dark:text-stone-100",
+      playing ? "flex h-dvh flex-col overflow-hidden" : "min-h-dvh",
+    )}>
+      <header className="shrink-0 border-b border-stone-200 bg-stone-100/95 backdrop-blur dark:border-stone-800 dark:bg-stone-950/95">
         <div className="mx-auto flex w-full max-w-3xl flex-col gap-3 px-4 py-3">
           <div className="flex items-center justify-between gap-3">
             <p className="text-lg font-semibold tracking-tight">Latein</p>
@@ -109,9 +113,15 @@ export function Layout({ children }: { children: ReactNode }) {
           )}
         </div>
       </header>
-      <main className="mx-auto w-full max-w-3xl px-4 pb-28 pt-5 md:pb-12">{children}</main>
+      <main className={cx(
+        "mx-auto w-full max-w-3xl",
+        playing ? "flex min-h-0 flex-1 flex-col overflow-y-auto px-2 py-2" : "px-4 pb-28 pt-5 md:pb-12",
+      )}>{children}</main>
       <nav
-        className="fixed inset-x-0 bottom-0 z-20 flex gap-1 border-t border-stone-200 bg-stone-100/95 px-2 pt-1 backdrop-blur dark:border-stone-800 dark:bg-stone-950/95 md:hidden"
+        className={cx(
+          "flex gap-1 border-t border-stone-200 bg-stone-100/95 px-2 pt-1 backdrop-blur dark:border-stone-800 dark:bg-stone-950/95 md:hidden",
+          playing ? "shrink-0" : "fixed inset-x-0 bottom-0 z-20",
+        )}
         style={{ paddingBottom: "max(0.4rem, env(safe-area-inset-bottom))" }}
         aria-label="Bereiche"
       >

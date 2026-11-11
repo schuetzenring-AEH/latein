@@ -133,12 +133,30 @@ export function spellingOptions(source: string, forbidden: Set<string>): string[
   return options;
 }
 
+export function buildSpaceRound(
+  all: readonly Vocab[],
+  asked: readonly Vocab[],
+  pool: readonly Vocab[],
+  direction: Direction,
+): RoundItem[] {
+  const field = direction === "l2d" ? "deutsch" : "latein";
+  return asked.map((vocab) => ({
+    vocab,
+    prompt: direction === "l2d" ? vocab.latein : vocab.deutsch,
+    promptLang: direction === "l2d" ? "la" : "de",
+    options: choiceOptions(all, pool, vocab, field, 3),
+    answer: vocab[field],
+    speakText: direction === "l2d" ? vocab.latein : null,
+  }));
+}
+
 export function buildRound(
   all: readonly Vocab[],
   words: readonly Vocab[],
   direction: Direction,
   variant: Variant,
 ): RoundItem[] {
+  if (variant === "space") return buildSpaceRound(all, words, words, direction);
   const latinForms = new Set(all.map((item) => item.latein));
   return words.map((vocab) => {
     if (direction === "l2d" && variant === "mc") {

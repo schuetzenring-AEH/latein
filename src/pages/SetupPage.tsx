@@ -30,7 +30,7 @@ export function SetupPage() {
 
   function chooseDirection(next: Direction) {
     setDirection(next);
-    setVariant("mc");
+    setVariant((current) => (current === "space" ? "space" : "mc"));
   }
 
   function toggleLesson(lektion: number) {
@@ -114,7 +114,13 @@ export function SetupPage() {
           ) : (
             <Radio name="variant" checked={variant === "spelling"} onChange={() => setVariant("spelling")} label="Richtige Schreibweise" />
           )}
+          <Radio name="variant" checked={variant === "space"} onChange={() => setVariant("space")} label="Weltraum" />
         </div>
+        {variant === "space" && (
+          <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">
+            Schiff lenken, Asteroiden abschießen und die richtige Blase treffen. Hülle 10, Leben 3.
+          </p>
+        )}
       </fieldset>
 
       <label className="mt-6 flex min-h-12 items-center gap-3 rounded-xl border border-stone-300 bg-white px-3 dark:border-stone-700 dark:bg-stone-900">
@@ -140,7 +146,7 @@ export function SetupPage() {
         <Button
           className="w-full"
           disabled={roundCount === 0}
-          onClick={() => navigate("/quiz", {
+          onClick={() => navigate(variant === "space" ? "/weltraum" : "/quiz", {
             state: {
               lektionIds: [...selected].sort((a, b) => a - b),
               direction,

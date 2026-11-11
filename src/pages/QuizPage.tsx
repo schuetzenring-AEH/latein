@@ -277,5 +277,6 @@ function directionLabel(direction: Direction): string {
 function variantLabel(variant: Variant): string {
   if (variant === "input") return "Freie Eingabe";
   if (variant === "spelling") return "Richtige Schreibweise";
+  if (variant === "space") return "Weltraum";
   return "Multiple Choice";
 }
