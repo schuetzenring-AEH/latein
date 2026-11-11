@@ -10,7 +10,7 @@ export type SpaceHud = {
 
 export type SpaceBeat = {
   id: number;
-  mode: "drift" | "ask" | "feedback";
+  mode: "ask" | "feedback";
   prompt: string | null;
   promptLang: "la" | "de" | null;
   outcome: "correct" | "wrong" | "miss" | null;
@@ -23,6 +23,25 @@ export type SpaceItem = {
   promptLang: "la" | "de";
   answer: string;
   options: readonly string[];
+};
+
+const PLANET_CYCLE = ["saturn", "erde", "jupiter", "mars", "venus", "merkur", "uranus", "neptun"] as const;
+
+type PlanetKind = (typeof PLANET_CYCLE)[number];
+
+type Planet = {
+  kind: PlanetKind;
+  label: string;
+  correct: boolean;
+  x: number;
+  y: number;
+  r: number;
+  vy: number;
+  lines: string[];
+  fontPx: number;
+  labelW: number;
+  labelH: number;
+  mark: "none" | "correct" | "wrong" | "dim";
 };
 
 type Asteroid = {
@@ -40,7 +59,6 @@ type Asteroid = {
 type Shot = {
   x: number;
   y: number;
-  vx: number;
   vy: number;
   life: number;
   alive: boolean;
@@ -56,26 +74,27 @@ type Particle = {
   color: string;
 };
 
-type Bubble = {
-  el: HTMLDivElement;
-  correct: boolean;
+type Gesture = {
+  id: number;
+  pointerType: string;
   x: number;
   y: number;
-  vx: number;
-  vy: number;
-  w: number;
-  h: number;
-  held: boolean;
+  originX: number;
+  originY: number;
+  t: number;
+  steer: boolean;
 };
 
-type Phase = "drift" | "ask" | "feedback";
+type Phase = "ask" | "feedback";
 
-const SHIP_R = 13;
+const FONT = 'system-ui, "Segoe UI", sans-serif';
+const SHIP_R = 15;
 const TAP_SLOP = 18;
 const TAP_MS = 380;
-const OPENING_DRIFT = 3.2;
-const NEXT_DRIFT = 2.4;
-const FEEDBACK_TIME = 1.15;
+const SHIP_MAX_SPEED = 220;
+const FEEDBACK_TIME = 1.2;
+const MAX_ASTEROIDS = 2;
+const INVULN_TIME = 0.85;
 
 function clamp(value: number, min: number, max: number): number {
   if (max < min) return min;
@@ -95,70 +114,90 @@ function shuffle<T>(list: readonly T[]): T[] {
   return copy;
 }
 
-function makeVerts(): number[] {
-  const count = 7 + Math.floor(Math.random() * 4);
-  return Array.from({ length: count }, () => 0.72 + Math.random() * 0.38);
+function planetTrio(beat: number): [PlanetKind, PlanetKind, PlanetKind] {
+  const start = (beat * 3) % PLANET_CYCLE.length;
+  return [0, 1, 2].map((offset) => PLANET_CYCLE[(start + offset) % PLANET_CYCLE.length]) as [PlanetKind, PlanetKind, PlanetKind];
 }
 
-function fontFor(label: string): string {
-  const length = [...label].length;
-  if (length > 36) return "16px";
-  if (length > 24) return "18px";
-  if (length > 14) return "20px";
-  return "24px";
+function makeVerts(): number[] {
+  const count = 7 + Math.floor(Math.random() * 3);
+  return Array.from({ length: count }, () => 0.74 + Math.random() * 0.36);
+}
+
+function wrapLines(ctx: CanvasRenderingContext2D, text: string, maxWidth: number, fontPx: number): string[] {
+  ctx.font = `700 ${fontPx}px ${FONT}`;
+  const words = text.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+  let current = "";
+  const pushWord = (word: string) => {
+    if (ctx.measureText(word).width <= maxWidth) {
+      current = word;
+      return;
+    }
+    let chunk = "";
+    for (const char of word) {
+      const trial = chunk + char;
+      if (chunk && ctx.measureText(trial).width > maxWidth) {
+        lines.push(chunk);
+        chunk = char;
+      } else chunk = trial;
+    }
+    current = chunk;
+  };
+  for (const word of words) {
+    const next = current ? `${current} ${word}` : word;
+    if (current && ctx.measureText(next).width <= maxWidth) current = next;
+    else {
+      if (current) lines.push(current);
+      pushWord(word);
+    }
+  }
+  if (current) lines.push(current);
+  return lines.slice(0, 4);
 }
 
 export function startWeltraum(options: {
   field: HTMLElement;
   canvas: HTMLCanvasElement;
-  overlay: HTMLElement;
   items: readonly SpaceItem[];
   onHud: (hud: SpaceHud) => void;
   onBeat: (beat: SpaceBeat) => void;
   onAnswer: (vocabId: string, correct: boolean) => void;
   onEnd: (hud: SpaceHud) => void;
 }): () => void {
-  const { field, canvas, overlay, items, onHud, onBeat, onAnswer, onEnd } = options;
+  const { field, canvas, items, onHud, onBeat, onAnswer, onEnd } = options;
   const context = canvas.getContext("2d");
   if (!context) return () => {};
   const ctx = context;
-
-  const stars = Array.from({ length: 48 }, () => ({
-    x: Math.random(),
-    y: Math.random(),
-    s: Math.random() < 0.82 ? 1.2 : 2.2,
-    a: 0.28 + Math.random() * 0.72,
-  }));
 
   let viewW = 0;
   let viewH = 0;
   let running = true;
   let ended = false;
-  let primed = false;
+  let started = false;
   let raf = 0;
   let beatSerial = 0;
+  let questionIndex = 0;
   let cursor = 0;
   let hull = HULL_MAX;
   let lives = LIVES_MAX;
   let correctCount = 0;
   let wrongCount = 0;
-  let phase: Phase = "drift";
-  let driftLeft = OPENING_DRIFT;
+  let phase: Phase = "ask";
   let feedbackLeft = 0;
-  let spawnLeft = 0.85;
+  let spawnLeft = 0.65;
   let shotCooldown = 0;
   let resolved = false;
-  let armed = false;
   let outcome: SpaceBeat["outcome"] = null;
   let current: SpaceItem | null = null;
+  let planets: Planet[] = [];
   let asteroids: Asteroid[] = [];
   let shots: Shot[] = [];
   let particles: Particle[] = [];
-  let bubbles: Bubble[] = [];
-  let tap: { id: number; x: number; y: number; t: number; moved: boolean } | null = null;
+  let gesture: Gesture | null = null;
 
-  const ship = { x: 0, y: 0, angle: -Math.PI / 2, invuln: 0, ready: false };
-  const target = { x: 0, y: 0, ready: false };
+  const ship = { x: 0, y: 0, vx: 0, invuln: 0, ready: false };
+  const target = { x: 0, ready: false };
 
   function hud(): SpaceHud {
     return { hull, lives, correct: correctCount, wrong: wrongCount };
@@ -170,12 +209,11 @@ export function startWeltraum(options: {
 
   function publishBeat() {
     beatSerial += 1;
-    const showing = phase !== "drift";
     onBeat({
       id: beatSerial,
       mode: phase,
-      prompt: showing ? current?.prompt ?? null : null,
-      promptLang: showing ? current?.promptLang ?? null : null,
+      prompt: current?.prompt ?? null,
+      promptLang: current?.promptLang ?? null,
       outcome: phase === "feedback" ? outcome : null,
       reveal: phase === "feedback" ? current?.answer ?? null : null,
     });
@@ -185,17 +223,22 @@ export function startWeltraum(options: {
     if (ended) return;
     ended = true;
     running = false;
-    for (const bubble of bubbles) bubble.el.remove();
-    bubbles = [];
-    overlay.replaceChildren();
     onEnd(hud());
   }
 
+  function shipLimit(): number {
+    return SHIP_R + 2;
+  }
+
+  function shipCenterY(): number {
+    return Math.max(shipLimit(), viewH - 22);
+  }
+
   function burst(x: number, y: number, color: string) {
-    for (let index = 0; index < 12; index += 1) {
-      const angle = (index / 12) * Math.PI * 2 + Math.random() * 0.35;
-      const speed = 46 + Math.random() * 120;
-      const life = 0.26 + Math.random() * 0.22;
+    for (let index = 0; index < 10; index += 1) {
+      const angle = (index / 10) * Math.PI * 2 + Math.random() * 0.4;
+      const speed = 40 + Math.random() * 110;
+      const life = 0.22 + Math.random() * 0.2;
       particles.push({
         x,
         y,
@@ -208,251 +251,49 @@ export function startWeltraum(options: {
     }
   }
 
-  function place(bubble: Bubble) {
-    bubble.el.style.transform = `translate(${bubble.x - bubble.w / 2}px, ${bubble.y - bubble.h / 2}px)`;
+  function labelMetrics(text: string, maxWidth: number): { lines: string[]; fontPx: number; labelW: number; labelH: number } {
+    const length = [...text].length;
+    const preferred = length > 28 ? 15 : length > 16 ? 17 : 20;
+    let fontPx = preferred;
+    let lines = wrapLines(ctx, text, maxWidth, fontPx);
+    if (lines.length > 3 && fontPx > 15) {
+      fontPx = 15;
+      lines = wrapLines(ctx, text, maxWidth, fontPx);
+    }
+    ctx.font = `700 ${fontPx}px ${FONT}`;
+    const labelW = Math.max(12, ...lines.map((line) => ctx.measureText(line).width));
+    const labelH = Math.max(fontPx, lines.length * (fontPx + 3));
+    return { lines, fontPx, labelW, labelH };
   }
 
-  function paint(bubble: Bubble, kind: "idle" | "correct" | "wrong" | "dim") {
-    if (kind === "correct") {
-      bubble.el.style.background = "#15803d";
-      bubble.el.style.color = "#f0fdf4";
-      bubble.el.style.borderColor = "#86efac";
-      bubble.el.style.opacity = "1";
-      return;
-    }
-    if (kind === "wrong") {
-      bubble.el.style.background = "#b91c1c";
-      bubble.el.style.color = "#fef2f2";
-      bubble.el.style.borderColor = "#fecaca";
-      bubble.el.style.opacity = "1";
-      return;
-    }
-    if (kind === "dim") {
-      bubble.el.style.opacity = "0.3";
-      return;
-    }
-    bubble.el.style.background = "rgba(248,250,252,0.96)";
-    bubble.el.style.color = "#0f172a";
-    bubble.el.style.borderColor = "#7dd3fc";
-    bubble.el.style.opacity = "1";
+  function labelTop(planet: Planet): number {
+    const gap = planet.kind === "saturn" ? planet.r * 0.62 : 8;
+    return planet.y + planet.r + gap;
   }
 
-  function createBubble(label: string, correct: boolean, lang: "la" | "de"): Bubble {
-    const el = document.createElement("div");
-    const span = document.createElement("span");
-    span.textContent = label;
-    span.lang = lang;
-    el.append(span);
-    const maxWidth = Math.min(210, Math.max(128, Math.floor((viewW - 52) / 2)));
-    const minWidth = Math.min(maxWidth, 128);
-    const minHeight = viewH < 390 ? 64 : 72;
-    el.style.position = "absolute";
-    el.style.left = "0";
-    el.style.top = "0";
-    el.style.boxSizing = "border-box";
-    el.style.display = "flex";
-    el.style.alignItems = "center";
-    el.style.justifyContent = "center";
-    el.style.width = "max-content";
-    el.style.maxWidth = `${maxWidth}px`;
-    el.style.minWidth = `${minWidth}px`;
-    el.style.minHeight = `${minHeight}px`;
-    el.style.padding = "14px 18px";
-    el.style.borderRadius = "999px";
-    el.style.border = "3px solid #7dd3fc";
-    el.style.background = "rgba(248,250,252,0.96)";
-    el.style.color = "#0f172a";
-    el.style.textAlign = "center";
-    el.style.fontFamily = "inherit";
-    el.style.fontWeight = "700";
-    el.style.fontSize = fontFor(label);
-    el.style.lineHeight = "1.2";
-    el.style.overflowWrap = "anywhere";
-    el.style.pointerEvents = "none";
-    el.style.userSelect = "none";
-    el.className = "space-bubble";
-    el.style.boxShadow = "0 10px 28px rgba(0,0,0,0.35)";
-    el.style.transition = "background-color 120ms linear, color 120ms linear, border-color 120ms linear, opacity 120ms linear";
-    overlay.append(el);
-    return {
-      el,
-      correct,
-      x: viewW / 2,
-      y: viewH / 2,
-      vx: 0,
-      vy: 0,
-      w: el.offsetWidth || minWidth,
-      h: el.offsetHeight || minHeight,
-      held: false,
-    };
+  function planetTop(planet: Planet): number {
+    return planet.y - (planet.kind === "saturn" ? planet.r * 1.15 : planet.r);
   }
 
-  function clearBubbles() {
-    for (const bubble of bubbles) bubble.el.remove();
-    bubbles = [];
+  function hitsPlanet(planet: Planet): boolean {
+    const body = planet.kind === "saturn" ? planet.r * 1.05 : planet.r;
+    const dx = ship.x - planet.x;
+    const dy = ship.y - planet.y;
+    if (dx * dx + dy * dy <= (body + SHIP_R - 1) * (body + SHIP_R - 1)) return true;
+    const top = labelTop(planet);
+    const half = Math.max(planet.labelW, 28) / 2 + 6;
+    const left = planet.x - half;
+    const right = planet.x + half;
+    const bottom = top + planet.labelH + 4;
+    const nearestX = clamp(ship.x, left, right);
+    const nearestY = clamp(ship.y, top, bottom);
+    const ox = ship.x - nearestX;
+    const oy = ship.y - nearestY;
+    return ox * ox + oy * oy <= SHIP_R * SHIP_R;
   }
 
-  function layoutStack(list: readonly Bubble[]) {
-    const reserve = viewH < 390 ? 72 : 90;
-    const slots = shuffle([
-      { x: viewW * 0.27, y: viewH * 0.68 },
-      { x: viewW * 0.73, y: viewH * 0.68 },
-      { x: viewW * 0.5, y: viewH * 0.34 },
-    ]);
-    list.forEach((bubble, index) => {
-      const slot = slots[index] ?? { x: viewW / 2, y: viewH / 2 };
-      bubble.x = clamp(slot.x, bubble.w / 2 + 8, viewW - bubble.w / 2 - 8);
-      bubble.y = clamp(slot.y, bubble.h / 2 + 8, viewH - reserve);
-      bubble.vx = 0;
-      bubble.vy = -Math.max(24, viewH / 11);
-    });
-    for (let pass = 0; pass < 16; pass += 1) {
-      for (let left = 0; left < list.length; left += 1) {
-        for (let right = left + 1; right < list.length; right += 1) {
-          const a = list[left];
-          const b = list[right];
-          if (!a || !b) continue;
-          const dx = b.x - a.x;
-          const dy = b.y - a.y;
-          const gap = 40;
-          const overlapX = (a.w + b.w) / 2 + gap - Math.abs(dx);
-          const overlapY = (a.h + b.h) / 2 + gap - Math.abs(dy);
-          if (overlapX <= 0 || overlapY <= 0) continue;
-          if (overlapX < overlapY) {
-            const push = overlapX / 2;
-            const sign = dx === 0 ? (left % 2 === 0 ? -1 : 1) : Math.sign(dx);
-            a.x -= sign * push;
-            b.x += sign * push;
-          } else {
-            const push = overlapY / 2;
-            const sign = dy === 0 ? -1 : Math.sign(dy);
-            a.y -= sign * push;
-            b.y += sign * push;
-          }
-        }
-      }
-    }
-    for (const bubble of list) {
-      bubble.x = clamp(bubble.x, bubble.w / 2 + 6, viewW - bubble.w / 2 - 6);
-      bubble.y = clamp(bubble.y, bubble.h / 2 + 6, viewH - 8);
-    }
-    for (let pass = 0; pass < 8; pass += 1) {
-      for (let left = 0; left < list.length; left += 1) {
-        for (let right = left + 1; right < list.length; right += 1) {
-          const a = list[left];
-          const b = list[right];
-          if (!a || !b) continue;
-          const dx = b.x - a.x;
-          const dy = b.y - a.y;
-          const overlapX = (a.w + b.w) / 2 + 18 - Math.abs(dx);
-          const overlapY = (a.h + b.h) / 2 + 22 - Math.abs(dy);
-          if (overlapX <= 0 || overlapY <= 0) continue;
-          const sign = dy === 0 ? -1 : Math.sign(dy);
-          a.y -= sign * (overlapY / 2);
-          b.y += sign * (overlapY / 2);
-        }
-      }
-      for (const bubble of list) {
-        bubble.y = clamp(bubble.y, bubble.h / 2 + 6, viewH - 8);
-      }
-    }
-    let guard = 0;
-    while (
-      guard < 8
-      && ship.ready
-      && list.some((bubble) => circleHitsBubble(ship.x, ship.y, SHIP_R + 12, bubble))
-      && list.every((bubble) => bubble.y - bubble.h / 2 > 8)
-    ) {
-      for (const bubble of list) bubble.y -= 14;
-      guard += 1;
-    }
-    for (const bubble of list) place(bubble);
-  }
-
-  function circleHitsBubble(cx: number, cy: number, radius: number, bubble: Bubble): boolean {
-    const insetX = Math.min(10, bubble.w * 0.1);
-    const insetY = Math.min(8, bubble.h * 0.1);
-    const left = bubble.x - bubble.w / 2 + insetX;
-    const top = bubble.y - bubble.h / 2 + insetY;
-    const right = bubble.x + bubble.w / 2 - insetX;
-    const bottom = bubble.y + bubble.h / 2 - insetY;
-    const nearestX = clamp(cx, left, Math.max(left, right));
-    const nearestY = clamp(cy, top, Math.max(top, bottom));
-    const dx = cx - nearestX;
-    const dy = cy - nearestY;
-    return dx * dx + dy * dy <= radius * radius;
-  }
-
-  function pullIn(bubble: Bubble) {
-    const halfW = bubble.w / 2;
-    const halfH = bubble.h / 2;
-    const visible = bubble.x > halfW && bubble.x < viewW - halfW && bubble.y > halfH && bubble.y < viewH - halfH;
-    if (!visible) {
-      bubble.x = viewW / 2;
-      bubble.y = Math.max(halfH + 8, viewH * 0.42);
-    }
-    place(bubble);
-  }
-
-  function showAnswerBubble(text: string, lang: "la" | "de") {
-    clearBubbles();
-    const bubble = createBubble(text, true, lang);
-    paint(bubble, "correct");
-    bubble.held = true;
-    bubble.x = viewW / 2;
-    bubble.y = Math.max(bubble.h / 2 + 8, viewH * 0.46);
-    place(bubble);
-    bubbles = [bubble];
-  }
-
-  function settle(correct: boolean, kind: "correct" | "wrong" | "miss", hit: Bubble | null) {
-    if (resolved || ended || !current) return;
-    resolved = true;
-    if (correct) correctCount += 1;
-    else {
-      wrongCount += 1;
-      lives = Math.max(0, lives - 1);
-    }
-    onAnswer(current.vocabId, correct);
-    outcome = kind;
-    phase = "feedback";
-    feedbackLeft = FEEDBACK_TIME;
-    const answerLang = current.promptLang === "la" ? "de" : "la";
-    if (kind === "miss") showAnswerBubble(current.answer, answerLang);
-    else {
-      for (const bubble of bubbles) {
-        bubble.held = true;
-        bubble.vy = 0;
-        if (kind === "correct") paint(bubble, bubble === hit ? "correct" : "dim");
-        else if (bubble === hit) paint(bubble, "wrong");
-        else if (bubble.correct) {
-          paint(bubble, "correct");
-          pullIn(bubble);
-        } else paint(bubble, "dim");
-      }
-    }
-    publishHud();
-    publishBeat();
-  }
-
-  function beginDrift(seconds: number) {
-    phase = "drift";
-    driftLeft = seconds;
-    outcome = null;
-    current = null;
-    resolved = false;
-    clearBubbles();
-    publishBeat();
-  }
-
-  function freeBubbleSpace() {
-    for (const asteroid of asteroids) {
-      if (!asteroid.alive) continue;
-      const blocked = bubbles.some((bubble) => circleHitsBubble(asteroid.x, asteroid.y, asteroid.r, bubble));
-      if (!blocked) continue;
-      asteroid.alive = false;
-      burst(asteroid.x, asteroid.y, "#fdba74");
-    }
+  function passed(planet: Planet): boolean {
+    return planetTop(planet) > ship.y + SHIP_R;
   }
 
   function beginAsk() {
@@ -465,102 +306,123 @@ export function startWeltraum(options: {
     current = item;
     phase = "ask";
     resolved = false;
-    armed = false;
     outcome = null;
-    clearBubbles();
-    const answerLang = item.promptLang === "la" ? "de" : "la";
-    bubbles = shuffle(item.options).map((label) => createBubble(label, label === item.answer, answerLang));
-    layoutStack(bubbles);
-    freeBubbleSpace();
+    const types = planetTrio(questionIndex);
+    questionIndex += 1;
+    const radius = clamp(Math.min(viewW * 0.09, viewH * 0.11), 28, 56);
+    const maxLabel = Math.max(88, Math.min(176, (viewW - 28) / 3));
+    const lanes = shuffle([0.17, 0.5, 0.83]).map((fraction) => clamp(
+      fraction * viewW,
+      maxLabel / 2 + 6,
+      Math.max(maxLabel / 2 + 6, viewW - maxLabel / 2 - 6),
+    ));
+    const offsets = shuffle([0, 36, 74]);
+    const cards = shuffle(item.options.map((label, index) => ({
+      label,
+      correct: label === item.answer,
+      kind: types[index] ?? "mars",
+    })));
+    planets = cards.map((card, index) => {
+      const metrics = labelMetrics(card.label, maxLabel);
+      const lane = lanes[index] ?? viewW / 2;
+      const offset = offsets[index] ?? 0;
+      const stack = radius + (card.kind === "saturn" ? radius * 0.62 : 8) + metrics.labelH;
+      return {
+        kind: card.kind,
+        label: card.label,
+        correct: card.correct,
+        x: lane,
+        y: -stack - offset,
+        r: radius,
+        vy: 82,
+        lines: metrics.lines,
+        fontPx: metrics.fontPx,
+        labelW: metrics.labelW,
+        labelH: metrics.labelH,
+        mark: "none" as const,
+      };
+    });
     publishBeat();
   }
 
-  function spawnEdge(): Asteroid {
-    const r = 18 + Math.random() * 16;
-    const speed = 34 + Math.random() * 40;
-    const edge = Math.floor(Math.random() * 4);
-    let x = viewW / 2;
-    let y = viewH / 2;
-    let vx = 0;
-    let vy = 0;
-    if (edge === 0) {
-      x = -r;
-      y = Math.random() * viewH;
-      vx = speed;
-      vy = (Math.random() - 0.5) * speed;
-    } else if (edge === 1) {
-      x = viewW + r;
-      y = Math.random() * viewH;
-      vx = -speed;
-      vy = (Math.random() - 0.5) * speed;
-    } else if (edge === 2) {
-      x = Math.random() * viewW;
-      y = -r;
-      vx = (Math.random() - 0.5) * speed;
-      vy = speed * 0.75;
-    } else {
-      x = Math.random() * viewW;
-      y = viewH + r;
-      vx = (Math.random() - 0.5) * speed;
-      vy = -speed * 0.75;
-    }
-    return { x, y, vx, vy, r, rot: Math.random() * Math.PI * 2, spin: (Math.random() - 0.5) * 1.4, verts: makeVerts(), alive: true };
+  function holdCorrectPlanet(planet: Planet) {
+    const minY = planet.r + 18;
+    const maxY = Math.max(minY, ship.y - planet.r - planet.labelH - 36);
+    planet.x = clamp(planet.x, planet.r + 8, Math.max(planet.r + 8, viewW - planet.r - 8));
+    planet.y = clamp(Math.min(viewH * 0.34, maxY), minY, maxY);
   }
 
-  function spawnInner(): Asteroid | null {
-    const r = 20 + Math.random() * 16;
-    for (let attempt = 0; attempt < 12; attempt += 1) {
-      const x = r + 8 + Math.random() * Math.max(1, viewW - r * 2 - 16);
-      const y = r + 8 + Math.random() * Math.max(1, viewH * 0.52 - r);
-      if (Math.hypot(x - ship.x, y - ship.y) < r + 110) continue;
-      const angle = Math.random() * Math.PI * 2;
-      const speed = 16 + Math.random() * 26;
-      return {
-        x,
-        y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        r,
-        rot: Math.random() * Math.PI * 2,
-        spin: (Math.random() - 0.5) * 1.1,
-        verts: makeVerts(),
-        alive: true,
-      };
-    }
-    return null;
+  function keepOnScreen(planet: Planet) {
+    const minY = planet.r + 10;
+    const bottom = labelTop(planet) + planet.labelH;
+    if (bottom > viewH - 6) planet.y -= bottom - (viewH - 6);
+    if (planet.y < minY) planet.y = minY;
+    const half = Math.min(viewW / 2 - 8, planet.labelW / 2 + 6);
+    planet.x = clamp(planet.x, half, Math.max(half, viewW - half));
   }
 
-  function prime() {
-    if (primed || !ship.ready) return;
-    primed = true;
-    for (let index = 0; index < 4; index += 1) {
-      const asteroid = spawnInner();
-      if (asteroid) asteroids.push(asteroid);
+  function settle(correct: boolean, kind: "correct" | "wrong" | "miss", hit: Planet | null) {
+    if (resolved || ended || !current || phase !== "ask") return;
+    resolved = true;
+    if (correct) correctCount += 1;
+    else {
+      wrongCount += 1;
+      lives = Math.max(0, lives - 1);
     }
+    onAnswer(current.vocabId, correct);
+    outcome = kind;
+    phase = "feedback";
+    feedbackLeft = FEEDBACK_TIME;
+    for (const planet of planets) {
+      planet.vy = 0;
+      if (planet.correct) planet.mark = "correct";
+      else if (planet === hit) planet.mark = "wrong";
+      else planet.mark = "dim";
+    }
+    const right = planets.find((planet) => planet.correct);
+    if (right && kind === "miss") holdCorrectPlanet(right);
+    if (right) keepOnScreen(right);
+    if (hit && hit !== right) keepOnScreen(hit);
+    if (hit) burst(hit.x, hit.y, correct ? "#86efac" : "#fda4af");
+    else if (right) burst(right.x, right.y, "#fde68a");
+    publishHud();
+    publishBeat();
   }
 
-  function aim(x: number, y: number) {
-    target.x = clamp(x, 0, viewW);
-    target.y = clamp(y, 0, viewH);
+  function spawnAsteroid() {
+    if (asteroids.length >= MAX_ASTEROIDS || viewW < 40) return;
+    const r = 14 + Math.random() * 8;
+    const x = r + 10 + Math.random() * Math.max(1, viewW - r * 2 - 20);
+    asteroids.push({
+      x,
+      y: -r - 6,
+      vx: (Math.random() - 0.5) * 16,
+      vy: 58 + Math.random() * 26,
+      r,
+      rot: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 1.1,
+      verts: makeVerts(),
+      alive: true,
+    });
+  }
+
+  function aimX(x: number) {
+    const limit = shipLimit();
+    target.x = clamp(x, limit, Math.max(limit, viewW - limit));
     target.ready = true;
-    const dx = target.x - ship.x;
-    const dy = target.y - ship.y;
-    if (dx * dx + dy * dy > 64) ship.angle = Math.atan2(dy, dx);
   }
 
   function fire() {
     if (ended || shotCooldown > 0 || !ship.ready) return;
-    shotCooldown = 0.14;
-    const angle = ship.angle;
+    shotCooldown = 0.18;
     shots.push({
-      x: ship.x + Math.cos(angle) * 20,
-      y: ship.y + Math.sin(angle) * 20,
-      vx: Math.cos(angle) * 480,
-      vy: Math.sin(angle) * 480,
+      x: ship.x,
+      y: ship.y - 20,
+      vy: -700,
       life: 1.15,
       alive: true,
     });
-    burst(ship.x + Math.cos(angle) * 16, ship.y + Math.sin(angle) * 16, "#fef9c3");
+    burst(ship.x, ship.y - 16, "#fef9c3");
   }
 
   function localPoint(event: PointerEvent) {
@@ -568,12 +430,28 @@ export function startWeltraum(options: {
     return { x: event.clientX - rect.left, y: event.clientY - rect.top };
   }
 
+  function considerSteer(now: number) {
+    if (!gesture || gesture.steer) return;
+    const moved = Math.hypot(gesture.x - gesture.originX, gesture.y - gesture.originY) > TAP_SLOP;
+    if (!moved && now - gesture.t <= TAP_MS) return;
+    gesture.steer = true;
+    if (gesture.pointerType !== "mouse") aimX(gesture.x);
+  }
+
   function onDown(event: PointerEvent) {
     if (ended || event.button !== 0) return;
-    event.preventDefault();
+    if (event.cancelable) event.preventDefault();
     const point = localPoint(event);
-    tap = { id: event.pointerId, x: point.x, y: point.y, t: performance.now(), moved: false };
-    aim(point.x, point.y);
+    gesture = {
+      id: event.pointerId,
+      pointerType: event.pointerType,
+      x: point.x,
+      y: point.y,
+      originX: point.x,
+      originY: point.y,
+      t: performance.now(),
+      steer: false,
+    };
     try {
       field.setPointerCapture(event.pointerId);
     } catch {
@@ -584,20 +462,24 @@ export function startWeltraum(options: {
   function onMove(event: PointerEvent) {
     if (ended) return;
     const point = localPoint(event);
-    if (tap && tap.id === event.pointerId && Math.hypot(point.x - tap.x, point.y - tap.y) > TAP_SLOP) tap.moved = true;
-    if (event.pointerType === "touch" && tap?.id !== event.pointerId) return;
-    aim(point.x, point.y);
+    if (event.pointerType === "mouse") aimX(point.x);
+    if (!gesture || gesture.id !== event.pointerId) return;
+    gesture.x = point.x;
+    gesture.y = point.y;
+    if (Math.hypot(gesture.x - gesture.originX, gesture.y - gesture.originY) > TAP_SLOP) gesture.steer = true;
+    if (gesture.steer && event.pointerType !== "mouse") aimX(gesture.x);
   }
 
   function onUp(event: PointerEvent) {
-    if (!tap || tap.id !== event.pointerId) return;
-    const shoot = !tap.moved && performance.now() - tap.t <= TAP_MS;
-    tap = null;
+    if (!gesture || gesture.id !== event.pointerId) return;
+    const moved = Math.hypot(gesture.x - gesture.originX, gesture.y - gesture.originY) > TAP_SLOP;
+    const shoot = !gesture.steer && !moved && performance.now() - gesture.t <= TAP_MS;
+    gesture = null;
     if (shoot) fire();
   }
 
   function onCancel(event: PointerEvent) {
-    if (tap?.id === event.pointerId) tap = null;
+    if (gesture?.id === event.pointerId) gesture = null;
   }
 
   function onMenu(event: Event) {
@@ -614,53 +496,86 @@ export function startWeltraum(options: {
       canvas.width = bitmapW;
       canvas.height = bitmapH;
     }
-    if (!ship.ready && viewW > 40 && viewH > 40) {
-      ship.x = viewW / 2;
-      ship.y = Math.max(SHIP_R + 8, viewH - 36);
-      target.x = ship.x;
-      target.y = ship.y;
-      ship.ready = true;
-    } else if (ship.ready) {
-      ship.x = clamp(ship.x, SHIP_R, Math.max(SHIP_R, viewW - SHIP_R));
-      ship.y = clamp(ship.y, SHIP_R, Math.max(SHIP_R, viewH - SHIP_R));
+    if (ship.ready) {
+      const limit = shipLimit();
+      ship.x = clamp(ship.x, limit, Math.max(limit, viewW - limit));
+      ship.y = shipCenterY();
+      if (target.ready) aimX(target.x);
     }
   }
 
-  function update(dt: number) {
+  function ensureRound() {
+    if (started || ended || viewW < 40 || viewH < 40) return;
+    started = true;
+    ship.x = viewW / 2;
+    ship.y = shipCenterY();
+    ship.vx = 0;
+    ship.ready = true;
+    aimX(ship.x);
+    beginAsk();
+  }
+
+  function stepShip(dt: number) {
+    ship.y = shipCenterY();
+    if (!target.ready) return;
+    const dx = target.x - ship.x;
+    const desired = clamp(dx * 3, -SHIP_MAX_SPEED, SHIP_MAX_SPEED);
+    const blend = 1 - Math.exp(-6 * dt);
+    ship.vx += (desired - ship.vx) * blend;
+    const step = ship.vx * dt;
+    if (Math.abs(dx) < 0.8 && Math.abs(ship.vx) < 18) {
+      ship.x = target.x;
+      ship.vx = 0;
+    } else if ((dx > 0 && step > dx) || (dx < 0 && step < dx)) {
+      ship.x = target.x;
+      ship.vx = 0;
+    } else ship.x += step;
+    const limit = shipLimit();
+    ship.x = clamp(ship.x, limit, Math.max(limit, viewW - limit));
+  }
+
+  function damageHull() {
+    hull = Math.max(0, hull - 1);
+    publishHud();
+    if (hull <= 0 && phase === "ask" && !resolved) finish();
+  }
+
+  function update(dt: number, now: number) {
     if (ended) return;
     shotCooldown = Math.max(0, shotCooldown - dt);
     if (viewW < 40 || viewH < 40) return;
-    prime();
+    ensureRound();
+    if (!started || ended) return;
     ship.invuln = Math.max(0, ship.invuln - dt);
-    if (target.ready && ship.ready) {
-      const follow = 1 - Math.exp(-14 * dt);
-      ship.x += (target.x - ship.x) * follow;
-      ship.y += (target.y - ship.y) * follow;
-      const dx = target.x - ship.x;
-      const dy = target.y - ship.y;
-      if (dx * dx + dy * dy > 36) ship.angle = Math.atan2(dy, dx);
-    }
-    ship.x = clamp(ship.x, SHIP_R, Math.max(SHIP_R, viewW - SHIP_R));
-    ship.y = clamp(ship.y, SHIP_R, Math.max(SHIP_R, viewH - SHIP_R));
+    considerSteer(now);
+    stepShip(dt);
 
     for (const shot of shots) {
       if (!shot.alive) continue;
-      shot.x += shot.vx * dt;
-      shot.y += shot.vy * dt;
+      const nextY = shot.y + shot.vy * dt;
       shot.life -= dt;
-      if (shot.life <= 0) shot.alive = false;
+      for (const asteroid of asteroids) {
+        if (!shot.alive || !asteroid.alive) continue;
+        const closestY = clamp(asteroid.y, Math.min(shot.y, nextY), Math.max(shot.y, nextY));
+        if (Math.hypot(shot.x - asteroid.x, closestY - asteroid.y) > asteroid.r + 8) continue;
+        shot.alive = false;
+        asteroid.alive = false;
+        hull = Math.min(HULL_MAX, hull + 1);
+        burst(asteroid.x, asteroid.y, "#fdba74");
+        publishHud();
+      }
+      shot.y = nextY;
+      if (shot.life <= 0 || shot.y < -30) shot.alive = false;
     }
     for (const asteroid of asteroids) {
       if (!asteroid.alive) continue;
       asteroid.x += asteroid.vx * dt;
       asteroid.y += asteroid.vy * dt;
       asteroid.rot += asteroid.spin * dt;
-      if (asteroid.x < -150 || asteroid.x > viewW + 150 || asteroid.y < -150 || asteroid.y > viewH + 150) asteroid.alive = false;
+      if (asteroid.y - asteroid.r > viewH + 40 || asteroid.x < -80 || asteroid.x > viewW + 80) asteroid.alive = false;
     }
-    for (const bubble of bubbles) {
-      if (bubble.held) continue;
-      bubble.x += bubble.vx * dt;
-      bubble.y += bubble.vy * dt;
+    if (phase === "ask") {
+      for (const planet of planets) planet.y += planet.vy * dt;
     }
     for (const particle of particles) {
       particle.x += particle.vx * dt;
@@ -668,76 +583,216 @@ export function startWeltraum(options: {
       particle.life -= dt;
     }
 
-    for (const shot of shots) {
-      if (!shot.alive) continue;
-      for (const asteroid of asteroids) {
-        if (!asteroid.alive) continue;
-        if (Math.hypot(shot.x - asteroid.x, shot.y - asteroid.y) <= asteroid.r * 0.86 + 4) {
-          shot.alive = false;
-          asteroid.alive = false;
-          burst(asteroid.x, asteroid.y, "#fdba74");
-          break;
-        }
-      }
-    }
-
+    if (ended) return;
     if (ship.ready) {
       for (const asteroid of asteroids) {
         if (!asteroid.alive) continue;
-        if (Math.hypot(ship.x - asteroid.x, ship.y - asteroid.y) <= asteroid.r * 0.82 + SHIP_R) {
-          asteroid.alive = false;
-          burst(asteroid.x, asteroid.y, ship.invuln > 0 ? "#cbd5e1" : "#fb7185");
-          if (ship.invuln <= 0) {
-            ship.invuln = 0.7;
-            hull = Math.max(0, hull - 1);
-            publishHud();
-          }
+        if (Math.hypot(ship.x - asteroid.x, ship.y - asteroid.y) > asteroid.r + SHIP_R - 1) continue;
+        asteroid.alive = false;
+        burst(asteroid.x, asteroid.y, ship.invuln > 0 ? "#cbd5e1" : "#fb7185");
+        if (ship.invuln <= 0) {
+          ship.invuln = INVULN_TIME;
+          damageHull();
+          if (ended) return;
         }
       }
     }
 
-    if (phase === "ask" && !resolved && ship.ready) {
-      const hit = bubbles.find((bubble) => !bubble.held && circleHitsBubble(ship.x, ship.y, SHIP_R, bubble));
-      if (!hit) armed = true;
-      else if (armed) settle(hit.correct, hit.correct ? "correct" : "wrong", hit);
-    }
-
-    if (phase === "ask" && !resolved && bubbles.length > 0 && bubbles.every((bubble) => bubble.y + bubble.h / 2 < -12)) {
-      settle(false, "miss", null);
+    if (phase === "ask" && !resolved) {
+      let hit: Planet | null = null;
+      let best = Infinity;
+      for (const planet of planets) {
+        if (!hitsPlanet(planet)) continue;
+        const distance = Math.hypot(planet.x - ship.x, planet.y - ship.y);
+        if (distance < best) {
+          best = distance;
+          hit = planet;
+        }
+      }
+      if (hit) settle(hit.correct, hit.correct ? "correct" : "wrong", hit);
+      else if (planets.length > 0 && planets.every(passed)) settle(false, "miss", null);
     }
 
     if (ended) return;
+    spawnLeft -= dt;
+    if (spawnLeft <= 0) {
+      spawnAsteroid();
+      spawnLeft = 2.7;
+    }
 
-    if (phase === "drift") {
-      spawnLeft -= dt;
-      if (spawnLeft <= 0 && asteroids.filter((asteroid) => asteroid.alive).length < 5) {
-        asteroids.push(spawnEdge());
-        spawnLeft = 0.8;
-      }
-      driftLeft -= dt;
-      if (hull <= 0) {
-        finish();
-        return;
-      }
-      if (driftLeft <= 0) beginAsk();
-    } else if (phase === "ask") {
-      if (hull <= 0 && !resolved) {
-        finish();
-        return;
-      }
-    } else if (feedbackLeft > 0) {
+    if (phase === "feedback") {
       feedbackLeft -= dt;
       if (feedbackLeft <= 0) {
-        clearBubbles();
+        planets = [];
         if (lives <= 0 || hull <= 0 || cursor >= items.length) finish();
-        else beginDrift(NEXT_DRIFT);
+        else beginAsk();
       }
     }
 
-    shots = shots.filter((shot) => shot.alive && shot.x > -50 && shot.x < viewW + 50 && shot.y > -50 && shot.y < viewH + 50);
+    shots = shots.filter((shot) => shot.alive);
     asteroids = asteroids.filter((asteroid) => asteroid.alive);
     particles = particles.filter((particle) => particle.life > 0);
-    for (const bubble of bubbles) place(bubble);
+  }
+
+  function fillSphere(inner: string, outer: string, r: number) {
+    const gradient = ctx.createRadialGradient(-r * 0.32, -r * 0.38, r * 0.12, 0, 0, r);
+    gradient.addColorStop(0, inner);
+    gradient.addColorStop(1, outer);
+    ctx.beginPath();
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+  }
+
+  function drawKind(kind: PlanetKind, r: number) {
+    if (kind === "saturn") {
+      ctx.save();
+      ctx.rotate(-0.5);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, r * 1.55, r * 0.42, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(186, 148, 96, 0.95)";
+      ctx.lineWidth = Math.max(4, r * 0.16);
+      ctx.stroke();
+      ctx.restore();
+      fillSphere("#f8edd4", "#c49658", r);
+      ctx.save();
+      ctx.rotate(-0.5);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, r * 1.55, r * 0.42, 0, 0.08, Math.PI - 0.08);
+      ctx.strokeStyle = "#f3ddb0";
+      ctx.lineWidth = Math.max(3, r * 0.13);
+      ctx.stroke();
+      ctx.restore();
+      return;
+    }
+    if (kind === "erde") {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.fillStyle = "#2f6fd6";
+      ctx.fillRect(-r, -r, r * 2, r * 2);
+      ctx.fillStyle = "#3d9a4a";
+      ctx.beginPath();
+      ctx.ellipse(-r * 0.28, -r * 0.18, r * 0.42, r * 0.28, -0.5, 0, Math.PI * 2);
+      ctx.ellipse(r * 0.32, r * 0.16, r * 0.3, r * 0.24, 0.4, 0, Math.PI * 2);
+      ctx.ellipse(-r * 0.08, r * 0.38, r * 0.2, r * 0.14, 0.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#57c15a";
+      ctx.beginPath();
+      ctx.ellipse(-r * 0.34, -r * 0.05, r * 0.16, r * 0.1, -0.4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+      const shade = ctx.createRadialGradient(-r * 0.3, -r * 0.35, r * 0.1, 0, 0, r);
+      shade.addColorStop(0, "rgba(255,255,255,0.18)");
+      shade.addColorStop(1, "rgba(0,0,0,0.2)");
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.fillStyle = shade;
+      ctx.fill();
+      return;
+    }
+    if (kind === "jupiter") {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.fillStyle = "#e7b07a";
+      ctx.fillRect(-r, -r, r * 2, r * 2);
+      const bands: Array<[number, number, string]> = [
+        [-0.78, 0.2, "#f6d7b0"],
+        [-0.5, 0.16, "#c56b32"],
+        [-0.28, 0.12, "#f3e0c4"],
+        [-0.08, 0.18, "#d4894c"],
+        [0.18, 0.12, "#f0c48e"],
+        [0.36, 0.16, "#b85a2e"],
+        [0.58, 0.24, "#e7b88a"],
+      ];
+      for (const [y, height, color] of bands) {
+        ctx.fillStyle = color;
+        ctx.fillRect(-r, y * r, r * 2, height * r);
+      }
+      ctx.beginPath();
+      ctx.ellipse(r * 0.28, r * 0.16, r * 0.2, r * 0.13, 0.3, 0, Math.PI * 2);
+      ctx.fillStyle = "#9a3412";
+      ctx.fill();
+      ctx.restore();
+      return;
+    }
+    if (kind === "mars") {
+      fillSphere("#ffb089", "#c2410c", r);
+      ctx.beginPath();
+      ctx.ellipse(-r * 0.15, r * 0.12, r * 0.28, r * 0.16, -0.4, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(127, 29, 29, 0.35)";
+      ctx.fill();
+      return;
+    }
+    if (kind === "venus") {
+      fillSphere("#fff6d5", "#e4bf62", r);
+      return;
+    }
+    if (kind === "merkur") {
+      fillSphere("#e4ded6", "#8a8178", r);
+      ctx.fillStyle = "rgba(68, 64, 60, 0.45)";
+      const craters = [
+        [-0.32, -0.22, 0.18],
+        [0.28, 0.08, 0.14],
+        [-0.05, 0.34, 0.12],
+        [0.12, -0.4, 0.1],
+        [-0.28, 0.28, 0.08],
+      ];
+      for (const [x, y, size] of craters) {
+        ctx.beginPath();
+        ctx.arc(x * r, y * r, size * r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      return;
+    }
+    if (kind === "uranus") {
+      fillSphere("#e7fffb", "#5eead4", r);
+      return;
+    }
+    fillSphere("#93c5fd", "#1e3a8a", r);
+    ctx.beginPath();
+    ctx.ellipse(r * 0.1, -r * 0.2, r * 0.16, r * 0.1, 0.2, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(30, 58, 138, 0.55)";
+    ctx.fill();
+  }
+
+  function drawPlanetBody(planet: Planet) {
+    ctx.save();
+    ctx.translate(planet.x, planet.y);
+    ctx.globalAlpha = planet.mark === "dim" ? 0.38 : 1;
+    drawKind(planet.kind, planet.r);
+    if (planet.mark === "correct" || planet.mark === "wrong") {
+      ctx.globalAlpha = 1;
+      ctx.beginPath();
+      const halo = planet.kind === "saturn" ? planet.r * 1.72 : planet.r + 7;
+      ctx.arc(0, 0, halo, 0, Math.PI * 2);
+      ctx.lineWidth = 4;
+      ctx.strokeStyle = planet.mark === "correct" ? "#4ade80" : "#f87171";
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawLabel(planet: Planet) {
+    const top = labelTop(planet);
+    ctx.save();
+    ctx.globalAlpha = planet.mark === "dim" ? 0.4 : 1;
+    ctx.font = `700 ${planet.fontPx}px ${FONT}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    ctx.lineWidth = 4;
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = "rgba(0,0,0,0.72)";
+    ctx.fillStyle = "#f8fafc";
+    planet.lines.forEach((line, index) => {
+      const y = top + index * (planet.fontPx + 3);
+      ctx.strokeText(line, planet.x, y);
+      ctx.fillText(line, planet.x, y);
+    });
+    ctx.restore();
   }
 
   function drawAsteroid(asteroid: Asteroid) {
@@ -761,28 +816,58 @@ export function startWeltraum(options: {
     ctx.restore();
   }
 
+  function drawShip() {
+    if (!ship.ready) return;
+    if (ship.invuln > 0 && Math.floor(ship.invuln * 14) % 2 === 0) return;
+    ctx.save();
+    ctx.translate(ship.x, ship.y);
+    ctx.beginPath();
+    ctx.moveTo(0, -18);
+    ctx.lineTo(8, -2);
+    ctx.lineTo(15, 10);
+    ctx.lineTo(6, 6);
+    ctx.lineTo(3, 14);
+    ctx.lineTo(0, 8);
+    ctx.lineTo(-3, 14);
+    ctx.lineTo(-6, 6);
+    ctx.lineTo(-15, 10);
+    ctx.lineTo(-8, -2);
+    ctx.closePath();
+    ctx.fillStyle = ship.invuln > 0 ? "#fecdd3" : "#e8eef5";
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "#94a3b8";
+    ctx.stroke();
+    ctx.fillStyle = "#38bdf8";
+    ctx.beginPath();
+    ctx.ellipse(0, -4, 3.2, 6.2, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#fb923c";
+    ctx.fillRect(-4.2, 10, 2.4, 7);
+    ctx.fillRect(1.8, 10, 2.4, 7);
+    ctx.restore();
+  }
+
   function draw() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, viewW, viewH);
-    ctx.fillStyle = "#070b16";
+    ctx.fillStyle = "#07111c";
     ctx.fillRect(0, 0, viewW, viewH);
-    for (const star of stars) {
-      ctx.globalAlpha = star.a;
-      ctx.fillStyle = "#e2e8f0";
-      ctx.fillRect(star.x * viewW, star.y * viewH, star.s, star.s);
-    }
-    ctx.globalAlpha = 1;
-    for (const asteroid of asteroids) drawAsteroid(asteroid);
+    const bodies = [
+      ...asteroids.filter((asteroid) => asteroid.alive).map((asteroid) => ({ y: asteroid.y, paint: () => drawAsteroid(asteroid) })),
+      ...planets.map((planet) => ({ y: planet.y, paint: () => drawPlanetBody(planet) })),
+    ].sort((left, right) => left.y - right.y);
+    for (const body of bodies) body.paint();
+    for (const planet of planets) drawLabel(planet);
     ctx.lineCap = "round";
     for (const shot of shots) {
       if (!shot.alive) continue;
-      const mag = Math.hypot(shot.vx, shot.vy) || 1;
       ctx.strokeStyle = "#fef08a";
       ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(shot.x, shot.y);
-      ctx.lineTo(shot.x - (shot.vx / mag) * 16, shot.y - (shot.vy / mag) * 16);
+      ctx.lineTo(shot.x, shot.y + 16);
       ctx.stroke();
       ctx.fillStyle = "#fef9c3";
       ctx.beginPath();
@@ -793,34 +878,18 @@ export function startWeltraum(options: {
       ctx.globalAlpha = Math.max(0, particle.life / particle.max);
       ctx.fillStyle = particle.color;
       ctx.beginPath();
-      ctx.arc(particle.x, particle.y, 2.5, 0, Math.PI * 2);
+      ctx.arc(particle.x, particle.y, 2.6, 0, Math.PI * 2);
       ctx.fill();
     }
     ctx.globalAlpha = 1;
-    if (!ship.ready) return;
-    if (ship.invuln > 0 && Math.floor(ship.invuln * 16) % 2 === 0) return;
-    ctx.save();
-    ctx.translate(ship.x, ship.y);
-    ctx.rotate(ship.angle);
-    ctx.beginPath();
-    ctx.moveTo(18, 0);
-    ctx.lineTo(-12, 10);
-    ctx.lineTo(-6, 0);
-    ctx.lineTo(-12, -10);
-    ctx.closePath();
-    ctx.fillStyle = ship.invuln > 0 ? "#fb7185" : "#e0f2fe";
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "#38bdf8";
-    ctx.stroke();
-    ctx.restore();
+    drawShip();
   }
 
   function frame(now: number) {
     if (!running) return;
     const dt = Math.min(0.034, (now - last) / 1000);
     last = now;
-    update(dt);
+    update(dt, now);
     if (viewW > 0 && viewH > 0) draw();
     if (running) raf = requestAnimationFrame(frame);
   }
@@ -828,13 +897,13 @@ export function startWeltraum(options: {
   const observer = new ResizeObserver(() => resize());
   observer.observe(field);
   field.addEventListener("pointerdown", onDown);
-  field.addEventListener("pointermove", onMove);
-  field.addEventListener("pointerup", onUp);
-  field.addEventListener("pointercancel", onCancel);
+  window.addEventListener("pointermove", onMove);
+  window.addEventListener("pointerup", onUp);
+  window.addEventListener("pointercancel", onCancel);
   field.addEventListener("contextmenu", onMenu);
   resize();
+  ensureRound();
   publishHud();
-  publishBeat();
   let last = performance.now();
   raf = requestAnimationFrame(frame);
 
@@ -844,11 +913,9 @@ export function startWeltraum(options: {
     cancelAnimationFrame(raf);
     observer.disconnect();
     field.removeEventListener("pointerdown", onDown);
-    field.removeEventListener("pointermove", onMove);
-    field.removeEventListener("pointerup", onUp);
-    field.removeEventListener("pointercancel", onCancel);
+    window.removeEventListener("pointermove", onMove);
+    window.removeEventListener("pointerup", onUp);
+    window.removeEventListener("pointercancel", onCancel);
     field.removeEventListener("contextmenu", onMenu);
-    overlay.replaceChildren();
-    bubbles = [];
   };
 }

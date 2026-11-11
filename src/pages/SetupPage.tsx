@@ -118,7 +118,7 @@ export function SetupPage() {
         </div>
         {variant === "space" && (
           <p className="mt-2 text-sm text-stone-600 dark:text-stone-300">
-            Schiff lenken, Asteroiden abschießen und die richtige Blase treffen. Hülle 10, Leben 3.
+            Drei Planeten fallen von oben. Das Schiff fängt die richtige Antwort. Asteroiden von oben füllen oder beschädigen die Hülle. Hülle 10, Leben 3.
           </p>
         )}
       </fieldset>

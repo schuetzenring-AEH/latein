@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, cx } from "../components/ui";
 import { useStore } from "../context/Store";
@@ -9,10 +9,6 @@ import type { ProgressEntry, RoundSetup, Vocab } from "../types";
 import { HULL_MAX, LIVES_MAX, startWeltraum, type SpaceBeat, type SpaceHud, type SpaceItem } from "../lib/weltraum";
 
 type SetupState = RoundSetup & { nonce?: number };
-
-const FieldOverlay = memo(function FieldOverlay({ hostRef }: { hostRef: RefObject<HTMLDivElement | null> }) {
-  return <div ref={hostRef} className="pointer-events-none absolute inset-0 overflow-hidden" />;
-});
 
 function readSetup(state: unknown): SetupState | null {
   if (!state || typeof state !== "object") return null;
@@ -62,7 +58,7 @@ export function SpacePage() {
   const setup = readSetup(location.state);
   if (!setup) {
     return (
-      <section>
+      <section className="min-h-0 flex-1 overflow-y-auto">
         <h1 className="text-3xl font-semibold tracking-tight">Keine Runde</h1>
         <p className="mt-3 text-stone-600 dark:text-stone-300">Wähle zuerst Lektionen und die Richtung. Danach startet Weltraum.</p>
         <Link to="/" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zur Auswahl</Link>
@@ -80,7 +76,7 @@ function SpaceRound({ setup }: { setup: SetupState }) {
 
   if (built.error || built.items.length === 0) {
     return (
-      <section>
+      <section className="min-h-0 flex-1 overflow-y-auto">
         <h1 className="text-3xl font-semibold tracking-tight">Runde nicht möglich</h1>
         <p className="mt-3 text-stone-600 dark:text-stone-300">{built.error ?? "Keine Wörter in dieser Auswahl."}</p>
         <Link to="/" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zur Auswahl</Link>
@@ -108,13 +104,13 @@ function Play({
   const profileRef = useRef(profileId);
   const fieldRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const first = items[0];
   const [hud, setHud] = useState<SpaceHud>({ hull: HULL_MAX, lives: LIVES_MAX, correct: 0, wrong: 0 });
   const [beat, setBeat] = useState<SpaceBeat>({
     id: 0,
-    mode: "drift",
-    prompt: null,
-    promptLang: null,
+    mode: "ask",
+    prompt: first?.prompt ?? null,
+    promptLang: first?.promptLang ?? null,
     outcome: null,
     reveal: null,
   });
@@ -124,12 +120,10 @@ function Play({
   useEffect(() => {
     const field = fieldRef.current;
     const canvas = canvasRef.current;
-    const overlay = overlayRef.current;
-    if (!field || !canvas || !overlay) return;
+    if (!field || !canvas) return;
     return startWeltraum({
       field,
       canvas,
-      overlay,
       items,
       onHud: setHud,
       onBeat: setBeat,
@@ -139,7 +133,7 @@ function Play({
   }, [items, onEnd]);
 
   useEffect(() => {
-    if (beat.mode === "ask" && beat.prompt && beat.promptLang) speakText(beat.prompt, beat.promptLang);
+    if (beat.id > 0 && beat.mode === "ask" && beat.prompt && beat.promptLang) speakText(beat.prompt, beat.promptLang);
   }, [beat.id, beat.mode, beat.prompt, beat.promptLang]);
 
   useEffect(() => () => {
@@ -147,21 +141,20 @@ function Play({
   }, []);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col">
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       {fellBack && (
-        <p className="mb-2 text-sm text-stone-600 dark:text-stone-300">Keine Wörter fällig. Diese Runde enthält alle Wörter der Auswahl.</p>
+        <p className="mb-2 shrink-0 text-sm text-stone-600 dark:text-stone-300">Keine Wörter fällig. Diese Runde enthält alle Wörter der Auswahl.</p>
       )}
-      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-[#070b16] text-white">
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl bg-[#07111c] text-white">
         <Hud hud={hud} />
-        <Prompt beat={beat} />
         <div
           ref={fieldRef}
-          className="relative min-h-48 flex-1 touch-none select-none overflow-hidden"
+          className="relative min-h-0 flex-1 touch-none select-none overflow-hidden"
           aria-label="Spielfeld"
         >
           <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 block h-full w-full" aria-hidden="true" />
-          <FieldOverlay hostRef={overlayRef} />
         </div>
+        <Prompt beat={beat} />
       </div>
     </div>
   );
@@ -169,75 +162,70 @@ function Play({
 
 function Hud({ hud }: { hud: SpaceHud }) {
   return (
-    <div className="grid shrink-0 gap-2 px-3 pt-3">
-      <div className="flex items-center gap-2">
-        <span className="w-14 shrink-0 text-sm font-semibold">Hülle</span>
-        <div
-          className="flex h-3 min-w-0 flex-1 gap-0.5"
-          role="meter"
-          aria-valuemin={0}
-          aria-valuemax={HULL_MAX}
-          aria-valuenow={hud.hull}
-          aria-label={`Hülle ${hud.hull} von ${HULL_MAX}`}
-        >
-          {Array.from({ length: HULL_MAX }, (_, index) => (
-            <span key={index} className={cx("h-full min-w-0 flex-1 rounded-sm", index < hud.hull ? "bg-sky-400" : "bg-white/15")} />
-          ))}
-        </div>
-        <span className="w-6 text-right text-sm font-semibold tabular-nums">{hud.hull}</span>
+    <div className="flex shrink-0 items-center gap-2 px-3 py-2.5">
+      <span className="shrink-0 text-sm font-semibold">Hülle</span>
+      <div
+        className="flex h-3.5 min-w-0 flex-1 gap-0.5"
+        role="meter"
+        aria-valuemin={0}
+        aria-valuemax={HULL_MAX}
+        aria-valuenow={hud.hull}
+        aria-label={`Hülle ${hud.hull} von ${HULL_MAX}`}
+      >
+        {Array.from({ length: HULL_MAX }, (_, index) => (
+          <span
+            key={index}
+            className={cx(
+              "h-full min-w-0 flex-1 rounded-[3px]",
+              index < hud.hull ? "bg-sky-400" : "border border-white/35 bg-white/5",
+            )}
+          />
+        ))}
       </div>
-      <div className="flex items-center gap-2">
-        <span className="w-14 shrink-0 text-sm font-semibold">Leben</span>
-        <div
-          className="flex gap-1.5"
-          role="meter"
-          aria-valuemin={0}
-          aria-valuemax={LIVES_MAX}
-          aria-valuenow={hud.lives}
-          aria-label={`Leben ${hud.lives} von ${LIVES_MAX}`}
-        >
-          {Array.from({ length: LIVES_MAX }, (_, index) => (
-            <span key={index} className={cx("size-4 rounded-full", index < hud.lives ? "bg-rose-400" : "bg-white/15")} />
-          ))}
-        </div>
-        <span className="text-sm font-semibold tabular-nums">{hud.lives}</span>
-        <p className="ml-auto text-right">
-          <span className="block text-xs font-semibold text-white/75">Richtige Vokabeln</span>
-          <span className="text-lg font-semibold tabular-nums leading-none">{hud.correct}</span>
-        </p>
+      <span className="shrink-0 pl-1 text-sm font-semibold">Leben</span>
+      <div
+        className="flex shrink-0 gap-0.5"
+        role="meter"
+        aria-valuemin={0}
+        aria-valuemax={LIVES_MAX}
+        aria-valuenow={hud.lives}
+        aria-label={`Leben ${hud.lives} von ${LIVES_MAX}`}
+      >
+        {Array.from({ length: LIVES_MAX }, (_, index) => (
+          <Heart key={index} filled={index < hud.lives} />
+        ))}
       </div>
     </div>
   );
 }
 
-function Prompt({ beat }: { beat: SpaceBeat }) {
-  if (beat.mode === "drift" || !beat.prompt) {
-    return (
-      <div className="shrink-0 px-3 pb-2 pt-2 text-center">
-        <p className="text-base font-semibold text-sky-100">Weiche den Asteroiden aus.</p>
-        <p className="mt-1 text-sm text-sky-100/80">Ziehen lenkt. Kurzes Tippen schießt.</p>
-      </div>
-    );
-  }
+function Heart({ filled }: { filled: boolean }) {
   return (
-    <div className="shrink-0 px-3 pb-2 pt-2" aria-live="polite">
+    <svg viewBox="0 0 24 24" className={cx("h-5 w-5", filled ? "text-rose-500" : "text-white/30")} aria-hidden="true">
+      <path
+        fill={filled ? "currentColor" : "none"}
+        stroke="currentColor"
+        strokeWidth={filled ? 0 : 1.7}
+        d="M12 20.4s-6.8-4.4-9-8.2C1.2 9.4 1.8 6.2 4.5 5 6.4 4.2 8.4 4.7 12 7.8c3.6-3.1 5.6-3.6 7.5-2.8 2.7 1.2 3.3 4.4 1.5 7.2-2.2 3.8-9 8.2-9 8.2z"
+      />
+    </svg>
+  );
+}
+
+function Prompt({ beat }: { beat: SpaceBeat }) {
+  return (
+    <div className="relative flex min-h-[4.75rem] shrink-0 items-center justify-center bg-[#1c2330] px-3 py-2.5">
       <p
         lang={beat.promptLang === "la" ? "la" : "de"}
-        className="rounded-2xl bg-white px-3 py-2 text-center text-[1.65rem] font-semibold leading-tight text-slate-950 [overflow-wrap:anywhere]"
+        className="w-full text-center text-[1.85rem] font-bold leading-tight text-white [overflow-wrap:anywhere]"
       >
-        {beat.prompt}
+        {beat.prompt ?? "\u00a0"}
       </p>
-      {beat.outcome === "correct" && <p className="mt-1 text-center text-base font-semibold text-emerald-300" role="status">Richtig.</p>}
-      {beat.outcome === "wrong" && (
-        <p className="mt-1 text-center text-base font-semibold text-red-300 [overflow-wrap:anywhere]" role="status">
-          Falsch. Richtig: {beat.reveal}
-        </p>
-      )}
-      {beat.outcome === "miss" && (
-        <p className="mt-1 text-center text-base font-semibold text-amber-200 [overflow-wrap:anywhere]" role="status">
-          Verfehlt. Richtig: {beat.reveal}
-        </p>
-      )}
+      <p className="sr-only" aria-live="polite">
+        {beat.outcome === "correct" && "Richtig."}
+        {beat.outcome === "wrong" && `Falsch. Richtig: ${beat.reveal ?? ""}`}
+        {beat.outcome === "miss" && `Verfehlt. Richtig: ${beat.reveal ?? ""}`}
+      </p>
     </div>
   );
 }
@@ -245,7 +233,7 @@ function Prompt({ beat }: { beat: SpaceBeat }) {
 function Result({ end, total, setup }: { end: SpaceHud; total: number; setup: SetupState }) {
   const navigate = useNavigate();
   return (
-    <section>
+    <section className="min-h-0 flex-1 overflow-y-auto">
       <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">Weltraum</p>
       <h1 className="mt-2 text-4xl font-semibold tracking-tight">Runde beendet</h1>
       <p className="mt-3 text-lg text-stone-600 dark:text-stone-300">{endReason(end, total)}</p>
@@ -276,6 +264,6 @@ function endReason(end: SpaceHud, total: number): string {
   if (end.hull <= 0 && end.lives <= 0) return "Hülle und Leben sind aufgebraucht.";
   if (end.hull <= 0) return "Die Hülle ist aufgebraucht.";
   if (end.lives <= 0) return "Keine Leben mehr.";
-  if (end.correct + end.wrong >= total) return "Alle ausgewählten Wörter waren dran.";
+  if (end.correct + end.wrong >= total) return "Geschafft. Alle Wörter waren dran.";
   return "Die Runde ist vorbei.";
 }
