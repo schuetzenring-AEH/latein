@@ -6,7 +6,7 @@ import { buildSpaceRound, shuffle } from "../lib/quiz";
 import { isDue } from "../lib/srs";
 import { canSpeak, speakText } from "../lib/speech";
 import type { ProgressEntry, RoundSetup, Vocab } from "../types";
-import { HULL_MAX, LIVES_MAX, startWeltraum, type SpaceBeat, type SpaceHud, type SpaceItem } from "../lib/weltraum";
+import { HULL_MAX, LIVES_MAX, startWeltraum, type SpaceBeat, type SpaceEnd, type SpaceHud, type SpaceItem } from "../lib/weltraum";
 
 type SetupState = RoundSetup & { nonce?: number };
 
@@ -72,7 +72,7 @@ function SpaceRound({ setup }: { setup: SetupState }) {
   const { vocab, progress, activeProfileId } = useStore();
   const profileId = useRef(activeProfileId);
   const built = useState(() => prepareSpace(vocab, progress[profileId.current], setup))[0];
-  const [end, setEnd] = useState<SpaceHud | null>(null);
+  const [end, setEnd] = useState<SpaceEnd | null>(null);
 
   if (built.error || built.items.length === 0) {
     return (
@@ -97,7 +97,7 @@ function Play({
   items: readonly SpaceItem[];
   fellBack: boolean;
   profileId: string;
-  onEnd: (hud: SpaceHud) => void;
+  onEnd: (end: SpaceEnd) => void;
 }) {
   const { recordAnswer } = useStore();
   const recordRef = useRef(recordAnswer);
@@ -252,8 +252,9 @@ function Prompt({ beat }: { beat: SpaceBeat }) {
   );
 }
 
-function Result({ end, total, setup }: { end: SpaceHud; total: number; setup: SetupState }) {
+function Result({ end, total, setup }: { end: SpaceEnd; total: number; setup: SetupState }) {
   const navigate = useNavigate();
+  const failed = end.hull <= 0 || end.lives <= 0;
   return (
     <section className="min-h-0 flex-1 overflow-y-auto">
       <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">Weltraum</p>
@@ -265,6 +266,21 @@ function Result({ end, total, setup }: { end: SpaceHud; total: number; setup: Se
         <Stat label="Richtige Vokabeln" value={String(end.correct)} />
         <Stat label="Falsch" value={String(end.wrong)} />
       </dl>
+      {failed && end.missed.length > 0 && (
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold tracking-tight">Falsche Wörter</h2>
+          <p className="mt-1 text-stone-600 dark:text-stone-300">So gehören die Paare richtig zusammen.</p>
+          <ul className="mt-4 grid gap-3">
+            {end.missed.map((pair, index) => (
+              <li key={`${pair.vocabId}-${index}`} className="rounded-2xl border border-stone-200 bg-white px-4 py-3 dark:border-stone-800 dark:bg-stone-900">
+                <p lang={pair.promptLang === "la" ? "la" : "de"} className="text-lg font-semibold [overflow-wrap:anywhere]">{pair.prompt}</p>
+                <p className="mt-2 text-sm font-semibold uppercase tracking-wide text-stone-500">Richtig</p>
+                <p lang={pair.promptLang === "la" ? "de" : "la"} className="text-stone-800 dark:text-stone-100 [overflow-wrap:anywhere]">{pair.answer}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="mt-8 grid gap-3">
         <Button onClick={() => navigate("/weltraum", { replace: true, state: { ...setup, nonce: Date.now() } })}>Nochmal</Button>
         <Button variant="secondary" onClick={() => navigate("/")}>Zur Auswahl</Button>

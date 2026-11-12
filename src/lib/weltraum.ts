@@ -8,6 +8,17 @@ export type SpaceHud = {
   wrong: number;
 };
 
+export type SpaceMiss = {
+  vocabId: string;
+  prompt: string;
+  promptLang: "la" | "de";
+  answer: string;
+};
+
+export type SpaceEnd = SpaceHud & {
+  missed: readonly SpaceMiss[];
+};
+
 export type SpaceBeat = {
   id: number;
   mode: "ask" | "feedback";
@@ -93,6 +104,8 @@ const TAP_SLOP = 18;
 const TAP_MS = 380;
 const SHIP_MAX_SPEED = 220;
 const FALL_SCALE = 0.7;
+const PLANET_SPEED = 82 * FALL_SCALE;
+const PLANET_LEAD = PLANET_SPEED * 3;
 const FEEDBACK_TIME = 1.2;
 const MAX_ASTEROIDS = 2;
 const INVULN_TIME = 0.85;
@@ -164,7 +177,7 @@ export function startWeltraum(options: {
   onHud: (hud: SpaceHud) => void;
   onBeat: (beat: SpaceBeat) => void;
   onAnswer: (vocabId: string, correct: boolean) => void;
-  onEnd: (hud: SpaceHud) => void;
+  onEnd: (end: SpaceEnd) => void;
 }): () => void {
   const { field, canvas, items, onHud, onBeat, onAnswer, onEnd } = options;
   const context = canvas.getContext("2d");
@@ -184,6 +197,7 @@ export function startWeltraum(options: {
   let lives = LIVES_MAX;
   let correctCount = 0;
   let wrongCount = 0;
+  const missed: SpaceMiss[] = [];
   let phase: Phase = "ask";
   let feedbackLeft = 0;
   let spawnLeft = 0.65;
@@ -224,7 +238,7 @@ export function startWeltraum(options: {
     if (ended) return;
     ended = true;
     running = false;
-    onEnd(hud());
+    onEnd({ ...hud(), missed: missed.slice() });
   }
 
   function shipLimit(): number {
@@ -333,9 +347,9 @@ export function startWeltraum(options: {
         label: card.label,
         correct: card.correct,
         x: lane,
-        y: -stack - offset,
+        y: -stack - offset - PLANET_LEAD,
         r: radius,
-        vy: 82 * FALL_SCALE,
+        vy: PLANET_SPEED,
         lines: metrics.lines,
         fontPx: metrics.fontPx,
         labelW: metrics.labelW,
@@ -369,6 +383,12 @@ export function startWeltraum(options: {
     else {
       wrongCount += 1;
       lives = Math.max(0, lives - 1);
+      missed.push({
+        vocabId: current.vocabId,
+        prompt: current.prompt,
+        promptLang: current.promptLang,
+        answer: current.answer,
+      });
     }
     onAnswer(current.vocabId, correct);
     outcome = kind;
