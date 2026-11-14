@@ -2,7 +2,7 @@
 
 Lektionen 1–10 sind aus `IMG_7120.mov` abgeschrieben (9. Nov 2026). Ab Lektion 11 kommt `IMG_7134.mov` dazu (11. Nov 2026). Sternchen, Formenangaben und Abkürzungen stehen so, wie sie gedruckt sind. Eine Lektion läuft oft über den Seitenumbruch: Was über der fetten Überschrift „Lektion N“ steht, gehört zur vorherigen Lektion und steht hier bei dieser.
 
-Bleistift-Haken sind nur ab Lektion 9 zu sehen. Wo kein Haken zu erkennen war, ist die Zelle leer. Längenstriche sind mitgelesen; einzelne unsichere Stellen stehen unten.
+Längenstriche sind mitgelesen; einzelne unsichere Stellen stehen unten.
 
 ## Lektion 1
 
@@ -267,72 +267,72 @@ Seitennummer nicht lesbar. Der Schluss steht oben auf Seite 14, über der Übers
 
 ## Lektion 9
 
-Seite 14, Fortsetzung auf der nächsten Seite (Kopfzeile Lektion 10). Haken ab `multī`.
+Seite 14, Fortsetzung auf der nächsten Seite (Kopfzeile Lektion 10).
 
-| Latin | Deutsch | Haken |
-| --- | --- | --- |
-| *puer, puerī m. | der Junge, der Bub; das Kind | |
-| multī, ae, a | viele | ✓ |
-| fābula, ae f. | die Geschichte, Sage, Fabel | ✓ |
-| nārrāre, nārrō | erzählen, berichten | ✓ |
-| *magister, magistrī m. | der Lehrer | ✓ |
-| vir, virī m. | der Mann | ✓ |
-| *pulcher, pulchra, pulchrum | schön | ✓ |
-| *in (Präp. mit Abl.) | in, an, auf (Frage: Wo?) | ✓ |
-| tenēre, teneō | halten, festhalten | ✓ |
-| *miser, misera, miserum | arm, elend, unglücklich | ✓ |
-| *ē, ex (Präp. mit Abl.) | aus, aus … heraus | ✓ |
-| *in (Präp. mit Akk.) | in … hinein, nach, gegen(über) (Frage: Wohin?) | ✓ |
-| novus, a, um | neu, neuartig | ✓ |
-| dēbēre, dēbeō | müssen | ✓ |
-| *cum (Präp. mit Abl.) | mit, zusammen mit | ✓ |
-| *ante (Präp. mit Akk.) | vor | ✓ |
-| cūra, ae f. | die Sorge, Fürsorge, Sorgfalt | ✓ |
-| carēre, careō (mit Abl.) | (etwas) nicht haben, ohne etwas sein, (von etwas) frei sein | ✓ |
-| frūstrā (Adv.) | vergeblich | ✓ |
-| *ā, ab (Präp. mit Abl.) | von, von … her, von … an | |
-| liber, lībera, līberum | frei | ✓ |
-| (ā) cūrīs līber | frei von Sorgen | ✓ ✓ |
-| pius, a, um | fromm, liebevoll, pflichtbewusst | ✓ |
-| ad (Präp. mit Akk.) | zu, bis zu, bei | ✓ |
-| umerus, ī m. | die Schulter | ✓ |
+| Latin | Deutsch |
+| --- | --- |
+| *puer, puerī m. | der Junge, der Bub; das Kind |
+| multī, ae, a | viele |
+| fābula, ae f. | die Geschichte, Sage, Fabel |
+| nārrāre, nārrō | erzählen, berichten |
+| *magister, magistrī m. | der Lehrer |
+| vir, virī m. | der Mann |
+| *pulcher, pulchra, pulchrum | schön |
+| *in (Präp. mit Abl.) | in, an, auf (Frage: Wo?) |
+| tenēre, teneō | halten, festhalten |
+| *miser, misera, miserum | arm, elend, unglücklich |
+| *ē, ex (Präp. mit Abl.) | aus, aus … heraus |
+| *in (Präp. mit Akk.) | in … hinein, nach, gegen(über) (Frage: Wohin?) |
+| novus, a, um | neu, neuartig |
+| dēbēre, dēbeō | müssen |
+| *cum (Präp. mit Abl.) | mit, zusammen mit |
+| *ante (Präp. mit Akk.) | vor |
+| cūra, ae f. | die Sorge, Fürsorge, Sorgfalt |
+| carēre, careō (mit Abl.) | (etwas) nicht haben, ohne etwas sein, (von etwas) frei sein |
+| frūstrā (Adv.) | vergeblich |
+| *ā, ab (Präp. mit Abl.) | von, von … her, von … an |
+| liber, lībera, līberum | frei |
+| (ā) cūrīs līber | frei von Sorgen |
+| pius, a, um | fromm, liebevoll, pflichtbewusst |
+| ad (Präp. mit Akk.) | zu, bis zu, bei |
+| umerus, ī m. | die Schulter |
 
 ## Lektion 10
 
 Seitennummer nicht sicher lesbar. Der Schluss steht oben auf Seite 16, über der Überschrift Lektion 11.
 
-| Latin | Deutsch | Haken |
-| --- | --- | --- |
-| *abesse, absum | abwesend sein, entfernt sein, fehlen | ✓ |
-| *ego | ich | ✓ |
-| mihi (Dativ) | mir | ✓ |
-| *adesse, adsum | da sein; mit Dativ: (jemandem) helfen | ✓ |
-| per (Präp. mit Akk.) | durch (… hindurch) | ✓ |
-| via, ae f. | der Weg, die Straße | ✓ ✓ |
-| *occultus, a, um | verborgen, geheim | ✓ |
-| dolēre, doleō | Schmerzen empfinden, traurig sein | ✓ |
-| tū | du | ✓ |
-| numquam (Adv.) | niemals | ✓ |
-| dēspērāre, dēspērō | verzweifeln, die Hoffnung aufgeben | ✓ |
-| perterrēre, perterreō | sehr erschrecken, in Angst versetzen | ✓ |
-| *terrēre, terreō | erschrecken, in Schrecken versetzen | ✓ |
-| retinēre, retineō | zurückhalten, festhalten | ✓ |
-| animus, ī m. | das Herz, der Sinn, der Mut, der Geist | ✓ |
-| turbāre, turbō | in Unruhe versetzen, verwirren | ✓ |
-| Ītalia, ae f. | Italien | ✓ |
-| *prīmum (Adv.) | zuerst; erstens; zum ersten Mal | ✓ |
-| *impius, a, um | gewissenlos, gottlos | ✓ |
-| Rōmānus, a, um | römisch | ✓ |
-| iūstus, a, um | gerecht | ✓ |
-| superbus, a, um | hochmütig, stolz | ✓ |
-| *terra, ae f. | die Erde, das Land | ✓ |
-| perturbāre, perturbō | völlig verwirren, durcheinanderbringen | ✓ |
-| dē (Präp. mit Abl.) | von; von … herab; über | ✓ |
-| cōgitāre, cōgitō | (nach)denken, überlegen | ✓ |
+| Latin | Deutsch |
+| --- | --- |
+| *abesse, absum | abwesend sein, entfernt sein, fehlen |
+| *ego | ich |
+| mihi (Dativ) | mir |
+| *adesse, adsum | da sein; mit Dativ: (jemandem) helfen |
+| per (Präp. mit Akk.) | durch (… hindurch) |
+| via, ae f. | der Weg, die Straße |
+| *occultus, a, um | verborgen, geheim |
+| dolēre, doleō | Schmerzen empfinden, traurig sein |
+| tū | du |
+| numquam (Adv.) | niemals |
+| dēspērāre, dēspērō | verzweifeln, die Hoffnung aufgeben |
+| perterrēre, perterreō | sehr erschrecken, in Angst versetzen |
+| *terrēre, terreō | erschrecken, in Schrecken versetzen |
+| retinēre, retineō | zurückhalten, festhalten |
+| animus, ī m. | das Herz, der Sinn, der Mut, der Geist |
+| turbāre, turbō | in Unruhe versetzen, verwirren |
+| Ītalia, ae f. | Italien |
+| *prīmum (Adv.) | zuerst; erstens; zum ersten Mal |
+| *impius, a, um | gewissenlos, gottlos |
+| Rōmānus, a, um | römisch |
+| iūstus, a, um | gerecht |
+| superbus, a, um | hochmütig, stolz |
+| *terra, ae f. | die Erde, das Land |
+| perturbāre, perturbō | völlig verwirren, durcheinanderbringen |
+| dē (Präp. mit Abl.) | von; von … herab; über |
+| cōgitāre, cōgitō | (nach)denken, überlegen |
 
 ## Lektion 11
 
-Seite 17. `contendere` stand schon im ersten Video, die deutsche Zeile lief aus dem Bild (`behaup…`). Auf dem linken Rand des neuen Videos ist das Ende `haupten` zu sehen; daraus ist `behaupten` gelesen. Weitere Zeilen von Seite 16 zwischen `in animō habēre` und `regere` sind nur als abgeschnittene deutsche Wortenden zu sehen und nicht aufgenommen.
+Seite 17 beginnt direkt mit `regere`. Der sichtbare Rand der Seite davor zeigt die deutschen Enden der schon aufgenommenen Zeilen, darunter `behaupten`. Dazwischen steht keine weitere Vokabel.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -431,7 +431,7 @@ Seite 19 und der Anfang von Seite 20. Die anschließenden „Stammformen zum Nac
 
 ## Lektion 14
 
-Nur die erste Seite. Die Fortsetzung (unter anderem lūx, prīmā lūce, antīquus, corpus, parātus) ist im Video unscharf und nicht aufgenommen.
+Die Fortsetzung steht bei etwa 15 Sekunden auf Seite 23, direkt vor den Stammformen.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -456,10 +456,15 @@ Nur die erste Seite. Die Fortsetzung (unter anderem lūx, prīmā lūce, antīqu
 | senātor, senātōris m. | der Senator |
 | ēgregius, a, um | hervorragend, ausgezeichnet |
 | mittere, mittō, mīsī | schicken |
+| lūx, lūcis f. | das Licht, Tageslicht |
+| prīmā lūce | bei Tagesanbruch |
+| *antīquus, a, um | alt |
+| corpus, corporis n. | der Körper |
+| parātus, a, um | bereit, vorbereitet |
 
 ## Lektion 15
 
-Nur die Seite mit der Überschrift Lektion 15. Die gegenüberliegende Seite (ārdēre, cīvis, honōs, pōnere, castra, contrā, abdūcere und weitere) ist am Rand angeschnitten, die deutschen Bedeutungen fehlen dort. Nicht aufgenommen.
+Die zweite Seite steht im Video bei etwa 21 Sekunden.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -476,6 +481,21 @@ Nur die Seite mit der Überschrift Lektion 15. Die gegenüberliegende Seite (ār
 | nōndum (Adv.) | noch nicht |
 | cum (Subjunktion) | als (plötzlich) |
 | īra, ae f. | der Zorn, die Wut |
+| ārdēre, ārdeō, ārsī | brennen, entbrannt sein |
+| īrā ārdēre | zornentbrannt sein, zornig sein |
+| *relinquere, relinquō, relīquī | verlassen, zurücklassen |
+| violāre, violō, violāvī | verletzen, entehren |
+| *cīvis, cīvis m. (Gen. Pl.: cīvium) | der Bürger |
+| honōs, honōris m. | die Ehre, das Ehrenamt |
+| afficere, afficiō, affēcī | (mit etwas) versehen |
+| honōribus afficere | (jemanden) ehren, (jemandem) Ehre erweisen |
+| pōnere, pōnō, posuī | setzen, stellen, legen |
+| castra pōnere | ein Lager errichten |
+| castra movēre | ein Lager abbrechen; aufbrechen |
+| quondam (Adv.) | einst, einmal; manchmal |
+| contrā (Präp. mit Akk.) | gegen |
+| vītam agere | sein Leben führen; leben |
+| abdūcere, abdūcō, abdūxī | wegführen |
 
 ## Lektion 16
 
@@ -713,7 +733,7 @@ Seite 33, bis `fēlīx`.
 
 ## Lektion 25
 
-Nur der untere Block der linken Seite. Die rechte Seite (interficere, negāre, vetāre, lēx, statuere, oppūgnāre, fortūna, mors und weitere) ist angeschnitten und nicht aufgenommen.
+Rechte Seite im Video bei etwa 71 Sekunden nachgelesen.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -724,6 +744,20 @@ Nur der untere Block der linken Seite. Die rechte Seite (interficere, negāre, v
 | *cūstōs, cūstōdis m./f. | der Wächter/die Wächterin |
 | *iubēre, iubeō, iussī, iussum (mit Akk.) | (jemandem) befehlen |
 | addūcere, addūcō, addūxī, adductum | heranführen; veranlassen |
+| *interficere, interficiō, interfēcī, interfectum | töten |
+| negāre, negō, negāvī, negātum | ablehnen; leugnen; (mit AcI) sagen, dass nicht |
+| *vetāre, vetō, vetuī, vetitum | verbieten |
+| *lēx, lēgis f. | das Gesetz; die Bedingung |
+| statuere, statuō, statuī, statūtum | aufstellen, festsetzen, beschließen |
+| *lēgem statuere | ein Gesetz erlassen |
+| oppūgnāre, oppūgnō, oppūgnāvī, oppūgnātum | angreifen, belagern |
+| paene (Adv.) | fast, beinahe |
+| fortūna, ae f. | das Schicksal, Glück |
+| etsī (Subjunktion) | auch wenn, obwohl |
+| mortuus, a, um | gestorben, tot |
+| neglegere, neglegō, neglēxī, neglēctum | vernachlässigen, nicht beachten |
+| *mors, mortis f. | der Tod |
+| quam | als (nach einem Vergleich) |
 
 ## Lektion 26
 
@@ -773,14 +807,40 @@ Nur der untere Block der linken Seite. Die rechte Seite (interficere, negāre, v
 | crēdere, crēdō, crēdidī, crēditum | glauben; (jmd. etwas) anvertrauen |
 | equidem | (ich) allerdings, (ich) zumindest |
 | atque/ac (Konjunktion) | und dazu; und auch |
+| iterum atque iterum | immer wieder |
+| modus, ī m. | das Maß; die Art und Weise |
+| eō modō | auf diese Weise; so |
+| *clārus, a, um | hell, klar; angesehen, berühmt |
+| *exstinguere, exstinguō, exstīnxī, exstīnctum | auslöschen, vernichten |
+| *parere, pariō, peperī, partum | gebären, hervorbringen |
 
 ## Lektion 28
 
-Nur das erste Wort unter der Überschrift ist vollständig im Bild. Der Rest der Seite liegt am rechten Rand ohne lesbare deutsche Spalte.
+`tempestās` ist die letzte Zeile der Seite. Die nächste Seite beginnt mit `iactāre`. Dazwischen fehlt nichts.
 
 | Latin | Deutsch |
 | --- | --- |
 | *tempestās, tempestātis f. | der Sturm, das Unwetter |
+| *iactāre, iactō, iactāvī, iactātum | (hin und her) werfen; (mit etwas) prahlen |
+| *nauta, ae m. | der Seemann, Matrose |
+| occāsiō, occāsiōnis f. | die Gelegenheit |
+| āmittere, āmittō, āmīsī, āmissum | entlassen, gehen lassen; verlieren |
+| occāsiōnem āmittere | eine Gelegenheit verstreichen lassen |
+| *fidem dare | ein Versprechen geben |
+| fidem servāre | jmd. die Treue halten; ein Versprechen halten |
+| ascendere, ascendō, ascendī, ascēnsum | hinaufsteigen, besteigen |
+| *salvus, a, um | gesund, unverletzt |
+| pellere, pellō, pepulī, pulsum | stoßen, schlagen; vertreiben |
+| hic, haec, hoc | dieser, diese, dieses; der/die/das Folgende |
+| *īnfestus, a, um | feindlich, bedrohlich |
+| locus, ī m. | der Ort |
+| Pl. loca, locōrum n. | die Gegend |
+| scelus, sceleris n. | das Verbrechen |
+| committere, committō, commīsī, commissum | veranstalten; beginnen |
+| scelus committere | ein Verbrechen begehen |
+| vēndere, vēndō, vēndidī, vēnditum | verkaufen |
+| īre in cōnsilium | zur Beratung zusammenkommen |
+| dēserere, dēserō, dēseruī, dēsertum | verlassen, im Stich lassen |
 
 ## Lektion 29
 
@@ -810,7 +870,7 @@ Die Lektionszahl in der Kopfzeile ist am Bildrand abgeschnitten. Die Seite liegt
 
 ## Lektion 30
 
-`gladius` bis `occīdere` stehen über der Überschrift Lektion 31. Bei `perspicere` ist eine weitere deutsche Angabe am Rand abgeschnitten und weggelassen.
+`gladius` bis `occīdere` stehen über der Überschrift Lektion 31.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -831,7 +891,7 @@ Die Lektionszahl in der Kopfzeile ist am Bildrand abgeschnitten. Die Seite liegt
 | *imperātor, imperātōris m. | der Feldherr; der Kaiser, Herrscher |
 | prius (Adv.) | vorher, eher |
 | prūdēns, prūdentis | klug, verständig |
-| *perspicere, perspiciō, perspexī, perspectum | genau betrachten, durchschauen |
+| *perspicere, perspiciō, perspexī, perspectum | genau betrachten, durchschauen, erkennen |
 | sōlus, a, um (Gen.: sōlīus, Dat.: sōlī) | einzig, allein |
 | senex, senis m. | der alte Mann |
 | *gladius, ī m. | das Schwert |
@@ -842,7 +902,7 @@ Die Lektionszahl in der Kopfzeile ist am Bildrand abgeschnitten. Die Seite liegt
 
 ## Lektion 31
 
-Die folgende Seite (potestās, discrimen und weitere) ist nicht scharf genug und nicht aufgenommen.
+Die Folgeseite ist im Video bei etwa 105 Sekunden lesbar.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -858,6 +918,20 @@ Die folgende Seite (potestās, discrimen und weitere) ist nicht scharf genug und
 | *afferre, afferō, attulī, allātum | herbeitragen, hinzufügen |
 | *nūntium afferre (perferre) | melden, berichten |
 | tōtus, a, um (Gen.: tōtīus, Dat.: tōtī) | ganz |
+| *potestās, potestātis f. | die Macht, Herrschaft |
+| *in potestāte tenēre | in seiner Gewalt haben |
+| *dē salūte dēspērāre | die Hoffnung auf Rettung aufgeben |
+| *discrīmen, discrīminis n. | der Unterschied; die Gefahr |
+| *rēs in summō discrīmine est | die Lage ist in größter Gefahr |
+| vīvus, a, um | lebendig, lebend |
+| incertus, a, um | ungewiss, unsicher |
+| legiō, legiōnis f. | die Legion (Heeresabteilung von 4200–6000 Mann) |
+| explōrāre, explōrō, explōrāvī, explōrātum | erforschen, auskundschaften |
+| impedīre, impediō, impedīvī, impedītum | hindern, verhindern |
+| cōgere, cōgō, coēgī, coāctum | zusammenbringen, zwingen |
+| silentium, ī n. | das Schweigen, die Stille |
+| praetereā (Adv.) | außerdem |
+| repellere, repellō, reppulī, repulsum | zurückstoßen, vertreiben |
 
 ## Lektion 32
 
@@ -885,7 +959,7 @@ Die folgende Seite (potestās, discrimen und weitere) ist nicht scharf genug und
 
 ## Lektion 33
 
-`lībertās`, `manus` und `perīculum est, nē` stehen über der Überschrift Lektion 34. Bei `manus` ist die Klammer nach „Trupp“ abgeschnitten.
+`lībertās`, `manus` und `perīculum est, nē` stehen über der Überschrift Lektion 34.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -907,12 +981,12 @@ Die folgende Seite (potestās, discrimen und weitere) ist nicht scharf genug und
 | pūblicus, a, um | öffentlich |
 | rēs pūblica, reī pūblicae f. | der Staat |
 | *lībertās, lībertātis f. | die Freiheit |
-| manus, manūs f. | die Hand; der Trupp |
+| manus, manūs f. | die Hand; der Trupp („Handvoll Leute“) |
 | perīculum est, nē (mit Konjunktiv) | es besteht die Gefahr, dass |
 
 ## Lektion 34
 
-Nur der Anfang. Die nächste Seite (iter und weitere) ist im Video nicht scharf lesbar.
+Die Folgeseite ist im Video bei etwa 117 Sekunden lesbar.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -922,6 +996,23 @@ Nur der Anfang. Die nächste Seite (iter und weitere) ist im Video nicht scharf 
 | vestrum (Gen. Pl.) | von euch |
 | quis vestrum? | wer von euch? |
 | *cōnsul, cōnsulis m. | der Konsul |
+| lēgātus, ī m. | der Gesandte; der Legat (Offizier) |
+| *iter, itineris n. | die Reise, der Weg, der Marsch |
+| iter facere | reisen, marschieren |
+| Gallia, ae f. | (die römische Provinz) Gallien |
+| *bellum īnferre (mit Dat.) | gegen jmd. einen Krieg beginnen, jmd. angreifen |
+| obsidēre, obsideō, obsēdī, obsessum | belagern, besetzt halten |
+| arma, armōrum n. Pl. | die Waffen |
+| exercitus, exercitūs m. | das Heer |
+| Rōmam | nach Rom |
+| *terror, terrōris m. | der Schrecken |
+| *umquam (Adv.) | jemals, irgendwann einmal |
+| inicere, iniciō, iniēcī, iniectum | hineinwerfen |
+| terrōrem inicere (mit Dat.) | (jemandem) einen Schrecken einjagen, Furcht einflößen |
+| utrum … an (in indirekten Fragesätzen) | ob … oder |
+| *adventus, adventūs m. | die Ankunft |
+| enim (Konjunktion; nachgestellt) | denn; nämlich |
+| vāstāre, vāstō, vāstāvī, vāstātum | verwüsten |
 
 ## Lektion 35
 
@@ -1006,15 +1097,13 @@ Nur der Anfang. Die nächste Seite (iter und weitere) ist im Video nicht scharf 
 
 ## Lektion 38
 
-Bei `cōnsistere` und `cor` ist jeweils das Ende der deutschen Zeile abgeschnitten und weggelassen. `lūdibriō esse` endet im Bild mit „verspottet werde…“.
-
 | Latin | Deutsch |
 | --- | --- |
 | *cārus, a, um | lieb, teuer |
 | quam | wie |
 | *precēs, precum f. Pl. | die Bitten |
 | dēdūcere, dēdūcō, dēdūxī, dēductum | hinabführen, wegführen, führen |
-| cōnsistere, cōnsistō, cōnstitī, – | anhalten; sich hinstellen; bestehen aus |
+| cōnsistere, cōnsistō, cōnstitī, – | anhalten; sich hinstellen; (mit in und Abl.) bestehen aus |
 | in aciē cōnsistere | sich zur Schlacht aufstellen |
 | *obsecrāre, obsecrō, obsecrāvī, obsecrātum | (er)bitten, (an)flehen |
 | auxiliō venīre | zu Hilfe kommen |
@@ -1023,7 +1112,7 @@ Bei `cōnsistere` und `cor` ist jeweils das Ende der deutschen Zeile abgeschnitt
 | turpis, turpe | schlimm, unanständig; hässlich |
 | honōrī esse | Ehre bereiten, Ehre einbringen |
 | dī, Dat./Abl. Pl.: dīs (Kurzformen von deī, deīs) | die Götter |
-| *cor, cordis n. | das Herz; die Stimmung; der Mut |
+| *cor, cordis n. | das Herz; die Stimmung; der Mut; der Verstand |
 | cordī esse | am Herzen liegen |
 | ex quō tempore | seit dieser Zeit, von da an |
 | *lūdibrium, ī n. | der Spott; das Spiel |
@@ -1032,8 +1121,6 @@ Bei `cōnsistere` und `cor` ist jeweils das Ende der deutschen Zeile abgeschnitt
 | dolōrī esse | Schmerz(en) bereiten |
 
 ## Lektion 39
-
-Bei `efferre`, `fingere` und `aetās` ist das Zeilenende abgeschnitten und weggelassen.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -1048,27 +1135,46 @@ Bei `efferre`, `fingere` und `aetās` ist das Zeilenende abgeschnitten und wegge
 | *pēs, pedis m. | der Fuß |
 | immō (Adv.) | im Gegenteil; ja sogar |
 | *auris, auris f. | das Ohr |
-| efferre, efferō, extulī, ēlātum | wegbringen; zu Grabe tragen |
-| (summīs) laudibus efferre | mit Lobsprüchen preisen |
+| efferre, efferō, extulī, ēlātum | wegbringen; zu Grabe tragen; hochheben, loben |
+| (summīs) laudibus efferre | mit Lobsprüchen preisen; verherrlichen |
 | mollis, molle | weich, empfindsam |
 | *pauper, pauperis | arm |
 | *dīves, dīvitis | reich |
 | aurum, ī n. | das Gold |
 | ōrnāmentum, ī n. | der Schmuck, das Schmuckstück |
-| fingere, fingō, fīnxī, fictum | sich ausdenken, sich vorstellen |
+| fingere, fingō, fīnxī, fictum | sich ausdenken, sich vorstellen, erfinden |
 | īrātus, a, um | zornig |
 | forās (Adv.) | raus, hinaus |
 | *vetus, veteris | alt |
 | vērē (Adv.) | wahrhaftig |
-| aetās, aetātis f. | das Lebensalter, das Zeitalter |
+| aetās, aetātis f. | das Lebensalter, das Zeitalter, die Zeit |
 | ait (3. Pers. Sg.) | er, sie, es sagt |
 
 ## Lektion 40
 
-Nur die vier Zeilen über der Überschrift Lektion 41. Die Hauptseite von Lektion 40 ist nur am Rand und ohne vollständige deutsche Spalte zu sehen.
+Hauptseite im Video bei etwa 135 Sekunden. Die vier Zeilen über der Überschrift Lektion 41 stehen am Schluss.
 
 | Latin | Deutsch |
 | --- | --- |
+| *mātrimōnium, ī n. | die Ehe |
+| *in mātrimōnium dūcere | (eine Frau) heiraten |
+| *crēscere, crēscō, crēvī, crētum | wachsen; sich steigern |
+| *sermō, sermōnis m. | das Gespräch, die Unterhaltung |
+| *sermōnem habēre | ein Gespräch führen, sich unterhalten |
+| *ōsculum, ī n. | der Kuss |
+| fallere, fallō, fefellī, – | täuschen, betrügen |
+| arbor, arboris f. | der Baum |
+| frūctus, frūctūs m. | die Frucht, der Ertrag; der Nutzen |
+| albus, a, um | weiß, hell |
+| leō, leōnis m. | der Löwe |
+| ubi (prīmum)/ut (prīmum) (Subjunktion mit Ind. Perf.) | sobald |
+| occultāre, occultō, occultāvī, occultātum | verbergen, verstecken |
+| cruentus, a, um | blutig, blutverschmiert |
+| sanguis, sanguinis m. | das Blut |
+| tingere (tinguere), tingō (tinguō), tīnxī, tīnctum | benetzen, färben |
+| stringere, stringō, strīnxī, strictum | (ab)streifen, ziehen |
+| inquit | er, sie, es sagt; er, sie, es hat gesagt |
+| vulnus, vulneris n. | die Wunde, Verletzung |
 | trahere, trahō, trāxī, tractum | ziehen, (weg)schleppen |
 | nihil habeō, quod | ich habe keinen Grund dafür, dass |
 | caedēs, caedis f. | der Mord, das Blutbad |
@@ -1091,13 +1197,32 @@ Nur die vier Zeilen über der Überschrift Lektion 41. Die Hauptseite von Lektio
 | *nātūra rērum | die Beschaffenheit der Dinge; der Aufbau der Welt |
 | *īnspicere, īnspiciō, īnspexī, īnspectum | anschauen; untersuchen |
 | tyrannus, ī m. | der Alleinherrscher, Tyrann |
+| disserere, disserō, disseruī, dissertum | besprechen, diskutieren |
+| inter (Präp. mit Akk.) | zwischen, unter |
+| artem exercēre | einen Beruf/eine Tätigkeit ausüben |
+| *sapiēns, sapientis | weise; Subst.: der Weise |
+| interesse, intersum, interfuī | dazwischen liegen; sich unterscheiden; mit Dativ: an etwas teilnehmen |
+| interest (inter) | es gibt einen Unterschied (zwischen …) |
+| *glōria, ae f. | der Ruhm, die Ehre |
+| neque … neque | weder … noch |
+| *studiōsus, a, um (mit Gen.) | (bei einer Tätigkeit) eifrig; gelehrt |
+| id est | das heißt |
 
 ## Lektion 42
 
-Die Zeilen über der Überschrift Lektion 43. Die Seite mit Sōcratēs und weiteren Wörtern ist nur angeschnitten.
+Die Seite mit Sōcratēs steht im Video bei etwa 138 Sekunden. Die Zeilen über der Überschrift Lektion 43 folgen danach.
 
 | Latin | Deutsch |
 | --- | --- |
+| Sōcratēs, Sōcratis m. | Sokrates (Philosoph aus Athen) |
+| Athēniēnsis, Athēniēnse | athenisch |
+| Subst. Athēniēnsis, Athēniēnsis m. (Gen. Pl.: Athēniēnsium) | der Athener |
+| cēterī, ae, a | die übrigen |
+| *cōgnitiō, cōgnitiōnis f. | die Erkenntnis; die Untersuchung |
+| caelestis, caeleste | himmlisch; am Himmel befindlich |
+| contentus, a, um | zufrieden |
+| ūtilis, ūtile | nützlich |
+| vitium, ī n. | der Fehler; die schlechte Eigenschaft |
 | omnīnō (Adv.) | überhaupt; insgesamt |
 | Athēnae, ārum f. Pl. | (die Stadt) Athen |
 | Athēnīs | in Athen |
@@ -1226,23 +1351,70 @@ Die Zeilen über der Überschrift Lektion 48. Ob die Kopfzeile diese Seite schon
 
 ## Lektion 48
 
-Nur der Anfang unter der Überschrift. Die rechte Seite ist angeschnitten.
+Die rechte Seite, Buchseite 81, liegt bei etwa 159 Sekunden frei.
 
 | Latin | Deutsch |
 | --- | --- |
 | Germānus, a, um | germanisch; Substantiv: der Germane |
 | trāns (Präp. mit Akk.) | jenseits (von); über … hinaus |
+| Rhēnus, ī m. | (der Fluss) Rhein |
+| trāns Rhēnum | auf der anderen Seite des Rheins |
+| quīcumque, quaecumque, quodcumque | wer (was) auch immer; jeder, der (alles, was) |
+| quācumque ratiōne | auf jede Art und Weise |
+| quisquis, quidquid | jeder (jedes) |
+| adipīscī, adipīscor, adeptus sum | erreichen, erlangen |
+| *cōnstāre, cōnstō, cōnstitī, cōnstātūrus | feststehen; standhaft sein |
+| cōnstat mit AcI | es steht fest, dass |
+| quōquō modō | auf jede Art und Weise |
+| flūmen, flūminis n. | der Fluss |
+| *claudere, claudō, clausī, clausum | (ab)schließen; versperren |
+| *colloquium, ī n. | die Unterredung, das Gespräch |
+| concilium, ī n. | die Versammlung |
+| rīpa, ae f. | das Ufer |
+| ōlim (Adv.) | einst, einmal |
+| *institūtum, ī n. | die Einrichtung; die Anweisung |
+| *cultus, cultūs m. | die Pflege; die Verehrung; die Lebensweise |
+| cōnūbium, ī n. | die Ehe |
+| pōscere, pōscō, popōscī, – | verlangen, fordern |
 
 ## Lektion 49
 
-Keine vollständig lesbare Vokabelseite. Die Seiten dazwischen sind unscharf oder nur Stammformen.
+Die Hauptseite steht bei etwa 161 Sekunden unter der Überschrift, nach den Stammformen. Der Block über der Überschrift Lektion 50 setzt sie fort.
 
-Im Video keine vollständig lesbare Vokabelzeile.
+| Latin | Deutsch |
+| --- | --- |
+| honestē sē gerere | sich anständig verhalten |
+| indignē ferre | schwer erträglich finden, entrüstet sein |
+| Nerō, Nerōnis | (der römische Kaiser) Nero |
+| adulēscēns, adulēscentis m. | der junge Mann (zwischen 18 und 25 Jahren) |
+| spem pōnere in (mit Abl.) | seine Hoffnung(en) auf jemanden/auf etwas setzen |
+| quisque, quidque (adjektivisch: quisque, quaeque, quodque) | jeder |
+| optimus quisque | gerade die Besten |
+| prīstinus, a, um | ehemalig, früher, aus früheren Zeiten |
+| *cupidus, a, um (mit Gen.) | (be)gierig (nach etwas) |
+| maledīcere (mit Dat.) | (über jemanden) schlecht reden, lästern |
+| *stultitia, ae f. | die Dummheit |
+| illūdere, illūdō, illūsī, illūsum | verspotten; täuschen |
+| dīligēns, dīligentis | gewissenhaft, sorgfältig |
+| aliquis, aliquid; adjektivisch: aliquī, aliqua, aliquod | (irgend)einer, (irgend)etwas; (irgend)ein, (irgend)eine |
+| Pl.: aliquī | einige, manche |
+| cuiusque modī | (von) jeder Art |
+| *perpetuō (Adv.) | auf ewig |
+| similis, simile (mit Gen./Dat.) (Superlativ: simillimus) | ähnlich |
+| *iūdicāre, iūdicō, iūdicāvī, iūdicātum | Recht sprechen, (be)urteilen |
+| *certus, a, um | sicher, gewiss; bestimmt |
+| prō certō habēre | für sicher halten |
+| *genus, generis n. | die Art, Abstammung; das Geschlecht |
+| cuiusque generis | (von) jeder Art |
+| verērī, vereor, veritus sum | sich fürchten; verehren |
+| agitāre, agitō, agitāvī, agitātum | (an)treiben; besprechen; überlegen |
 
 ## Lektion 50
 
 | Latin | Deutsch |
 | --- | --- |
+| *triumphus, ī m. | der Triumph, Triumphzug |
+| *multitūdō, multitūdinis f. | die Menge, große Anzahl |
 | *currus, currūs m. | der Wagen, Streitwagen |
 | certāmen, certāminis n. | der Wettstreit, Kampf |
 | in certāmen venīre | in einen Wettkampf eintreten |
@@ -1266,10 +1438,28 @@ Im Video keine vollständig lesbare Vokabelzeile.
 
 ## Lektion 51
 
-`supplicium` steht über der Überschrift Lektion 52. Die rechte Seite (requīrere, rūmor, Christiānus, religiō und weitere) ist angeschnitten.
+Die rechte Seite ist im Video bei etwa 167 Sekunden lesbar. `supplicium` steht danach über der Überschrift Lektion 52.
 
 | Latin | Deutsch |
 | --- | --- |
+| requīrere, requīrō, requīsīvī, requīsītum | (nach)fragen, forschen; verlangen |
+| rūmor, rūmōris m. | das Gerücht, das Gerede |
+| Chrīstiānus, a, um | christlich |
+| Chrīstiānus, ī m. / Chrīstiāna, ae f. | der Christ/die Christin |
+| religiō, religiōnis f. | die Götterverehrung, der Glaube |
+| religiōnēs cōnficere | religiöse Handlungen vollziehen |
+| crux, crucis f. | das Kreuz |
+| tollere, tollō, sustulī, sublātum | aufheben, hochheben; wegnehmen |
+| crucem tollere | kreuzigen |
+| coniūrātiō, coniūrātiōnis f. | die Verschwörung |
+| plērique, plēraeque, plēraque | die meisten, sehr viele |
+| cāsus, cāsūs m. | der Fall; der Untergang; der Zufall, das Ereignis |
+| idōneus, a, um | geeignet; fähig |
+| rēgius, a, um | königlich |
+| domus rēgia | der Palast |
+| crīminī dare | zum Vorwurf machen |
+| quārē (Adv.) | wodurch, weshalb; deshalb |
+| comprehendere, comprehendō, comprehendī, comprehēnsum | ergreifen, festnehmen; begreifen |
 | supplicium, ī n. | das Bitten, Flehen; die Bestrafung |
 | suppliciō afficere | bestrafen, hinrichten |
 
@@ -1291,14 +1481,53 @@ Im Video keine vollständig lesbare Vokabelzeile.
 | īgnōscere, īgnōscō, īgnōvī, īgnōtum | verzeihen |
 | *ante/anteā (Adv.) | vorher, früher |
 | *dēsinere, dēsinō, dēsiī, dēsitum | (mit etwas) aufhören |
+| rērī, reor, ratus sum | glauben, meinen, urteilen |
+| comperīre, comperiō, comperī, compertum | in Erfahrung bringen, erfahren |
+| māne (Adv.) | (früh)morgens |
+| perficere, perficiō, perfēcī, perfectum | vollenden, zustandebringen; bewirken |
 
 ## Lektion 53
 
-Im Video keine vollständig lesbare Vokabelzeile.
+Die Seite liegt bei etwa 173 Sekunden frei. Die vier Zeilen darüber gehören zu Lektion 52. Der Block über der Überschrift Lektion 54 schließt diese Lektion ab.
+
+| Latin | Deutsch |
+| --- | --- |
+| aequus, a, um | eben, gerecht, gleich |
+| aequō animō | mit Gleichmut, gelassen |
+| *fortitūdō, fortitūdinis f. | die Tapferkeit, der Mut |
+| praestāre, praestō, praestitī, praestātūrus | voranstehen, leisten, zeigen |
+| sē fortem praestāre | sich als tapfer erweisen |
+| exemplum, ī n. | das Beispiel, Vorbild |
+| speciēs, speciēī f. | der Anblick, das Aussehen; die Schönheit |
+| horribilis, horribile | entsetzlich |
+| *ēdūcere, ēdūcō, ēdūxī, ēductum | herausführen |
+| diūtius (Adv.) | länger |
+| palam (Adv.) | öffentlich |
+| *cūstōdia, ae f. | die Bewachung; die Haft |
+| *ēgredī, ēgredior, ēgressus sum | herausgehen, verlassen |
+| *dēmittere, dēmittō, dēmīsī, dēmissum | hinabwerfen; wegwerfen |
+| animum dēmittere | den Mut sinken lassen |
+| repente (Adv.) | plötzlich |
+| *impellere, impellō, impulī, impulsum | antreiben; veranlassen |
+| vertere, vertō, vertī, versum | drehen, wenden; ändern |
+| familiāris, familiāre | zum Haus gehörend; vertraut, freundschaftlich |
+| familiāris, familiāris m./f. | der/die Vertraute, der/die Freund(in) |
+| capitis damnāre | zum Tode verurteilen |
+| meā, tuā, suā sponte | aus (meinem, deinem, seinem/ihrem) eigenen Antrieb, freiwillig |
+| *voluntās, voluntātis f. | der Wille, Wunsch, die Absicht |
 
 ## Lektion 54
 
-Im Video keine vollständig lesbare Vokabelzeile.
+Die Überschrift steht auf Buchseite 88. Danach folgen nur noch diese Zeilen, die gegenüberliegende Seite ist eine Stammformenreihe.
+
+| Latin | Deutsch |
+| --- | --- |
+| utinam (verneint: utinam nē) (mit Konjunktiv) | hoffentlich (erfüllbarer Wunsch); wenn doch (unerfüllbarer Wunsch) |
+| *magnitūdō, magnitūdinis f. | die Größe |
+| *noctū (Adv.) | nachts, in der Nacht |
+| quiēs, quiētis f. | die Ruhe, der Schlaf |
+| proficīscī, proficīscor, profectus sum | aufbrechen, abreisen |
+| aggredī, aggredior, aggressus sum | angreifen; hingehen |
 
 ## Lektion 55
 
@@ -1319,13 +1548,31 @@ Die drei Verben über der Überschrift sind Stammformen zum Nachlernen (perīre,
 | facilis, facile (Superlativ: facillimus; Adverb: facile) | leicht (zu tun), einfach |
 | colligere, colligō, collēgī, collēctum | sammeln |
 | *ōrātor, ōrātōris m. | der Redner |
+| nēmō nostrum | niemand von uns |
+| ars dicendī | die Rhetorik, Redekunst |
+| pār, paris | gleich, angemessen; ebenbürtig |
+| lectus, ī m. | das Bett, die Liege |
+| *quiēscere, quiēscō, quiēvī, quiētūrus | ruhen, schlafen |
+| somnium, ī n. | der Traum |
+| hinc (Adv.) | von da an, daraufhin |
+| *miserērī, misereor, miseritus/misertus sum (mit Gen.) | (mit jemandem/etwas) Mitleid haben |
 
 ## Lektion 56
 
-Die Zeilen über der Überschrift Lektion 57.
+Buchseite 91 beginnt unter der Überschrift. Die Zeilen über der Überschrift Lektion 57 setzen die Lektion fort.
 
 | Latin | Deutsch |
 | --- | --- |
+| improbus, a, um | böse, unverschämt |
+| *tantum … quantum | so viel … wie (viel) |
+| inopia, ae f. | die Not, der Mangel |
+| tribūnus, ī m. | der Tribun (Kommandeur einer militärischen Einheit oder hoher Beamter) |
+| arcessere, arcessō, arcessīvī, arcessītum | (jemanden) herbeirufen, holen |
+| *audēre, audeō, ausus sum | (etwas) wagen |
+| *solēre, soleō, solitus sum | gewohnt sein, (etwas zu tun) pflegen |
+| *quotiēns (Adv.) | wie oft |
+| *totiēns (Adv.) | so oft |
+| *totiēns … quotiēns | so oft … wie (oft) |
 | opus est (mit Abl.) | (etwas) ist nötig |
 | *cōnfīdere, cōnfīdō, cōnfīsus sum (mit Dat./Abl.) | vertrauen, sich (auf jemanden/etwas) verlassen |
 | *quot | wie viele |
@@ -1341,7 +1588,7 @@ Die Zeilen über der Überschrift Lektion 57.
 
 ## Lektion 57
 
-Bei `cēdere` verdeckt ein Finger die mittleren Stammformen. Aufgenommen ist, was neben dem Finger noch lesbar ist.
+Bei einem späteren scharfen Bild liegt der Finger unter der letzten Zeile. Die Stammformen von `cēdere` sind vollständig lesbar.
 
 | Latin | Deutsch |
 | --- | --- |
@@ -1365,14 +1612,32 @@ Bei `cēdere` verdeckt ein Finger die mittleren Stammformen. Aufgenommen ist, wa
 | dēcipere, dēcipiō, dēcēpī, dēceptum | betrügen, täuschen |
 | pollicērī, polliceor, pollicitus sum | versprechen |
 | *terga vertere | sich umdrehen; fliehen |
-| *cēdere, cessūrus | gehen, sich zurückziehen |
+| *cēdere, cēdō, cessī, cessūrus | gehen, sich zurückziehen |
 
 ## Lektion 58
 
-Nur die vier Zeilen über der Überschrift Lektion 59. Die übrige Seite von Lektion 58 ist nicht als eigene scharfe Seite im Video.
+Die Hauptseite liegt bei etwa 191 Sekunden unter der Überschrift. Die vier Zeilen über der Überschrift Lektion 59 setzen sie fort.
 
 | Latin | Deutsch |
 | --- | --- |
+| *beneficium, ī n. | die Wohltat, der Gefallen |
+| tribuere, tribuō, tribuī, tribūtum | zuteilen; gewähren |
+| *diversus, a, um | verschieden; entgegengesetzt |
+| ā puerō | von Kindheit an |
+| *ēloquentia, ae f. | die Redegewandtheit; die Rhetorik |
+| *exprimere, exprimō, expressī, expressum | ausdrücken, schildern |
+| *patrius, a, um | väterlich, heimatlich |
+| sermō patrius/lingua patria | die Muttersprache |
+| *cōnsūmere, cōnsūmō, cōnsūmpsī, cōnsūmptum | verwenden, verbrauchen |
+| discere, discō, didicī, – | lernen, kennenlernen |
+| aequē ac | in gleicher Weise wie |
+| nītī, nītor, nīsus (nīxus) sum | sich stützen; sich bemühen |
+| parum (Adv.) | (zu) wenig |
+| *succēdere, succēdō, successī, successūrus | nachfolgen; gelingen |
+| sērus, a, um (Adv.: sērō) | (zu) spät |
+| instruere, instruō, instrūxī, instrūctum | einrichten; unterrichten |
+| *necessārius, a, um | notwendig |
+| rēgnum, ī n. | die Königsherrschaft; das Königreich |
 | tuērī, tueor, tuitus (tūtus) sum | betrachten, beschützen |
 | proinde (Adv.) | daher, deshalb |
 | suādēre, suādeō, suāsī, suāsum | einen Rat geben, raten |
@@ -1437,10 +1702,6 @@ Nur die vier Zeilen über der Überschrift Lektion 59. Die übrige Seite von Lek
 ## Unsicher / nicht lesbar
 
 - Quelle der neuen Lektionen: `IMG_7134.mov` (11. Nov 2026, etwa 3:28, 1080×1920). Text steht aufrecht. Die grüne Kopfzeile lautet „Vokabeln | Lektion N“ oder „Lektion N | Vokabeln“.
-- Lektion 11, Seite 16: Zwischen `in animō habēre` und `regere` sind auf dem linken Seitenrand nur deutsche Wortenden zu sehen (`…g sein`, `…eben`, `…etzen`, `Geist`, `…ngen`). Latein und die volle Bedeutung fehlen. Nicht aufgenommen.
-- Lektion 14, zweite Seite, und Lektion 15, rechte Seite: zu unscharf oder ohne deutsche Spalte.
-- Lektion 25, rechte Seite; Lektion 28 außer `tempestās`; Lektion 31, Folgeseite; Lektion 34, Folgeseite; Lektion 40 außer vier Zeilen; Lektion 42 außer dem Block vor Lektion 43; Lektion 48 außer dem Anfang; Lektion 49; Lektion 51 außer `supplicium`; Lektion 53; Lektion 54; Lektion 58 außer vier Zeilen: im Video nur angeschnitten, verwackelt oder von der nächsten Seite verdeckt.
 - Stammformen-Seiten (Plateau 11–15 und „Stammformen zum Nachlernen“) wiederholen bekannte Verben mit Perfektstämmen. Sie sind nicht als zweite Vokabelkarte gespeichert. Einzelne Zeilen darauf waren unscharf.
 - Die letzten Sekunden sind „Wortschatzarbeit“, keine Vokabelliste.
-- Bleistift-Haken sind auf vielen neuen Seiten zu sehen, stehen aber oft am Zeilenrand und sind hier nicht Zeile für Zeile übernommen.
 - Wo eine deutsche Angabe am Seitenrand abbricht, ist nur der lesbare Teil gespeichert.

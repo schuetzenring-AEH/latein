@@ -1,16 +1,14 @@
 import { useState, type FormEvent, type ReactNode } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useStore } from "../context/Store";
 import { Button, cx } from "./ui";
 
-const links = [
-  { to: "/", label: "Üben" },
-  { to: "/statistik", label: "Statistik" },
-  { to: "/woerter", label: "Wörter" },
-];
-
-function linkActive(path: string, current: string): boolean {
-  if (path === "/") return current === "/" || current.startsWith("/quiz") || current.startsWith("/weltraum");
+function linkActive(path: string, current: string, inArena: boolean): boolean {
+  if (path === "/planeten") return current === "/planeten" || current === "/arena" || inArena;
+  if (path === "/") {
+    if (inArena) return false;
+    return current === "/" || current.startsWith("/quiz") || current.startsWith("/weltraum");
+  }
   return current === path || current.startsWith(`${path}/`);
 }
 
@@ -29,12 +27,29 @@ export function Layout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const [adding, setAdding] = useState(false);
   const [name, setName] = useState("");
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const named = store.playMode === "named";
   const active = store.profiles.find((profile) => profile.id === store.activeProfileId);
+  const freeProfiles = store.profiles.filter((profile) => !profile.passwordHash);
   const playing = location.pathname === "/weltraum";
+  const arenaState = location.state as { arena?: { arenaId?: unknown }; arenaId?: unknown } | null;
+  const inArena = location.pathname === "/arena"
+    || ((location.pathname === "/weltraum" || location.pathname === "/quiz")
+      && (typeof arenaState?.arena?.arenaId === "string" || typeof arenaState?.arenaId === "string"));
+  const links = [
+    { to: "/", label: "Üben" },
+    ...(named ? [{ to: "/planeten", label: "Planeten" }] : []),
+    { to: "/statistik", label: "Statistik" },
+    { to: "/woerter", label: "Wörter" },
+  ];
 
   function createProfile(event: FormEvent) {
     event.preventDefault();
-    store.addProfile(name);
+    if (!store.addProfile(name)) {
+      setProfileError(name.trim() ? "Dieser Name ist schon vergeben." : "Bitte einen Namen eingeben.");
+      return;
+    }
+    setProfileError(null);
     setName("");
     setAdding(false);
   }
@@ -50,9 +65,9 @@ export function Layout({ children }: { children: ReactNode }) {
             <p className="text-lg font-semibold tracking-tight">Latein</p>
             <nav className="hidden gap-1 md:flex" aria-label="Bereiche">
               {links.map((link) => (
-                <NavLink key={link.to} to={link.to} className={() => navClass(linkActive(link.to, location.pathname))}>
+                <Link key={link.to} to={link.to} aria-current={linkActive(link.to, location.pathname, inArena) ? "page" : undefined} className={navClass(linkActive(link.to, location.pathname, inArena))}>
                   {link.label}
-                </NavLink>
+                </Link>
               ))}
             </nav>
             <button
@@ -63,36 +78,44 @@ export function Layout({ children }: { children: ReactNode }) {
               {store.theme === "dark" ? "Hell" : "Dunkel"}
             </button>
           </div>
-          <div className="flex flex-wrap items-end gap-2">
-            <div className="min-w-0 flex-1">
-              <label htmlFor="profile" className="mb-1 block text-sm font-medium">Profil</label>
-              <select
-                id="profile"
-                className="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-3 dark:border-stone-700 dark:bg-stone-900"
-                value={store.activeProfileId}
-                onChange={(event) => store.setActiveProfile(event.target.value)}
-              >
-                {store.profiles.map((profile) => (
-                  <option key={profile.id} value={profile.id}>{profile.name}</option>
-                ))}
-              </select>
+          {named ? (
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm font-medium">Angemeldet als <span className="font-semibold">{active?.name ?? "…"}</span></p>
+              <Button variant="secondary" onClick={store.logout}>Abmelden</Button>
             </div>
-            <Button variant="secondary" onClick={() => setAdding((open) => !open)}>Neu</Button>
-            {store.profiles.length > 1 && (
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  if (!active) return;
-                  if (window.confirm(`Profil „${active.name}“ löschen? Der Lernstand dieses Profils geht verloren.`)) {
-                    store.deleteProfile(active.id);
-                  }
-                }}
-              >
-                Löschen
-              </Button>
-            )}
-          </div>
-          {adding && (
+          ) : (
+            <div className="flex flex-wrap items-end gap-2">
+              <div className="min-w-0 flex-1">
+                <label htmlFor="profile" className="mb-1 block text-sm font-medium">Profil</label>
+                <select
+                  id="profile"
+                  className="min-h-12 w-full rounded-xl border border-stone-300 bg-white px-3 dark:border-stone-700 dark:bg-stone-900"
+                  value={freeProfiles.some((profile) => profile.id === store.activeProfileId) ? store.activeProfileId : freeProfiles[0]?.id ?? ""}
+                  onChange={(event) => store.setActiveProfile(event.target.value)}
+                >
+                  {freeProfiles.map((profile) => (
+                    <option key={profile.id} value={profile.id}>{profile.name}</option>
+                  ))}
+                </select>
+              </div>
+              <Button variant="secondary" onClick={() => { setAdding((open) => !open); setProfileError(null); }}>Neu</Button>
+              {freeProfiles.length > 1 && (
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    if (!active || active.passwordHash) return;
+                    if (window.confirm(`Profil „${active.name}“ löschen? Der Lernstand dieses Profils geht verloren.`)) {
+                      store.deleteProfile(active.id);
+                    }
+                  }}
+                >
+                  Löschen
+                </Button>
+              )}
+              <Button variant="ghost" onClick={store.leaveToGate}>Spielwahl</Button>
+            </div>
+          )}
+          {!named && adding && (
             <form onSubmit={createProfile} className="flex flex-col gap-2 sm:flex-row sm:items-end">
               <div className="min-w-0 flex-1">
                 <label htmlFor="new-profile" className="mb-1 block text-sm font-medium">Name des Profils</label>
@@ -108,6 +131,7 @@ export function Layout({ children }: { children: ReactNode }) {
               <Button type="submit">Anlegen</Button>
             </form>
           )}
+          {profileError && <p className="text-sm text-red-800 dark:text-red-300" role="alert">{profileError}</p>}
           {store.storageWarning && (
             <p className="text-sm text-red-800 dark:text-red-300" role="status">{store.storageWarning}</p>
           )}
@@ -126,9 +150,9 @@ export function Layout({ children }: { children: ReactNode }) {
         aria-label="Bereiche"
       >
         {links.map((link) => (
-          <NavLink key={link.to} to={link.to} className={() => navClass(linkActive(link.to, location.pathname), true)}>
+          <Link key={link.to} to={link.to} aria-current={linkActive(link.to, location.pathname, inArena) ? "page" : undefined} className={navClass(linkActive(link.to, location.pathname, inArena), true)}>
             {link.label}
-          </NavLink>
+          </Link>
         ))}
       </nav>
     </div>

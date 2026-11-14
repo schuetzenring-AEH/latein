@@ -1,4 +1,5 @@
 import type { Direction, Variant, Vocab } from "../types";
+import { joinDeutsch } from "./vocab";
 
 export type RoundItem = {
   vocab: Vocab;
@@ -24,11 +25,15 @@ export function shuffle<T>(list: readonly T[]): T[] {
   return copy;
 }
 
+function shown(entry: Vocab, field: "deutsch" | "latein"): string {
+  return field === "latein" ? entry.latein : joinDeutsch(entry.deutsch);
+}
+
 function takeValues(entries: readonly Vocab[], field: "deutsch" | "latein", blocked: Set<string>, limit: number): string[] {
   const found: string[] = [];
   for (const entry of shuffle(entries)) {
     if (found.length >= limit) break;
-    const value = entry[field];
+    const value = shown(entry, field);
     if (blocked.has(value)) continue;
     blocked.add(value);
     found.push(value);
@@ -43,20 +48,31 @@ export function choiceOptions(
   field: "deutsch" | "latein",
   count: number,
 ): string[] {
-  const correct = entry[field];
+  const correct = shown(entry, field);
   const blocked = new Set<string>([correct]);
   if (field === "latein") {
+    const gloss = joinDeutsch(entry.deutsch);
     for (const item of all) {
-      if (item.deutsch === entry.deutsch) blocked.add(item.latein);
+      if (joinDeutsch(item.deutsch) === gloss) blocked.add(item.latein);
     }
   }
   const selectedIds = new Set(selected.map((item) => item.id));
   const needed = count - 1;
-  const primary = takeValues(selected, field, blocked, needed);
-  const extra = primary.length < needed
-    ? takeValues(all.filter((item) => !selectedIds.has(item.id)), field, blocked, needed - primary.length)
-    : [];
-  const options = shuffle([correct, ...primary, ...extra]);
+  const sameArt = (item: Vocab) => item.wortart === entry.wortart && item.id !== entry.id;
+  const inSelected = selected.filter((item) => item.id !== entry.id);
+  const outside = all.filter((item) => !selectedIds.has(item.id));
+  const pools = [
+    inSelected.filter(sameArt),
+    inSelected.filter((item) => !sameArt(item)),
+    outside.filter(sameArt),
+    outside.filter((item) => !sameArt(item)),
+  ];
+  const found: string[] = [];
+  for (const pool of pools) {
+    if (found.length >= needed) break;
+    found.push(...takeValues(pool, field, blocked, needed - found.length));
+  }
+  const options = shuffle([correct, ...found]);
   if (options.length !== count || new Set(options).size !== count) {
     throw new Error("Zu wenige verschiedene Antworten für diese Auswahl.");
   }
@@ -142,10 +158,10 @@ export function buildSpaceRound(
   const field = direction === "l2d" ? "deutsch" : "latein";
   return asked.map((vocab) => ({
     vocab,
-    prompt: direction === "l2d" ? vocab.latein : vocab.deutsch,
+    prompt: direction === "l2d" ? vocab.latein : joinDeutsch(vocab.deutsch),
     promptLang: direction === "l2d" ? "la" : "de",
     options: choiceOptions(all, pool, vocab, field, 3),
-    answer: vocab[field],
+    answer: shown(vocab, field),
     speakText: direction === "l2d" ? vocab.latein : null,
   }));
 }
@@ -165,7 +181,7 @@ export function buildRound(
         prompt: vocab.latein,
         promptLang: "la" as const,
         options: choiceOptions(all, words, vocab, "deutsch", 5),
-        answer: vocab.deutsch,
+        answer: joinDeutsch(vocab.deutsch),
         speakText: vocab.latein,
       };
     }
@@ -175,14 +191,14 @@ export function buildRound(
         prompt: vocab.latein,
         promptLang: "la" as const,
         options: null,
-        answer: vocab.deutsch,
+        answer: joinDeutsch(vocab.deutsch),
         speakText: vocab.latein,
       };
     }
     if (direction === "d2l" && variant === "mc") {
       return {
         vocab,
-        prompt: vocab.deutsch,
+        prompt: joinDeutsch(vocab.deutsch),
         promptLang: "de" as const,
         options: choiceOptions(all, words, vocab, "latein", 3),
         answer: vocab.latein,
@@ -191,7 +207,7 @@ export function buildRound(
     }
     return {
       vocab,
-      prompt: vocab.deutsch,
+      prompt: joinDeutsch(vocab.deutsch),
       promptLang: "de" as const,
       options: spellingOptions(vocab.latein, latinForms),
       answer: vocab.latein,

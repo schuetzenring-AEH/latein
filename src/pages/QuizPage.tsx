@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../context/Store";
+import { arenaPracticeState, readArenaLink, runOnce, stationPassed, type ArenaRoundLink } from "../lib/arena";
 import { buildRound, type RoundItem } from "../lib/quiz";
 import { endMessage, streakMessage } from "../lib/messages";
 import { isDue } from "../lib/srs";
@@ -9,23 +10,27 @@ import { matchesGloss } from "../lib/text";
 import type { Direction, ProgressMap, RoundSetup, Variant, Vocab } from "../types";
 import { Button, cx } from "../components/ui";
 
-type SetupState = RoundSetup & { nonce?: number };
+type SetupState = RoundSetup & { nonce?: number; wordIds?: string[]; arena?: ArenaRoundLink };
 
 function readSetup(state: unknown): SetupState | null {
   if (!state || typeof state !== "object") return null;
-  const value = state as Partial<SetupState>;
+  const value = state as Partial<SetupState> & { arena?: unknown };
   if (!Array.isArray(value.lektionIds) || value.lektionIds.some((id) => typeof id !== "number")) return null;
   if (value.lektionIds.length === 0) return null;
   if (value.direction !== "l2d" && value.direction !== "d2l") return null;
   if (value.variant !== "mc" && value.variant !== "input" && value.variant !== "spelling") return null;
   if (value.direction === "l2d" && value.variant === "spelling") return null;
   if (value.direction === "d2l" && value.variant === "input") return null;
+  const wordIds = Array.isArray(value.wordIds) && value.wordIds.every((id) => typeof id === "string") ? value.wordIds : undefined;
+  const arena = readArenaLink(value.arena);
   return {
     lektionIds: value.lektionIds,
     direction: value.direction,
     variant: value.variant,
     dueOnly: Boolean(value.dueOnly),
     nonce: typeof value.nonce === "number" ? value.nonce : 0,
+    ...(wordIds ? { wordIds } : {}),
+    ...(arena ? { arena } : {}),
   };
 }
 
@@ -45,7 +50,8 @@ export function QuizPage() {
 }
 
 function Round({ setup }: { setup: SetupState }) {
-  const { vocab, progress, activeProfileId, recordAnswer } = useStore();
+  const store = useStore();
+  const { vocab, progress, activeProfileId, recordAnswer } = store;
   const navigate = useNavigate();
   const profileId = useRef(activeProfileId);
   const built = useState(() => prepareRound(vocab, progress[profileId.current] ?? {}, setup))[0];
@@ -59,6 +65,14 @@ function Round({ setup }: { setup: SetupState }) {
   const [streak, setStreak] = useState(0);
   const [cheer, setCheer] = useState<string | null>(null);
   const lock = useRef(false);
+  const misses = useRef<string[]>([]);
+
+  useEffect(() => {
+    if (phase !== "done" || !setup.arena || setup.arena.practice) return;
+    const passed = stationPassed(setup.arena.station, misses.current.length, false);
+    const key = `quiz:${setup.nonce}:${setup.arena.arenaId}:${setup.arena.run.lessonIndex}:${setup.arena.station}`;
+    runOnce(key, () => store.recordArenaResult(setup.arena!.arenaId, misses.current, passed));
+  }, [phase, setup, store]);
 
   const item = built.items[index];
   const total = built.items.length;
@@ -88,6 +102,7 @@ function Round({ setup }: { setup: SetupState }) {
     if (!item || lock.current || phase !== "question") return;
     lock.current = true;
     recordAnswer(profileId.current, item.vocab.id, correct);
+    if (!correct) misses.current = [...misses.current, item.vocab.id];
     const nextStreak = correct ? streak + 1 : 0;
     setPicked(value);
     setWasCorrect(correct);
@@ -120,20 +135,41 @@ function Round({ setup }: { setup: SetupState }) {
       <section>
         <h1 className="text-3xl font-semibold tracking-tight">Runde nicht möglich</h1>
         <p className="mt-3 text-stone-600 dark:text-stone-300">{built.error ?? "Keine Wörter in dieser Auswahl."}</p>
-        <Link to="/" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zur Auswahl</Link>
+        <Link to={setup.arena ? "/arena" : "/"} state={setup.arena ? { arenaId: setup.arena.arenaId } : undefined} className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">{setup.arena ? "Zur Arena" : "Zur Auswahl"}</Link>
       </section>
     );
   }
 
   if (phase === "done") {
+    const arena = setup.arena;
+    const passed = arena ? stationPassed(arena.station, misses.current.length, false) : true;
+    const back = arena
+      ? arena.practice
+        ? { pathname: "/arena", state: arenaPracticeState(vocab, arena, misses.current, passed) }
+        : { pathname: "/arena", state: { arenaId: arena.arenaId } }
+      : null;
     return (
       <section>
         <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">Runde beendet</p>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight">{correctCount} von {total} richtig.</h1>
-        <p className="mt-3 text-lg text-stone-600 dark:text-stone-300">{endMessage(correctCount, total)}</p>
+        <p className="mt-3 text-lg text-stone-600 dark:text-stone-300">
+          {arena?.station === "boss-write" && !passed
+            ? "Mehr als ein Fehler. Die Schreibprobe beginnt neu."
+            : arena?.station === "boss-write" && passed && !arena.practice
+              ? "Die Arena ist geschafft."
+              : endMessage(correctCount, total)}
+        </p>
         <div className="mt-8 grid gap-3">
-          <Button onClick={() => navigate("/quiz", { replace: true, state: { ...setup, nonce: Date.now() } })}>Nochmal</Button>
-          <Button variant="secondary" onClick={() => navigate("/")}>Zur Auswahl</Button>
+          {back ? (
+            <Button onClick={() => navigate(arena?.station === "boss-write" && passed && !arena.practice ? "/planeten" : back.pathname, { state: arena?.station === "boss-write" && passed && !arena.practice ? undefined : back.state })}>
+              {arena?.station === "boss-write" && passed && !arena.practice ? "Zu den Planeten" : "Weiter in der Arena"}
+            </Button>
+          ) : (
+            <>
+              <Button onClick={() => navigate("/quiz", { replace: true, state: { ...setup, nonce: Date.now() } })}>Nochmal</Button>
+              <Button variant="secondary" onClick={() => navigate("/")}>Zur Auswahl</Button>
+            </>
+          )}
         </div>
       </section>
     );
@@ -243,9 +279,12 @@ function Round({ setup }: { setup: SetupState }) {
   );
 }
 
-function prepareRound(vocab: Vocab[], profileProgress: ProgressMap[string] | undefined, setup: RoundSetup) {
+function prepareRound(vocab: Vocab[], profileProgress: ProgressMap[string] | undefined, setup: SetupState) {
   try {
-    const selected = vocab.filter((item) => setup.lektionIds.includes(item.lektion));
+    const inLessons = vocab.filter((item) => setup.lektionIds.includes(item.lektion));
+    const selected = setup.wordIds
+      ? setup.wordIds.flatMap((id) => inLessons.filter((item) => item.id === id))
+      : inLessons;
     const due = selected.filter((item) => isDue(profileProgress?.[item.id]));
     const fellBack = setup.dueOnly && due.length === 0;
     const words = shuffleWords(setup.dueOnly && due.length > 0 ? due : selected);

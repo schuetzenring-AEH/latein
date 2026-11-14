@@ -1,4 +1,5 @@
-import type { Vocab } from "../types";
+import type { Vocab, VocabInput, Wortart } from "../types";
+import { WORTARTEN } from "../types";
 
 export function lessonNumbers(vocab: readonly Vocab[]): number[] {
   return [...new Set(vocab.map((item) => item.lektion))].sort((a, b) => a - b);
@@ -29,4 +30,34 @@ export function parseLessonInput(text: string): { lessons: number[] } | { error:
     return { error: "invalid" };
   }
   return { lessons: [...new Set(numbers)] };
+}
+
+const WORTART_SET = new Set<string>(WORTARTEN);
+
+export function splitDeutsch(text: string): string[] {
+  return text.split(";").map((part) => part.trim()).filter((part) => part.length > 0);
+}
+
+export function joinDeutsch(meanings: readonly string[]): string {
+  return meanings.join("; ");
+}
+
+export function sameStrings(left: readonly string[], right: readonly string[]): boolean {
+  return left.length === right.length && left.every((item, index) => item === right[index]);
+}
+
+export function isWortart(value: string): value is Wortart {
+  return WORTART_SET.has(value);
+}
+
+/** Fills wortart and cluster when a hand-added card does not bring them. */
+export function completeVocab(input: VocabInput & { id: string }): Vocab {
+  return {
+    id: input.id,
+    lektion: input.lektion,
+    latein: input.latein,
+    deutsch: input.deutsch,
+    wortart: input.wortart ?? "wendung",
+    cluster: input.cluster ?? [],
+  };
 }

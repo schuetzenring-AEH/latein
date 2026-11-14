@@ -1,8 +1,8 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { useStore } from "../context/Store";
 import { parseCsv } from "../lib/csv";
-import { lessonNumbers } from "../lib/vocab";
-import type { Vocab } from "../types";
+import { lessonNumbers, joinDeutsch, splitDeutsch } from "../lib/vocab";
+import type { Vocab, VocabInput } from "../types";
 import { Button, Field, SelectField, TextArea } from "../components/ui";
 
 export function AdminPage() {
@@ -22,11 +22,11 @@ export function AdminPage() {
     .slice()
     .sort((a, b) => a.lektion - b.lektion || a.latein.localeCompare(b.latein, "de"));
 
-  function readForm(): { lektion: number; latein: string; deutsch: string } | null {
+  function readForm(): VocabInput | null {
     const number = Number(lektion.trim());
     const latin = latein.trim();
-    const german = deutsch.trim();
-    if (!Number.isInteger(number) || number < 1 || !latin || !german) {
+    const german = splitDeutsch(deutsch);
+    if (!Number.isInteger(number) || number < 1 || !latin || german.length === 0) {
       setError("Bitte Lektion, Latein und Deutsch ausfüllen. Die Lektion ist eine ganze Zahl ab 1.");
       setMessage(null);
       return null;
@@ -62,7 +62,7 @@ export function AdminPage() {
     setEditingId(item.id);
     setLektion(String(item.lektion));
     setLatein(item.latein);
-    setDeutsch(item.deutsch);
+    setDeutsch(joinDeutsch(item.deutsch));
     setError(null);
     setMessage(null);
     window.scrollTo(0, 0);
@@ -160,7 +160,7 @@ export function AdminPage() {
           <article key={item.id} id={`vocab-${item.id}`} className="rounded-2xl border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
             <p className="text-sm text-stone-500 dark:text-stone-400">Lektion {item.lektion}</p>
             <p lang="la" className="mt-1 text-lg font-semibold [overflow-wrap:anywhere]">{item.latein}</p>
-            <p className="[overflow-wrap:anywhere]">{item.deutsch}</p>
+            <p className="[overflow-wrap:anywhere]">{joinDeutsch(item.deutsch)}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               <Button variant="secondary" onClick={() => startEdit(item)}>Bearbeiten</Button>
               <Button variant="danger" onClick={() => remove(item)}>Löschen</Button>

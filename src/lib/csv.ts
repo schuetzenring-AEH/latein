@@ -1,4 +1,5 @@
 import type { VocabInput } from "../types";
+import { splitDeutsch } from "./vocab";
 
 export type CsvResult = {
   rows: VocabInput[];
@@ -27,8 +28,8 @@ export function parseCsv(text: string): CsvResult {
     }
     const lektion = Number(parts[0]?.trim());
     const latein = parts[1]?.trim() ?? "";
-    const deutsch = parts.slice(2).join(";").trim();
-    if (!Number.isInteger(lektion) || lektion < 1 || !latein || !deutsch) {
+    const deutsch = splitDeutsch(parts.slice(2).join(";"));
+    if (!Number.isInteger(lektion) || lektion < 1 || !latein || deutsch.length === 0) {
       skipped += 1;
       continue;
     }
