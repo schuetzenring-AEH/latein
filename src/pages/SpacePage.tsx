@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button, cx } from "../components/ui";
 import { useStore } from "../context/Store";
-import { arenaPracticeState, readArenaLink, runOnce, stationPassed, type ArenaRoundLink } from "../lib/arena";
+import { arenaPracticeState, arenaResultText, isLessonStation, readArenaLink, runOnce, stationPassed, type ArenaRoundLink } from "../lib/arena";
 import { PLANETS, planetById, planetIndex } from "../lib/planets";
 import { buildSpaceRound, shuffle } from "../lib/quiz";
 import { isDue } from "../lib/srs";
@@ -124,7 +124,7 @@ function SpaceRound({ setup }: { setup: SetupState }) {
       <section className="min-h-0 flex-1 overflow-y-auto">
         <h1 className="text-3xl font-semibold tracking-tight">Diese Arena ist zu</h1>
         <p className="mt-3 text-stone-600 dark:text-stone-300">Schaffe zuerst den offenen Planeten. Danach geht es weiter.</p>
-        <Link to="/planeten" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zu den Planeten</Link>
+        <Link to="/planeten" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zum Planetenpfad</Link>
       </section>
     );
   }
@@ -135,12 +135,13 @@ function SpaceRound({ setup }: { setup: SetupState }) {
         <h1 className="text-3xl font-semibold tracking-tight">Runde nicht möglich</h1>
         <p className="mt-3 text-stone-600 dark:text-stone-300">{built.error ?? "Keine Wörter in dieser Auswahl."}</p>
         <Link to={back} className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">
-          {setup.arenaId ? "Zu den Planeten" : "Zur Auswahl"}
+          {setup.arenaId ? "Zum Planetenpfad" : "Zur Auswahl"}
         </Link>
       </section>
     );
   }
 
+  const rule = setup.arena && isLessonStation(setup.arena.station) ? "lesson" : setup.arena ? "boss" : "free";
   if (outcome) return <Result end={outcome.end} total={built.items.length} setup={setup} cleared={outcome.cleared} />;
   return (
     <Play
@@ -148,6 +149,7 @@ function SpaceRound({ setup }: { setup: SetupState }) {
       fellBack={built.fellBack}
       profileId={profileId.current}
       onEnd={onEnd}
+      rule={rule}
       banner={planet ? `${planet.latin} · ${planet.deutsch}` : undefined}
     />
   );
@@ -158,12 +160,14 @@ function Play({
   fellBack,
   profileId,
   onEnd,
+  rule,
   banner,
 }: {
   items: readonly SpaceItem[];
   fellBack: boolean;
   profileId: string;
   onEnd: (end: SpaceEnd) => void;
+  rule: "free" | "lesson" | "boss";
   banner?: string;
 }) {
   const { recordAnswer } = useStore();
@@ -197,8 +201,9 @@ function Play({
       onBeat: setBeat,
       onAnswer: (vocabId, correct) => recordRef.current(profileRef.current, vocabId, correct),
       onEnd,
+      rule,
     });
-  }, [items, onEnd]);
+  }, [items, onEnd, rule]);
 
   useEffect(() => {
     if (beat.id > 0 && beat.mode === "ask" && beat.prompt && beat.promptLang) speakText(beat.prompt, beat.promptLang);
@@ -330,6 +335,7 @@ function Result({ end, total, setup, cleared }: { end: SpaceEnd; total: number; 
   const missedIds = end.missed.map((item) => item.vocabId);
   const passed = link ? stationPassed(link.station, missedIds.length, failed) : !failed;
   const arenaNote = link ? arenaMessage(link.station, passed, link.practice, index, cleared) : null;
+  const showMisses = end.missed.length > 0 && (link ? !passed : failed);
   const arenaBack = link
     ? link.practice
       ? arenaPracticeState(store.vocab, link, missedIds, passed)
@@ -341,7 +347,7 @@ function Result({ end, total, setup, cleared }: { end: SpaceEnd; total: number; 
       <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">{planet ? planet.latin : "Weltraum"}</p>
       {planet && <p className="mt-1 text-stone-500 dark:text-stone-400">{planet.deutsch}</p>}
       <h1 className="mt-2 text-4xl font-semibold tracking-tight">Runde beendet</h1>
-      <p className="mt-3 text-lg text-stone-600 dark:text-stone-300">{endReason(end, total)}</p>
+      <p className="mt-3 text-lg text-stone-600 dark:text-stone-300">{endReason(end, total, Boolean(link && isLessonStation(link.station)))}</p>
       {arenaNote && <p className="mt-2 text-lg font-semibold">{arenaNote}</p>}
       <dl className="mt-6 grid grid-cols-2 gap-3">
         <Stat label="Hülle" value={`${end.hull} von ${HULL_MAX}`} />
@@ -349,7 +355,7 @@ function Result({ end, total, setup, cleared }: { end: SpaceEnd; total: number; 
         <Stat label="Richtige Vokabeln" value={String(end.correct)} />
         <Stat label="Falsch" value={String(end.wrong)} />
       </dl>
-      {failed && end.missed.length > 0 && (
+      {showMisses && (
         <div className="mt-8">
           <h2 className="text-xl font-semibold tracking-tight">Falsche Wörter</h2>
           <p className="mt-1 text-stone-600 dark:text-stone-300">So gehören die Paare richtig zusammen.</p>
@@ -370,7 +376,7 @@ function Result({ end, total, setup, cleared }: { end: SpaceEnd; total: number; 
         ) : (
           <>
             <Button onClick={() => navigate("/weltraum", { replace: true, state: { ...setup, nonce: Date.now() } })}>Nochmal</Button>
-            <Button variant="secondary" onClick={() => navigate(back)}>{setup.arenaId ? "Zu den Planeten" : "Zur Auswahl"}</Button>
+            <Button variant="secondary" onClick={() => navigate(back)}>{setup.arenaId ? "Zum Planetenpfad" : "Zur Auswahl"}</Button>
           </>
         )}
       </div>
@@ -388,15 +394,18 @@ function Stat({ label, value }: { label: string; value: string }) {
 }
 
 function arenaMessage(station: ArenaRoundLink["station"], passed: boolean, practice: boolean, index: number, cleared: number | null): string | null {
-  if (!passed) return "Diese Station zählt noch nicht. Sie beginnt noch einmal.";
-  if (station !== "boss-write") return "Diese Station ist geschafft.";
-  if (practice || cleared === null || index < cleared) return "Übung beendet. Der Pfad bleibt, wo er ist.";
-  const next = PLANETS[index + 1];
-  if (!next) return "Geschafft. Alle Arenen sind geschafft.";
-  return `Geschafft. ${next.latin} ist jetzt offen.`;
+  if (practice && station === "boss-write" && passed) return "Übung beendet. Der Pfad bleibt, wo er ist.";
+  if (station === "boss-write" && passed && !practice && cleared !== null && index >= cleared) {
+    const next = PLANETS[index + 1];
+    if (!next) return "Geschafft. Alle Arenen sind geschafft.";
+    return `Geschafft. ${next.latin} ist jetzt offen.`;
+  }
+  return arenaResultText(station, passed);
 }
 
-function endReason(end: SpaceHud, total: number): string {
+function endReason(end: SpaceHud, total: number, lessonRound: boolean): string {
+  if (lessonRound && end.correct + end.wrong >= total) return "Alle Wörter waren dran.";
+  if (end.wrong > 1 && !lessonRound) return "Mehr als ein Fehler.";
   if (end.hull <= 0 && end.lives <= 0) return "Hülle und Leben sind aufgebraucht.";
   if (end.hull <= 0) return "Die Hülle ist aufgebraucht.";
   if (end.lives <= 0) return "Keine Leben mehr.";

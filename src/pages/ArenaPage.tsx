@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui";
 import { useStore } from "../context/Store";
-import { freshArenaRun, isLessonStation, readArenaRun, runOnce, stationTitle, wordsForStation } from "../lib/arena";
+import { freshArenaRun, isLessonStation, lessonStars, readArenaRun, runOnce, stationTitle, wordsForStation } from "../lib/arena";
+import { LessonStars } from "../components/LessonStars";
 import { arenaStatus, planetById, planetIndex, planetLessons } from "../lib/planets";
 import type { ArenaRun, ArenaStationId, Direction, Variant } from "../types";
 
@@ -118,7 +119,7 @@ function ArenaStep({
           <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">{planet?.latin}</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight">Übung beendet</h1>
           <p className="mt-3 text-stone-600 dark:text-stone-300">Dieser Planet war schon geschafft. Der Pfad bleibt, wo er ist.</p>
-          <Link to="/planeten" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zu den Planeten</Link>
+          <Link to="/planeten" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zum Planetenpfad</Link>
         </section>
       );
     }
@@ -151,10 +152,14 @@ function ArenaStep({
         {practice ? " · Übung" : ""}
       </p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">{stationTitle(run.station)}</h1>
+      <div className="mt-3 flex items-center gap-2">
+        <LessonStars stars={lessonStars(run)} />
+        <p className="text-sm text-stone-500">{lessonStars(run).filter(Boolean).length} von 6 Sternen</p>
+      </div>
       <p className="mt-3 text-stone-600 dark:text-stone-300">
         {boss
           ? bossCopy(run.station, words.length)
-          : `Lektion ${lesson} · ${run.lessonIndex + 1} von ${lessons.length}. ${words.length} Wörter.`}
+          : `Lektion ${lesson} · ${run.lessonIndex + 1} von ${lessons.length}. ${words.length} Wörter. ${ruleCopy(run.station)}`}
       </p>
       {choose && (
         <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -167,12 +172,17 @@ function ArenaStep({
           {words.length === 0 ? "Keine Wörter" : "Starten"}
         </Button>
       )}
-      <Link to="/planeten" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zu den Planeten</Link>
+      <Link to="/planeten" className="mt-6 inline-flex min-h-12 items-center font-semibold text-teal-800 underline dark:text-teal-300">Zum Planetenpfad</Link>
     </section>
   );
 }
 
+function ruleCopy(station: ArenaStationId): string {
+  if (station === "write") return "Artikel und Klammern zählen nicht. Ab drei Fehlern fehlt der Stern.";
+  return "Ab drei Fehlern fehlt der Stern. Die Runde wird trotzdem zu Ende gespielt.";
+}
+
 function bossCopy(station: ArenaStationId, count: number): string {
-  if (station === "boss-write") return `${count} Wörter tippen. Nur ein Fehler ist erlaubt.`;
-  return `${count} Wörter im Weltraum. Verloren ist die Probe, wenn Hülle oder Leben auf 0 fallen.`;
+  if (station === "boss-write") return `${count} Wörter tippen. Höchstens ein Fehler. Artikel und Klammern zählen nicht.`;
+  return `${count} Wörter im Weltraum. Höchstens ein Fehler. Die Hülle darf nicht auf 0 fallen.`;
 }

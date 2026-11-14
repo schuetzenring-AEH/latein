@@ -1,73 +1,35 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { cx } from "./ui";
+import { isLessonStation, stationKey } from "../lib/arena";
 import { PLANETS, type ArenaStatus, type Planet } from "../lib/planets";
-import type { ArenaRun } from "../types";
+import type { ArenaRun, ArenaStationId } from "../types";
 
-const WIDTH = 340;
-const HEIGHT = 1080;
-const STEPS = 21;
-
-const LOOK: Record<string, { size: number; disc: string; ring?: string }> = {
-  mercurius: { size: 46, disc: "radial-gradient(circle at 32% 32%, #f3efe6, #9a9386 46%, #3f3b35)" },
-  venus: { size: 58, disc: "radial-gradient(circle at 32% 32%, #fff6d8, #e2b54a 42%, #a56b22)" },
-  mars: { size: 50, disc: "radial-gradient(circle at 32% 32%, #f0b8a0, #c45a3a 46%, #6e2618)" },
-  iuppiter: { size: 72, disc: "radial-gradient(circle at 32% 30%, #f3e2c2, #d7a15a 28%, #c4784a 46%, #e6d2a8 62%, #b07a45)" },
-  saturnus: { size: 64, disc: "radial-gradient(circle at 32% 32%, #fff4d2, #e6c98a 48%, #b08d4e)", ring: "#f3e2b0" },
-  uranus: { size: 56, disc: "radial-gradient(circle at 32% 32%, #e7fffb, #7fd6d0 48%, #2f8f93)" },
-  neptunus: { size: 56, disc: "radial-gradient(circle at 32% 32%, #d9e6ff, #4168d6 50%, #1a2d78)" },
-  terra: { size: 60, disc: "radial-gradient(circle at 32% 32%, #d7ffe8, #3cb7e0 36%, #2f9a55 58%, #1d4e8f)" },
-  luna: { size: 42, disc: "radial-gradient(circle at 32% 32%, #ffffff, #c9cdd4 48%, #6d7380)" },
-  sol: { size: 78, disc: "radial-gradient(circle at 35% 35%, #fff7d6, #ffd15a 40%, #f08a1a 72%, #e25a12)" },
+const LOOK: Record<string, { disc: string; ring?: string }> = {
+  neptunus: { disc: "radial-gradient(circle at 32% 32%, #d9e6ff, #4168d6 50%, #1a2d78)" },
+  uranus: { disc: "radial-gradient(circle at 32% 32%, #e7fffb, #7fd6d0 48%, #2f8f93)" },
+  saturnus: { disc: "radial-gradient(circle at 32% 32%, #fff4d2, #e6c98a 48%, #b08d4e)", ring: "#f3e2b0" },
+  iuppiter: { disc: "radial-gradient(circle at 32% 30%, #f3e2c2, #d7a15a 28%, #c4784a 46%, #e6d2a8 62%, #b07a45)" },
+  mars: { disc: "radial-gradient(circle at 32% 32%, #f0b8a0, #c45a3a 46%, #6e2618)" },
+  venus: { disc: "radial-gradient(circle at 32% 32%, #fff6d8, #e2b54a 42%, #a56b22)" },
+  mercurius: { disc: "radial-gradient(circle at 32% 32%, #f3efe6, #9a9386 46%, #3f3b35)" },
+  terra: { disc: "radial-gradient(circle at 32% 32%, #d7ffe8, #3cb7e0 36%, #2f9a55 58%, #1d4e8f)" },
+  luna: { disc: "radial-gradient(circle at 32% 32%, #ffffff, #c9cdd4 48%, #6d7380)" },
+  sol: { disc: "radial-gradient(circle at 35% 35%, #fff7d6, #ffd15a 40%, #f08a1a 72%, #e25a12)" },
 };
 
-function pointFor(index: number): { x: number; y: number } {
-  const span = PLANETS.length - 1;
-  const y = 1000 - (index / span) * 920;
-  const x = 170 + Math.sin(index * 0.9) * 86;
-  return { x, y };
-}
+const LESSON_CHIPS = [
+  { id: "recognize", short: "L→D", title: "Latein → Deutsch" },
+  { id: "reverse", short: "D→L", title: "Deutsch → Latein" },
+  { id: "write", short: "Schr.", title: "Schreiben" },
+] as const;
 
-function trailPath(): string {
-  const points = PLANETS.map((_, index) => pointFor(index));
-  const first = points[0];
-  if (!first) return "";
-  let path = `M ${first.x} ${first.y}`;
-  for (let index = 0; index < points.length - 1; index += 1) {
-    const from = points[index];
-    const to = points[index + 1];
-    if (!from || !to) continue;
-    const midY = (from.y + to.y) / 2;
-    path += ` C ${from.x} ${midY}, ${to.x} ${midY}, ${to.x} ${to.y}`;
-  }
-  return path;
-}
+const PROBE_CHIPS = [
+  { id: "boss-l2d", short: "L→D", title: "Probe, Weltraum, Latein → Deutsch" },
+  { id: "boss-d2l", short: "D→L", title: "Probe, Weltraum, Deutsch → Latein" },
+  { id: "boss-write", short: "Schr.", title: "Probe Schreiben" },
+] as const;
 
-function stars(): { x: number; y: number; r: number; o: number }[] {
-  let seed = 19;
-  const next = () => {
-    seed = (seed * 48271) % 2147483647;
-    return seed / 2147483647;
-  };
-  return Array.from({ length: 90 }, () => ({
-    x: next() * WIDTH,
-    y: next() * HEIGHT,
-    r: 0.4 + next() * 1.3,
-    o: 0.35 + next() * 0.65,
-  }));
-}
-
-const STARFIELD = stars();
-const TRAIL = trailPath();
-
-function innerProgress(run: ArenaRun | undefined, planetId: string, status: ArenaStatus): number {
-  if (status === "done") return 1;
-  if (status !== "open" || !run || run.planetId !== planetId) return 0;
-  if (run.station === "boss-l2d") return 18 / STEPS;
-  if (run.station === "boss-d2l") return 19 / STEPS;
-  if (run.station === "boss-write") return 20 / STEPS;
-  const station = run.station === "recognize" ? 0 : run.station === "reverse" ? 1 : 2;
-  return (run.lessonIndex * 3 + station) / STEPS;
-}
+type ChipState = "done" | "here" | "open" | "wait" | "dim";
 
 function placeLabel(run: ArenaRun | undefined, planet: Planet, status: ArenaStatus): string {
   if (status === "locked") return "Gesperrt";
@@ -80,6 +42,67 @@ function placeLabel(run: ArenaRun | undefined, planet: Planet, status: ArenaStat
   return `Lektion ${planet.from + run.lessonIndex} · ${name}`;
 }
 
+function chipState(
+  status: ArenaStatus,
+  planetId: string,
+  lessonIndex: number,
+  station: ArenaStationId,
+  run: ArenaRun | undefined,
+  finished: boolean,
+): ChipState {
+  if (finished || status === "done") {
+    if (finished && planetId === "sol" && station === "boss-write") return "here";
+    return "done";
+  }
+  if (status === "locked") return "dim";
+  const active = run?.planetId === planetId ? run : undefined;
+  if (!active) return lessonIndex === 0 && station === "recognize" ? "here" : "wait";
+  if (isLessonStation(station)) {
+    if ((active.passedStations ?? []).includes(stationKey(lessonIndex, station))) return "done";
+    if (isLessonStation(active.station) && active.lessonIndex === lessonIndex && active.station === station) return "here";
+    const order = station === "recognize" ? 0 : station === "reverse" ? 1 : 2;
+    const currentOrder = active.station === "recognize" ? 0 : active.station === "reverse" ? 1 : active.station === "write" ? 2 : 3;
+    if (lessonIndex < active.lessonIndex || (lessonIndex === active.lessonIndex && order < currentOrder)) return "open";
+    return "wait";
+  }
+  if (!isLessonStation(active.station)) {
+    const probeOrder = station === "boss-l2d" ? 0 : station === "boss-d2l" ? 1 : 2;
+    const currentProbe = active.station === "boss-l2d" ? 0 : active.station === "boss-d2l" ? 1 : 2;
+    if (probeOrder < currentProbe) return "done";
+    if (probeOrder === currentProbe) return "here";
+  }
+  return "wait";
+}
+
+function Chip({ state, short, title }: { state: ChipState; short: string; title: string }) {
+  return (
+    <span
+      title={title}
+      className={cx(
+        "relative rounded-md px-1 py-1 text-center text-[11px] font-semibold leading-none",
+        state === "done" && "bg-amber-300 text-amber-950",
+        state === "here" && "bg-teal-300 text-teal-950 ring-2 ring-white",
+        state === "open" && "text-amber-200 ring-1 ring-amber-300",
+        state === "wait" && "text-stone-300 ring-1 ring-stone-500",
+        state === "dim" && "text-stone-500 ring-1 ring-stone-700",
+      )}
+    >
+      {state === "here" && <Ship />}
+      {short}
+    </span>
+  );
+}
+
+function Ship() {
+  return (
+    <svg viewBox="0 0 32 40" className="pointer-events-none absolute -top-6 left-1/2 h-6 w-5 -translate-x-1/2 rotate-180 drop-shadow-[0_0_8px_rgba(94,234,212,0.95)]" aria-hidden="true">
+      <path d="M16 1 L25 28 L16 23 L7 28 Z" fill="#f8fafc" />
+      <path d="M16 22 L16 36" stroke="#5eead4" strokeWidth="3" strokeLinecap="round" />
+      <circle cx="16" cy="14" r="2.2" fill="#0f766e" />
+    </svg>
+  );
+}
+
 export function PlanetPath({
   cleared,
   run,
@@ -89,32 +112,18 @@ export function PlanetPath({
   run: ArenaRun | undefined;
   onOpen: (planetId: string) => void;
 }) {
-  const pathRef = useRef<SVGPathElement>(null);
   const hereRef = useRef<HTMLButtonElement>(null);
-  const [ship, setShip] = useState<{ x: number; y: number; angle: number } | null>(null);
-  const openIndex = Math.min(cleared, PLANETS.length - 1);
   const finished = cleared >= PLANETS.length;
+  const openIndex = Math.min(cleared, PLANETS.length - 1);
   const here = PLANETS[finished ? PLANETS.length - 1 : openIndex];
-  const inner = here ? innerProgress(finished ? undefined : run, here.id, finished ? "done" : "open") : 0;
-  const along = finished ? 1 : Math.min(1, (cleared + inner) / (PLANETS.length - 1));
-
-  useEffect(() => {
-    const trail = pathRef.current;
-    if (!trail) return;
-    const total = trail.getTotalLength();
-    const distance = along * total;
-    const at = trail.getPointAtLength(distance);
-    const next = trail.getPointAtLength(Math.min(total, distance + 12));
-    const angle = Math.atan2(next.y - at.y, next.x - at.x) * (180 / Math.PI) + 90;
-    setShip({ x: at.x, y: at.y, angle });
-  }, [along]);
+  const along = finished ? 1 : cleared / PLANETS.length;
 
   useEffect(() => {
     hereRef.current?.scrollIntoView({ block: "center" });
   }, []);
 
   const summary = finished
-    ? "Alle zehn Arenen sind geschafft."
+    ? "Alle zehn Stationen des Pfads sind geschafft."
     : here
       ? `${here.latin}: ${placeLabel(run, here, "open")}`
       : "";
@@ -124,8 +133,8 @@ export function PlanetPath({
       <div className="sticky top-0 z-20 bg-[#07101c]/95 px-4 pb-3 pt-4 backdrop-blur">
         <div className="flex items-end justify-between gap-3">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-200/80">Dein Weg</p>
-            <h1 className="text-3xl font-semibold tracking-tight">Planeten</h1>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-200/80">Von außen nach innen</p>
+            <h1 className="text-3xl font-semibold tracking-tight">Planetenpfad</h1>
           </div>
           <p className="text-right">
             <span className="text-3xl font-semibold tabular-nums">{Math.min(cleared, PLANETS.length)}</span>
@@ -133,111 +142,80 @@ export function PlanetPath({
           </p>
         </div>
         <p className="mt-2 text-stone-300">{summary}</p>
-        <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10" role="progressbar" aria-valuemin={0} aria-valuemax={PLANETS.length} aria-valuenow={Math.min(cleared, PLANETS.length)} aria-label="Arenen geschafft">
+        <p className="mt-1 text-xs text-stone-400">L→D Latein nach Deutsch · D→L Deutsch nach Latein · Schr. Schreiben</p>
+        <div className="mt-3 h-2 overflow-hidden rounded-full bg-white/10" role="progressbar" aria-valuemin={0} aria-valuemax={PLANETS.length} aria-valuenow={Math.min(cleared, PLANETS.length)} aria-label="Planeten geschafft">
           <div className="h-full rounded-full bg-teal-300" style={{ width: `${along * 100}%` }} />
         </div>
       </div>
-      <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-b-3xl" style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}>
-        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="absolute inset-0 h-full w-full" aria-hidden="true">
-          <defs>
-            <filter id="planet-trail-glow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3.5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          {STARFIELD.map((star, index) => (
-            <circle key={index} cx={star.x} cy={star.y} r={star.r} fill="#fff" opacity={star.o} />
-          ))}
-          <path d={TRAIL} fill="none" stroke="#243044" strokeWidth="8" strokeLinecap="round" />
-          <path
-            ref={pathRef}
-            d={TRAIL}
-            fill="none"
-            stroke="#5eead4"
-            strokeWidth="4"
-            strokeLinecap="round"
-            filter="url(#planet-trail-glow)"
-            pathLength={100}
-            strokeDasharray={`${along * 100} 100`}
-          />
-        </svg>
+      <ol className="relative mx-auto grid max-w-md gap-1 px-3 pb-8 pt-2">
+        <span className="absolute bottom-6 left-9 top-2 w-1 rounded-full bg-slate-800" aria-hidden="true" />
         {PLANETS.map((planet, index) => {
           const status: ArenaStatus = finished ? "done" : index < cleared ? "done" : index === cleared ? "open" : "locked";
-          const spot = pointFor(index);
-          const look = LOOK[planet.id] ?? { size: 52, disc: "#888" };
-          const labelOnRight = spot.x < WIDTH / 2;
-          const current = status === "open" || (finished && index === PLANETS.length - 1);
+          const look = LOOK[planet.id] ?? { disc: "#888" };
+          const current = status === "open" || (finished && planet.id === "sol");
           return (
-            <button
-              key={planet.id}
-              ref={current ? hereRef : undefined}
-              type="button"
-              disabled={status === "locked"}
-              onClick={() => onOpen(planet.id)}
-              className="absolute -translate-x-1/2 -translate-y-1/2 disabled:cursor-not-allowed"
-              style={{ left: `${(spot.x / WIDTH) * 100}%`, top: `${(spot.y / HEIGHT) * 100}%` }}
-              aria-label={`${planet.latin}, ${planet.deutsch}, Lektion ${planet.from} bis ${planet.to}, ${placeLabel(run, planet, status)}`}
-            >
-              <span
-                className={cx("relative grid place-items-center", status === "locked" && "opacity-40")}
-                style={{ width: look.size + 18, height: look.size + 18 }}
+            <li key={planet.id}>
+              <button
+                ref={current ? hereRef : undefined}
+                type="button"
+                disabled={status === "locked"}
+                onClick={() => onOpen(planet.id)}
+                className="grid w-full grid-cols-[4.25rem_1fr] gap-2 rounded-2xl px-1 py-2 text-left disabled:cursor-not-allowed"
+                aria-label={`${planet.latin}, ${planet.deutsch}, Lektion ${planet.from} bis ${planet.to}, ${placeLabel(run, planet, status)}`}
               >
-                {status === "open" && (
-                  <svg viewBox="0 0 36 36" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
-                    <circle cx="18" cy="18" r="16" fill="none" stroke="#1e293b" strokeWidth="2" />
-                    <circle
-                      cx="18"
-                      cy="18"
-                      r="16"
-                      fill="none"
-                      stroke="#5eead4"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeDasharray={`${innerProgress(run, planet.id, status) * 100.5} 100.5`}
-                    />
-                  </svg>
-                )}
-                <span
-                  className={cx("relative rounded-full shadow-lg", planet.id === "sol" && "shadow-[0_0_28px_8px_rgba(255,180,40,0.55)]")}
-                  style={{ width: look.size, height: look.size, background: look.disc }}
-                />
-                {look.ring && (
-                  <svg viewBox="0 0 100 100" className="absolute inset-[-18%] h-[136%] w-[136%] overflow-visible" aria-hidden="true">
-                    <ellipse cx="50" cy="50" rx="46" ry="16" fill="none" stroke={look.ring} strokeWidth="4" transform="rotate(-24 50 50)" />
-                  </svg>
-                )}
-              </span>
-              <span className={cx("absolute top-1/2 w-28 -translate-y-1/2", labelOnRight ? "left-[calc(100%+0.4rem)] text-left" : "right-[calc(100%+0.4rem)] text-right")}>
-                <span lang="la" className="block text-base font-semibold leading-tight">{planet.latin}</span>
-                <span className="block text-xs text-stone-300">{planet.deutsch} · {planet.from}–{planet.to}</span>
-                <span className={cx("block text-xs font-semibold", status === "locked" ? "text-stone-500" : "text-teal-200")}>
-                  {placeLabel(run, planet, status)}
+                <span className={cx("relative z-10 grid place-items-center", status === "locked" && "opacity-40")}>
+                  {look.ring && (
+                    <span className="absolute h-3 w-14 rounded-full border-2" style={{ borderColor: look.ring, transform: "rotate(-18deg)" }} />
+                  )}
+                  <span
+                    className={cx("relative h-12 w-12 rounded-full shadow-lg", planet.id === "sol" && "shadow-[0_0_22px_6px_rgba(255,180,40,0.55)]", status === "done" && "ring-2 ring-amber-300")}
+                    style={{ background: look.disc }}
+                  />
                 </span>
-              </span>
-            </button>
+                <span className={cx("min-w-0", status === "locked" && "opacity-45")}>
+                  <span className="flex items-baseline justify-between gap-2">
+                    <span lang="la" className="text-lg font-semibold leading-tight">{planet.latin}</span>
+                    <span className="text-xs text-stone-400">{planet.deutsch}</span>
+                  </span>
+                  <span className="mt-1 grid grid-cols-[2.2rem_1fr_1fr_1fr] items-center gap-1">
+                    <span className="text-[10px] font-semibold uppercase tracking-wide text-stone-500">Lekt.</span>
+                    {LESSON_CHIPS.map((chip) => (
+                      <span key={chip.id} className="text-center text-[10px] font-semibold text-stone-400">{chip.short}</span>
+                    ))}
+                  </span>
+                  {[0, 1, 2, 3, 4, 5].map((lessonIndex) => {
+                    const states = LESSON_CHIPS.map((chip) => chipState(status, planet.id, lessonIndex, chip.id, run, finished));
+                    return (
+                      <span key={lessonIndex} className={cx("mt-1 grid grid-cols-[2.2rem_1fr_1fr_1fr] items-center gap-1", states.includes("here") && "pt-6")}>
+                        <span className="text-xs font-semibold text-stone-300">{planet.from + lessonIndex}</span>
+                        {LESSON_CHIPS.map((chip, chipIndex) => (
+                          <Chip
+                            key={chip.id}
+                            short={chip.short}
+                            title={`Lektion ${planet.from + lessonIndex}, ${chip.title}`}
+                            state={states[chipIndex]}
+                          />
+                        ))}
+                      </span>
+                    );
+                  })}
+                  {(() => {
+                    const states = PROBE_CHIPS.map((chip) => chipState(status, planet.id, 6, chip.id, run, finished));
+                    return (
+                      <span className={cx("mt-1 grid grid-cols-[2.2rem_1fr_1fr_1fr] items-center gap-1", states.includes("here") && "pt-6")}>
+                        <span className="text-[10px] font-semibold uppercase tracking-wide text-stone-500">Probe</span>
+                        {PROBE_CHIPS.map((chip, chipIndex) => (
+                          <Chip key={chip.id} short={chip.short} title={chip.title} state={states[chipIndex]} />
+                        ))}
+                      </span>
+                    );
+                  })()}
+                </span>
+              </button>
+            </li>
           );
         })}
-        {ship && (
-          <span
-            className="pointer-events-none absolute z-10"
-            style={{
-              left: `${(ship.x / WIDTH) * 100}%`,
-              top: `${(ship.y / HEIGHT) * 100}%`,
-              transform: `translate(-50%, -50%) rotate(${ship.angle}deg) translate(0, -30px)`,
-            }}
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 32 40" className="h-9 w-8 drop-shadow-[0_0_8px_rgba(94,234,212,0.9)]">
-              <path d="M16 1 L25 28 L16 23 L7 28 Z" fill="#f8fafc" />
-              <path d="M16 22 L16 36" stroke="#5eead4" strokeWidth="3" strokeLinecap="round" />
-              <circle cx="16" cy="14" r="2.2" fill="#0f766e" />
-            </svg>
-          </span>
-        )}
-      </div>
+      </ol>
     </section>
   );
 }

@@ -178,8 +178,10 @@ export function startWeltraum(options: {
   onBeat: (beat: SpaceBeat) => void;
   onAnswer: (vocabId: string, correct: boolean) => void;
   onEnd: (end: SpaceEnd) => void;
+  /** Lesson rounds play every word. Boss rounds end on the second miss or an empty hull. */
+  rule?: "free" | "lesson" | "boss";
 }): () => void {
-  const { field, canvas, items, onHud, onBeat, onAnswer, onEnd } = options;
+  const { field, canvas, items, onHud, onBeat, onAnswer, onEnd, rule = "free" } = options;
   const context = canvas.getContext("2d");
   if (!context) return () => {};
   const ctx = context;
@@ -558,7 +560,14 @@ export function startWeltraum(options: {
   function damageHull() {
     hull = Math.max(0, hull - 1);
     publishHud();
-    if (hull <= 0 && phase === "ask" && !resolved) finish();
+    if (rule !== "lesson" && hull <= 0 && phase === "ask" && !resolved) finish();
+  }
+
+  function roundOver(): boolean {
+    if (cursor >= items.length) return true;
+    if (rule === "lesson") return false;
+    if (rule === "boss") return hull <= 0 || wrongCount > 1;
+    return hull <= 0 || lives <= 0;
   }
 
   function update(dt: number, now: number) {
@@ -645,7 +654,7 @@ export function startWeltraum(options: {
       feedbackLeft -= dt;
       if (feedbackLeft <= 0) {
         planets = [];
-        if (lives <= 0 || hull <= 0 || cursor >= items.length) finish();
+        if (roundOver()) finish();
         else beginAsk();
       }
     }

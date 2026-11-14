@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../context/Store";
-import { arenaPracticeState, readArenaLink, runOnce, stationPassed, type ArenaRoundLink } from "../lib/arena";
+import { arenaPracticeState, arenaResultText, readArenaLink, runOnce, stationPassed, type ArenaRoundLink } from "../lib/arena";
 import { buildRound, type RoundItem } from "../lib/quiz";
 import { endMessage, streakMessage } from "../lib/messages";
 import { isDue } from "../lib/srs";
@@ -153,16 +153,12 @@ function Round({ setup }: { setup: SetupState }) {
         <p className="text-sm font-semibold uppercase tracking-wide text-stone-500">Runde beendet</p>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight">{correctCount} von {total} richtig.</h1>
         <p className="mt-3 text-lg text-stone-600 dark:text-stone-300">
-          {arena?.station === "boss-write" && !passed
-            ? "Mehr als ein Fehler. Die Schreibprobe beginnt neu."
-            : arena?.station === "boss-write" && passed && !arena.practice
-              ? "Die Arena ist geschafft."
-              : endMessage(correctCount, total)}
+          {arena ? arenaResultText(arena.station, passed, arena.practice) : endMessage(correctCount, total)}
         </p>
         <div className="mt-8 grid gap-3">
           {back ? (
             <Button onClick={() => navigate(arena?.station === "boss-write" && passed && !arena.practice ? "/planeten" : back.pathname, { state: arena?.station === "boss-write" && passed && !arena.practice ? undefined : back.state })}>
-              {arena?.station === "boss-write" && passed && !arena.practice ? "Zu den Planeten" : "Weiter in der Arena"}
+              {arena?.station === "boss-write" && passed && !arena.practice ? "Zum Planetenpfad" : "Weiter in der Arena"}
             </Button>
           ) : (
             <>

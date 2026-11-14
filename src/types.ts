@@ -49,6 +49,8 @@ export type ArenaRun = {
   lessonIndex: number;
   station: ArenaStationId;
   missedIds: string[];
+  /** Lesson stations already passed with fewer than three errors. Keys are "lessonIndex:station". */
+  passedStations: string[];
 };
 
 export type Profile = {
@@ -56,7 +58,7 @@ export type Profile = {
   name: string;
   /** SHA-256 hex. Only named accounts have one. Free profiles stay without it. */
   passwordHash?: string;
-  /** Arenas cleared in path order. Missing means none, so only Mercurius is open. */
+  /** Arenas cleared in path order. Missing means none, so only Neptunus is open. */
   arenasCleared?: number;
   /** Saved step of the open arena. Cleared planets do not keep a run. */
   arenaRun?: ArenaRun;

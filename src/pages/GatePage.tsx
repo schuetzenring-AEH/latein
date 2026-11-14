@@ -54,7 +54,7 @@ export function GatePage() {
         <section>
           <h1 className="text-3xl font-semibold tracking-tight">Wie willst du spielen?</h1>
           <p className="mt-2 text-stone-600 dark:text-stone-300">
-            Frei spielen geht ohne Konto. Mit Namen schaltest du die Planeten frei.
+            Frei spielen geht ohne Konto. Mit Namen schaltest du den Planetenpfad frei.
           </p>
           {panel === "choose" && (
             <div className="mt-6 grid gap-3">

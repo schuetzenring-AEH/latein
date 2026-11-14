@@ -38,7 +38,7 @@ export function Layout({ children }: { children: ReactNode }) {
       && (typeof arenaState?.arena?.arenaId === "string" || typeof arenaState?.arenaId === "string"));
   const links = [
     { to: "/", label: "Üben" },
-    ...(named ? [{ to: "/planeten", label: "Planeten" }] : []),
+    ...(named ? [{ to: "/planeten", label: "Planetenpfad" }] : []),
     { to: "/statistik", label: "Statistik" },
     { to: "/woerter", label: "Wörter" },
   ];

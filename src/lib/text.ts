@@ -25,13 +25,25 @@ function withinTolerance(typed: string, expected: string): boolean {
   return false;
 }
 
+function coreGloss(text: string): string {
+  return text
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/[„“”«»"]/g, " ")
+    .replace(/\b(der|die|das)\b/gi, " ")
+    .toLowerCase()
+    .replace(/[^a-zäöüß\s-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 export function matchesGloss(typed: string, gloss: string): boolean {
-  const input = typed.trim().toLowerCase();
+  const input = coreGloss(typed);
   if (!input) return false;
-  const targets = [gloss, ...gloss.split(/[,;/]/).map((part) => part.trim())];
+  const stripped = gloss.replace(/\([^)]*\)/g, " ");
+  const pieces = [stripped, ...stripped.split(/[,;/]/)];
   const seen = new Set<string>();
-  for (const target of targets) {
-    const expected = target.trim().toLowerCase();
+  for (const piece of pieces) {
+    const expected = coreGloss(piece);
     if (!expected || seen.has(expected)) continue;
     seen.add(expected);
     if (withinTolerance(input, expected)) return true;

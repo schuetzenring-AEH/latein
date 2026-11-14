@@ -5,11 +5,50 @@ import { planetById, planetLessons, type Planet } from "./planets";
 
 export const BOSS_SHOOT_COUNT = 50;
 export const BOSS_WRITE_COUNT = 30;
+export const LESSON_MISS_LIMIT = 3;
+export const BOSS_MISS_LIMIT = 1;
 
+const LESSON_STATIONS = ["recognize", "reverse", "write"] as const;
 const STATION_SET = new Set<string>(ARENA_STATIONS);
 
+export function stationKey(lessonIndex: number, station: ArenaStationId): string {
+  return `${lessonIndex}:${station}`;
+}
+
 export function freshArenaRun(planetId: string): ArenaRun {
-  return { planetId, lessonIndex: 0, station: "recognize", missedIds: [] };
+  return { planetId, lessonIndex: 0, station: "recognize", missedIds: [], passedStations: [] };
+}
+
+export function lessonStars(run: ArenaRun): boolean[] {
+  return [0, 1, 2, 3, 4, 5].map((index) => (
+    LESSON_STATIONS.every((station) => run.passedStations.includes(stationKey(index, station)))
+  ));
+}
+
+function creditBefore(lessonIndex: number, station: ArenaStationId): string[] {
+  const passed: string[] = [];
+  const doneLessons = isLessonStation(station) ? lessonIndex : 6;
+  for (let index = 0; index < doneLessons; index += 1) {
+    for (const name of LESSON_STATIONS) passed.push(stationKey(index, name));
+  }
+  if (!isLessonStation(station)) return passed;
+  if (station === "reverse" || station === "write") passed.push(stationKey(lessonIndex, "recognize"));
+  if (station === "write") passed.push(stationKey(lessonIndex, "reverse"));
+  return passed;
+}
+
+function readPassedStations(value: unknown, lessonIndex: number, station: ArenaStationId): string[] {
+  if (!Array.isArray(value)) return creditBefore(lessonIndex, station);
+  const keys = new Set<string>();
+  for (const item of value) {
+    if (typeof item !== "string") continue;
+    const [lesson, name] = item.split(":");
+    const index = Number(lesson);
+    if (!Number.isInteger(index) || index < 0 || index > 5) continue;
+    if (name !== "recognize" && name !== "reverse" && name !== "write") continue;
+    keys.add(stationKey(index, name));
+  }
+  return [...keys];
 }
 
 export function isLessonStation(station: ArenaStationId): boolean {
@@ -27,7 +66,7 @@ export function readArenaRun(value: unknown): ArenaRun | undefined {
   const missedIds = Array.isArray(item.missedIds)
     ? [...new Set(item.missedIds.filter((id): id is string => typeof id === "string" && id.length > 0))]
     : [];
-  return { planetId: item.planetId, lessonIndex, station, missedIds };
+  return { planetId: item.planetId, lessonIndex, station, missedIds, passedStations: readPassedStations(item.passedStations, lessonIndex, station) };
 }
 
 function step(run: ArenaRun): ArenaRun | "clear" {
@@ -46,12 +85,53 @@ function lessonHasWords(vocab: readonly Vocab[], lesson: number | undefined): bo
   return lesson !== undefined && vocab.some((item) => item.lektion === lesson);
 }
 
+function withStationCredit(run: ArenaRun, passed: boolean): ArenaRun {
+  const key = stationKey(run.lessonIndex, run.station);
+  const passedStations = passed
+    ? [...new Set([...run.passedStations, key])]
+    : run.passedStations.filter((item) => item !== key);
+  return { ...run, passedStations };
+}
+
+function markEmptyLesson(run: ArenaRun): ArenaRun {
+  const passedStations = [...run.passedStations];
+  for (const station of LESSON_STATIONS) {
+    const key = stationKey(run.lessonIndex, station);
+    if (!passedStations.includes(key)) passedStations.push(key);
+  }
+  return { ...run, passedStations };
+}
+
+function stepForward(run: ArenaRun): ArenaRun | "clear" {
+  let next = step(run);
+  while (next !== "clear" && isLessonStation(next.station) && next.passedStations.includes(stationKey(next.lessonIndex, next.station))) {
+    next = step(next);
+  }
+  return next;
+}
+
+function firstOpenLesson(run: ArenaRun, planet: Planet, vocab: readonly Vocab[]): ArenaRun | null {
+  const lessons = planetLessons(planet);
+  for (let index = 0; index < lessons.length; index += 1) {
+    if (!lessonHasWords(vocab, lessons[index])) continue;
+    for (const station of LESSON_STATIONS) {
+      if (!run.passedStations.includes(stationKey(index, station))) {
+        return { ...run, lessonIndex: index, station };
+      }
+    }
+  }
+  return null;
+}
+
 function skipEmpty(run: ArenaRun, planet: Planet, vocab: readonly Vocab[]): ArenaRun | "clear" {
   let current: ArenaRun | "clear" = run;
   const lessons = planetLessons(planet);
   while (current !== "clear" && isLessonStation(current.station)) {
     if (lessonHasWords(vocab, lessons[current.lessonIndex])) return current;
-    current = step(current);
+    const marked = markEmptyLesson(current);
+    const stepped = step(marked);
+    current = stepped === "clear" ? "clear" : stepped;
+    if (current !== "clear" && lessons[current.lessonIndex] === undefined) return current;
   }
   return current;
 }
@@ -65,10 +145,20 @@ export function applyArenaResult(
 ): ArenaRun | "clear" {
   const missed = [...new Set([...run.missedIds, ...missedIds])];
   const withMisses = { ...run, missedIds: missed };
+  if (isLessonStation(withMisses.station)) {
+    const credited = withStationCredit(withMisses, passed);
+    const stepped = stepForward(credited);
+    if (stepped === "clear") return "clear";
+    const next = skipEmpty(stepped, planet, vocab);
+    if (next === "clear" || isLessonStation(next.station)) return next;
+    const gap = firstOpenLesson(next, planet, vocab);
+    return gap ?? next;
+  }
   if (!passed) return withMisses;
+  const gap = firstOpenLesson(withMisses, planet, vocab);
+  if (gap) return gap;
   const next = step(withMisses);
-  if (next === "clear") return "clear";
-  return skipEmpty(next, planet, vocab);
+  return next === "clear" ? "clear" : next;
 }
 
 export function wordsForStation(vocab: readonly Vocab[], planet: Planet, run: ArenaRun): Vocab[] {
@@ -111,10 +201,18 @@ export function arenaPracticeState(vocab: readonly Vocab[], link: ArenaRoundLink
 }
 
 export function stationPassed(station: ArenaStationId, missedCount: number, spaceFailed: boolean): boolean {
-  if (station === "boss-write") return missedCount <= 1;
-  if (station === "boss-l2d" || station === "boss-d2l") return !spaceFailed;
-  if (station === "write") return true;
-  return !spaceFailed;
+  if (isLessonStation(station)) return missedCount < LESSON_MISS_LIMIT;
+  if (spaceFailed) return false;
+  return missedCount <= BOSS_MISS_LIMIT;
+}
+
+export function arenaResultText(station: ArenaStationId, passed: boolean, practice = false): string {
+  if (!passed && isLessonStation(station)) return "Drei Fehler. Die Runde ist zu Ende, der Stern für diese Lektion fehlt noch.";
+  if (!passed) return "Mehr als ein Fehler. Die Probe beginnt neu.";
+  if (isLessonStation(station)) return "Bestanden.";
+  if (practice) return "Diese Station ist geschafft. Der Pfad bleibt, wo er ist.";
+  if (station === "boss-write") return "Die Arena ist geschafft.";
+  return "Diese Probe ist geschafft.";
 }
 
 const onceKeys = new Set<string>();
