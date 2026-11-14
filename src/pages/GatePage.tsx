@@ -52,7 +52,8 @@ export function GatePage() {
           </button>
         </div>
         <section>
-          <h1 className="text-3xl font-semibold tracking-tight">Wie willst du spielen?</h1>
+          <h1 lang="la" className="text-2xl font-semibold tracking-tight sm:text-3xl">Repetitio est mater studiorum</h1>
+          <p className="mt-3 text-xl font-semibold tracking-tight">Wie willst du spielen?</p>
           <p className="mt-2 text-stone-600 dark:text-stone-300">
             Frei spielen geht ohne Konto. Mit Namen schaltest du den Planetenpfad frei.
           </p>
