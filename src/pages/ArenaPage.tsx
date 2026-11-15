@@ -179,11 +179,11 @@ function ArenaStep({
 }
 
 function ruleCopy(station: ArenaStationId): string {
-  if (station === "write") return "Artikel, Klammern und Satzzeichen zählen nicht. Ab drei Fehlern wird diese Übung wiederholt.";
+  if (station === "write") return "Eine Bedeutung reicht. Artikel, Klammern und Satzzeichen zählen nicht. Ab drei Fehlern wird diese Übung wiederholt.";
   return "Ab drei Fehlern wird diese Übung wiederholt. Die Runde wird trotzdem zu Ende gespielt.";
 }
 
 function bossCopy(station: ArenaStationId, count: number): string {
-  if (station === "boss-write") return `${count} Wörter tippen. Höchstens ein Fehler. Artikel, Klammern und Satzzeichen zählen nicht.`;
+  if (station === "boss-write") return `${count} Wörter tippen. Höchstens ein Fehler. Eine Bedeutung reicht. Artikel, Klammern und Satzzeichen zählen nicht.`;
   return `${count} Wörter im Weltraum. Höchstens ein Fehler. Die Hülle darf nicht auf 0 fallen.`;
 }
