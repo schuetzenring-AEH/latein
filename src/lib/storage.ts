@@ -1,6 +1,6 @@
 import { SEED_VOCAB } from "../data/seed";
 import { PLANETS } from "./planets";
-import { isWortart, sameStrings, splitDeutsch } from "./vocab";
+import { isWortart, plainLatin, sameStrings, splitDeutsch } from "./vocab";
 import { readArenaRun } from "./arena";
 import type { Mistake, Profile, ProgressEntry, ProgressMap, Vocab, Wortart } from "../types";
 
@@ -52,7 +52,7 @@ export function writeStored(key: string, value: string): boolean {
 }
 
 export function freshSeed(): Vocab[] {
-  return SEED_VOCAB.map((item) => ({ ...item }));
+  return SEED_VOCAB.map((item) => ({ ...item, latein: plainLatin(item.latein) }));
 }
 
 function normalizeStored(value: unknown): Vocab | null {
@@ -78,7 +78,7 @@ function normalizeStored(value: unknown): Vocab | null {
   const cluster = Array.isArray(item.cluster)
     ? item.cluster.filter((part): part is string => typeof part === "string" && part.trim().length > 0)
     : [];
-  return { id: item.id, lektion: item.lektion, latein: item.latein.trim(), deutsch, wortart, cluster };
+  return { id: item.id, lektion: item.lektion, latein: plainLatin(item.latein), deutsch, wortart, cluster };
 }
 
 function isHash(value: unknown): value is string {
@@ -156,7 +156,9 @@ export function loadVocab(): Vocab[] {
   try {
     const parsed = JSON.parse(raw) as unknown;
     if (!Array.isArray(parsed)) return freshSeed();
-    return mergeNewLessons(parsed.map(normalizeStored).filter((item): item is Vocab => item !== null));
+    const merged = mergeNewLessons(parsed.map(normalizeStored).filter((item): item is Vocab => item !== null));
+    if (raw.includes('"latein": "*') || raw.includes('"latein":"*')) writeStored(KEYS.vocab, JSON.stringify(merged));
+    return merged;
   } catch {
     return freshSeed();
   }

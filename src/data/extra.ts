@@ -21,7 +21,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-5",
     "lektion": 11,
-    "latein": "*regere, regō",
+    "latein": "regere, regō",
     "deutsch": [
       "lenken, leiten"
     ],
@@ -31,7 +31,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-6",
     "lektion": 11,
-    "latein": "*cōnsulere, cōnsulō",
+    "latein": "cōnsulere, cōnsulō",
     "deutsch": [
       "(sich) beraten",
       "(mit Akk.) jemanden um Rat fragen",
@@ -55,7 +55,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-8",
     "lektion": 11,
-    "latein": "*agere, agō",
+    "latein": "agere, agō",
     "deutsch": [
       "durchführen, handeln, verhandeln"
     ],
@@ -65,7 +65,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-9",
     "lektion": 11,
-    "latein": "*dīcere, dīcō",
+    "latein": "dīcere, dīcō",
     "deutsch": [
       "sagen, sprechen"
     ],
@@ -87,7 +87,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-11",
     "lektion": 11,
-    "latein": "*petere, petō",
+    "latein": "petere, petō",
     "deutsch": [
       "bitten, verlangen",
       "angreifen",
@@ -114,7 +114,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-13",
     "lektion": 11,
-    "latein": "*aspicere, aspiciō",
+    "latein": "aspicere, aspiciō",
     "deutsch": [
       "erblicken, ansehen"
     ],
@@ -185,7 +185,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-20",
     "lektion": 11,
-    "latein": "*accipere, accipiō",
+    "latein": "accipere, accipiō",
     "deutsch": [
       "annehmen, aufnehmen",
       "hören"
@@ -198,7 +198,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-21",
     "lektion": 11,
-    "latein": "*cupere, cupiō",
+    "latein": "cupere, cupiō",
     "deutsch": [
       "begehren, wünschen"
     ],
@@ -218,7 +218,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-23",
     "lektion": 11,
-    "latein": "*capere, capiō",
+    "latein": "capere, capiō",
     "deutsch": [
       "fassen, ergreifen",
       "erobern"
@@ -229,7 +229,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-24",
     "lektion": 11,
-    "latein": "*cōnsilium capere",
+    "latein": "cōnsilium capere",
     "deutsch": [
       "einen Plan fassen"
     ],
@@ -275,7 +275,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l11-28",
     "lektion": 11,
-    "latein": "*accēdere, accēdō",
+    "latein": "accēdere, accēdō",
     "deutsch": [
       "herantreten, hinzukommen"
     ],
@@ -295,7 +295,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-2",
     "lektion": 12,
-    "latein": "*rēx, rēgis m.",
+    "latein": "rēx, rēgis m.",
     "deutsch": [
       "der König"
     ],
@@ -321,7 +321,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-4",
     "lektion": 12,
-    "latein": "*uxor, uxōris f.",
+    "latein": "uxor, uxōris f.",
     "deutsch": [
       "die Ehefrau"
     ],
@@ -331,7 +331,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-5",
     "lektion": 12,
-    "latein": "*coniūnx, coniugis m./f.",
+    "latein": "coniūnx, coniugis m./f.",
     "deutsch": [
       "der Ehemann/die Ehefrau"
     ],
@@ -353,7 +353,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-7",
     "lektion": 12,
-    "latein": "*pater, patris m.",
+    "latein": "pater, patris m.",
     "deutsch": [
       "der Vater"
     ],
@@ -365,7 +365,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-8",
     "lektion": 12,
-    "latein": "*frāter, frātris m.",
+    "latein": "frāter, frātris m.",
     "deutsch": [
       "der Bruder"
     ],
@@ -377,7 +377,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-9",
     "lektion": 12,
-    "latein": "*mulier, mulieris f.",
+    "latein": "mulier, mulieris f.",
     "deutsch": [
       "die Frau"
     ],
@@ -474,7 +474,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-18",
     "lektion": 12,
-    "latein": "*posse, possum",
+    "latein": "posse, possum",
     "deutsch": [
       "können"
     ],
@@ -514,7 +514,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l12-22",
     "lektion": 12,
-    "latein": "*fūr, fūris m.",
+    "latein": "fūr, fūris m.",
     "deutsch": [
       "der Dieb"
     ],
@@ -569,7 +569,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l13-1",
     "lektion": 13,
-    "latein": "*septimus, a, um",
+    "latein": "septimus, a, um",
     "deutsch": [
       "der siebte"
     ],
@@ -621,7 +621,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l13-6",
     "lektion": 13,
-    "latein": "*vōx, vōcis f.",
+    "latein": "vōx, vōcis f.",
     "deutsch": [
       "die Stimme"
     ],
@@ -689,7 +689,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l13-12",
     "lektion": 13,
-    "latein": "*factum, ī n.",
+    "latein": "factum, ī n.",
     "deutsch": [
       "die Tat"
     ],
@@ -763,7 +763,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l13-19",
     "lektion": 13,
-    "latein": "*servitūs, servitūtis f.",
+    "latein": "servitūs, servitūtis f.",
     "deutsch": [
       "die Sklaverei"
     ],
@@ -783,7 +783,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l13-21",
     "lektion": 13,
-    "latein": "*ager, agrī m.",
+    "latein": "ager, agrī m.",
     "deutsch": [
       "das Feld, der Acker"
     ],
@@ -815,7 +815,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l13-24",
     "lektion": 13,
-    "latein": "*fīnīre, fīniō, fīnīvī",
+    "latein": "fīnīre, fīniō, fīnīvī",
     "deutsch": [
       "beenden"
     ],
@@ -847,7 +847,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l14-3",
     "lektion": 14,
-    "latein": "*discēdere, discēdō, discessī",
+    "latein": "discēdere, discēdō, discessī",
     "deutsch": [
       "weggehen, auseinandergehen"
     ],
@@ -899,7 +899,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l14-8",
     "lektion": 14,
-    "latein": "*bellum, ī n.",
+    "latein": "bellum, ī n.",
     "deutsch": [
       "der Krieg"
     ],
@@ -921,7 +921,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l14-10",
     "lektion": 14,
-    "latein": "*ignōrāre, ignōrō, ignōrāvī",
+    "latein": "ignōrāre, ignōrō, ignōrāvī",
     "deutsch": [
       "nicht kennen"
     ],
@@ -969,7 +969,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l14-14",
     "lektion": 14,
-    "latein": "*gerere, gerō, gessī",
+    "latein": "gerere, gerō, gessī",
     "deutsch": [
       "tragen",
       "ausführen"
@@ -982,7 +982,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l14-15",
     "lektion": 14,
-    "latein": "*bellum gerere",
+    "latein": "bellum gerere",
     "deutsch": [
       "Krieg führen"
     ],
@@ -1076,7 +1076,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l14-24",
     "lektion": 14,
-    "latein": "*antīquus, a, um",
+    "latein": "antīquus, a, um",
     "deutsch": [
       "alt"
     ],
@@ -1119,7 +1119,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l15-2",
     "lektion": 15,
-    "latein": "*hostis, hostis m. (Gen. Pl.: hostium)",
+    "latein": "hostis, hostis m. (Gen. Pl.: hostium)",
     "deutsch": [
       "der Feind",
       "der Landesfeind"
@@ -1132,7 +1132,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l15-3",
     "lektion": 15,
-    "latein": "*urbs, urbis f. (Gen. Pl.: urbium)",
+    "latein": "urbs, urbis f. (Gen. Pl.: urbium)",
     "deutsch": [
       "die Stadt"
     ],
@@ -1144,7 +1144,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l15-4",
     "lektion": 15,
-    "latein": "*māter, mātris f.",
+    "latein": "māter, mātris f.",
     "deutsch": [
       "die Mutter"
     ],
@@ -1201,7 +1201,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l15-9",
     "lektion": 15,
-    "latein": "*lacrima, ae f.",
+    "latein": "lacrima, ae f.",
     "deutsch": [
       "die Träne"
     ],
@@ -1211,7 +1211,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l15-10",
     "lektion": 15,
-    "latein": "*castra, ōrum n.",
+    "latein": "castra, ōrum n.",
     "deutsch": [
       "das Lager"
     ],
@@ -1277,7 +1277,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l15-16",
     "lektion": 15,
-    "latein": "*relinquere, relinquō, relīquī",
+    "latein": "relinquere, relinquō, relīquī",
     "deutsch": [
       "verlassen, zurücklassen"
     ],
@@ -1297,7 +1297,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l15-18",
     "lektion": 15,
-    "latein": "*cīvis, cīvis m. (Gen. Pl.: cīvium)",
+    "latein": "cīvis, cīvis m. (Gen. Pl.: cīvium)",
     "deutsch": [
       "der Bürger"
     ],
@@ -1451,7 +1451,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l16-3",
     "lektion": 16,
-    "latein": "*nūbēs, nūbis f. (Gen. Pl.: nūbium)",
+    "latein": "nūbēs, nūbis f. (Gen. Pl.: nūbium)",
     "deutsch": [
       "die Wolke"
     ],
@@ -1461,7 +1461,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l16-4",
     "lektion": 16,
-    "latein": "*mōns, montis m. (Gen. Pl.: montium)",
+    "latein": "mōns, montis m. (Gen. Pl.: montium)",
     "deutsch": [
       "der Berg, das Gebirge"
     ],
@@ -1473,7 +1473,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l16-5",
     "lektion": 16,
-    "latein": "*mare, maris n.",
+    "latein": "mare, maris n.",
     "deutsch": [
       "das Meer"
     ],
@@ -1485,7 +1485,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l16-6",
     "lektion": 16,
-    "latein": "*nāvis, nāvis f. (Gen. Pl.: nāvium)",
+    "latein": "nāvis, nāvis f. (Gen. Pl.: nāvium)",
     "deutsch": [
       "das Schiff"
     ],
@@ -1631,7 +1631,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l16-19",
     "lektion": 16,
-    "latein": "*regiō, regiōnis f.",
+    "latein": "regiō, regiōnis f.",
     "deutsch": [
       "das Gebiet, die Gegend"
     ],
@@ -1672,7 +1672,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l17-4",
     "lektion": 17,
-    "latein": "*ē somnō excitāre",
+    "latein": "ē somnō excitāre",
     "deutsch": [
       "aufwecken"
     ],
@@ -1682,7 +1682,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l17-5",
     "lektion": 17,
-    "latein": "*ruere, ruō, ruī",
+    "latein": "ruere, ruō, ruī",
     "deutsch": [
       "stürzen, eilen"
     ],
@@ -1726,7 +1726,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l17-9",
     "lektion": 17,
-    "latein": "*extrā (Präp. mit Akk.)",
+    "latein": "extrā (Präp. mit Akk.)",
     "deutsch": [
       "außerhalb (von)"
     ],
@@ -1774,7 +1774,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l17-13",
     "lektion": 17,
-    "latein": "*flamma, ae f.",
+    "latein": "flamma, ae f.",
     "deutsch": [
       "die Flamme"
     ],
@@ -1845,7 +1845,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l17-20",
     "lektion": 17,
-    "latein": "*nox, noctis f. (Gen. Pl.: noctium)",
+    "latein": "nox, noctis f. (Gen. Pl.: noctium)",
     "deutsch": [
       "die Nacht"
     ],
@@ -1857,7 +1857,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l17-21",
     "lektion": 17,
-    "latein": "*iuvenis, iuvenis m.",
+    "latein": "iuvenis, iuvenis m.",
     "deutsch": [
       "der junge Mann"
     ],
@@ -1889,7 +1889,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l18-3",
     "lektion": 18,
-    "latein": "*īre, eō, iī",
+    "latein": "īre, eō, iī",
     "deutsch": [
       "gehen"
     ],
@@ -1957,7 +1957,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l18-9",
     "lektion": 18,
-    "latein": "*ācer, ācris, ācre",
+    "latein": "ācer, ācris, ācre",
     "deutsch": [
       "scharf, heftig, eifrig"
     ],
@@ -2005,7 +2005,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l18-13",
     "lektion": 18,
-    "latein": "*fēlīx, fēlīcis",
+    "latein": "fēlīx, fēlīcis",
     "deutsch": [
       "glücklich"
     ],
@@ -2015,7 +2015,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-1",
     "lektion": 19,
-    "latein": "*trīstis, trīste",
+    "latein": "trīstis, trīste",
     "deutsch": [
       "traurig",
       "finster",
@@ -2054,7 +2054,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-4",
     "lektion": 19,
-    "latein": "*nōbilis, nōbile",
+    "latein": "nōbilis, nōbile",
     "deutsch": [
       "berühmt, vornehm, adelig"
     ],
@@ -2161,7 +2161,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-14",
     "lektion": 19,
-    "latein": "*mercātor, ōris m.",
+    "latein": "mercātor, ōris m.",
     "deutsch": [
       "der Händler, Kaufmann"
     ],
@@ -2171,7 +2171,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-15",
     "lektion": 19,
-    "latein": "*emere, emō, ēmī",
+    "latein": "emere, emō, ēmī",
     "deutsch": [
       "kaufen"
     ],
@@ -2203,7 +2203,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-18",
     "lektion": 19,
-    "latein": "*tertius, a, um",
+    "latein": "tertius, a, um",
     "deutsch": [
       "der dritte"
     ],
@@ -2224,7 +2224,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-20",
     "lektion": 19,
-    "latein": "*Graecus, a, um",
+    "latein": "Graecus, a, um",
     "deutsch": [
       "griechisch"
     ],
@@ -2276,7 +2276,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-25",
     "lektion": 19,
-    "latein": "*fortis, forte",
+    "latein": "fortis, forte",
     "deutsch": [
       "stark, tapfer"
     ],
@@ -2300,7 +2300,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l19-27",
     "lektion": 19,
-    "latein": "*quārtus, a, um",
+    "latein": "quārtus, a, um",
     "deutsch": [
       "der vierte"
     ],
@@ -2363,7 +2363,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l20-1",
     "lektion": 20,
-    "latein": "*adīre, adeō, adiī",
+    "latein": "adīre, adeō, adiī",
     "deutsch": [
       "herangehen, aufsuchen"
     ],
@@ -2478,7 +2478,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l20-12",
     "lektion": 20,
-    "latein": "*dēpōnere, dēpōnō, dēposuī",
+    "latein": "dēpōnere, dēpōnō, dēposuī",
     "deutsch": [
       "ablegen, niederlegen"
     ],
@@ -2518,7 +2518,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l20-16",
     "lektion": 20,
-    "latein": "*secundus, a, um",
+    "latein": "secundus, a, um",
     "deutsch": [
       "der zweite, folgende",
       "günstig"
@@ -2529,7 +2529,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l20-17",
     "lektion": 20,
-    "latein": "*ōtium, ī n.",
+    "latein": "ōtium, ī n.",
     "deutsch": [
       "die Ruhe, freie Zeit"
     ],
@@ -2541,7 +2541,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l20-18",
     "lektion": 20,
-    "latein": "*ōtiō sē dare",
+    "latein": "ōtiō sē dare",
     "deutsch": [
       "sich ausruhen, seine freie Zeit genießen"
     ],
@@ -2573,7 +2573,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-1",
     "lektion": 21,
-    "latein": "*amor, amōris m.",
+    "latein": "amor, amōris m.",
     "deutsch": [
       "die Liebe"
     ],
@@ -2617,7 +2617,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-5",
     "lektion": 21,
-    "latein": "*timor, timōris m.",
+    "latein": "timor, timōris m.",
     "deutsch": [
       "die Angst, die Furcht"
     ],
@@ -2650,7 +2650,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-8",
     "lektion": 21,
-    "latein": "*taurus, ī m.",
+    "latein": "taurus, ī m.",
     "deutsch": [
       "der Stier"
     ],
@@ -2660,7 +2660,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-9",
     "lektion": 21,
-    "latein": "*fōrma, ae f.",
+    "latein": "fōrma, ae f.",
     "deutsch": [
       "die Form, die Gestalt, die Schönheit"
     ],
@@ -2707,7 +2707,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-13",
     "lektion": 21,
-    "latein": "*flōs, flōris m.",
+    "latein": "flōs, flōris m.",
     "deutsch": [
       "die Blume, die Blüte"
     ],
@@ -2739,7 +2739,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-16",
     "lektion": 21,
-    "latein": "*abīre, abeō, abiī",
+    "latein": "abīre, abeō, abiī",
     "deutsch": [
       "weggehen"
     ],
@@ -2809,7 +2809,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-22",
     "lektion": 21,
-    "latein": "*mūtāre, mūtō, mūtāvī",
+    "latein": "mūtāre, mūtō, mūtāvī",
     "deutsch": [
       "(ver)ändern, (sich) verwandeln"
     ],
@@ -2819,7 +2819,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-23",
     "lektion": 21,
-    "latein": "*īnsula, ae f.",
+    "latein": "īnsula, ae f.",
     "deutsch": [
       "die Insel",
       "der Wohnblock"
@@ -2830,7 +2830,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l21-24",
     "lektion": 21,
-    "latein": "*dolor, dolōris m.",
+    "latein": "dolor, dolōris m.",
     "deutsch": [
       "der Schmerz"
     ],
@@ -2853,7 +2853,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l22-1",
     "lektion": 22,
-    "latein": "*ōrāre, ōrō, ōrāvī, ōrātum",
+    "latein": "ōrāre, ōrō, ōrāvī, ōrātum",
     "deutsch": [
       "bitten, beten",
       "sprechen"
@@ -2923,7 +2923,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l22-7",
     "lektion": 22,
-    "latein": "*crūdēlis, crūdēle",
+    "latein": "crūdēlis, crūdēle",
     "deutsch": [
       "grausam, gefühllos"
     ],
@@ -2946,7 +2946,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l22-9",
     "lektion": 22,
-    "latein": "*nāvigāre, nāvigō, nāvigāvī, nāvigātum",
+    "latein": "nāvigāre, nāvigō, nāvigāvī, nāvigātum",
     "deutsch": [
       "segeln, (mit einem Schiff) fahren"
     ],
@@ -2958,7 +2958,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l22-10",
     "lektion": 22,
-    "latein": "*cōnfirmāre, cōnfirmō, cōnfirmāvī, cōnfirmātum",
+    "latein": "cōnfirmāre, cōnfirmō, cōnfirmāvī, cōnfirmātum",
     "deutsch": [
       "befestigen",
       "stärken, ermutigen"
@@ -2981,7 +2981,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l22-12",
     "lektion": 22,
-    "latein": "*clāmor, clāmōris m.",
+    "latein": "clāmor, clāmōris m.",
     "deutsch": [
       "das Geschrei",
       "der Lärm"
@@ -3062,7 +3062,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l22-19",
     "lektion": 22,
-    "latein": "*dēmōnstrāre, dēmōnstrō, dēmōnstrāvī, dēmōnstrātum",
+    "latein": "dēmōnstrāre, dēmōnstrō, dēmōnstrāvī, dēmōnstrātum",
     "deutsch": [
       "zeigen",
       "deutlich machen"
@@ -3085,7 +3085,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l23-2",
     "lektion": 23,
-    "latein": "*fuga, ae f.",
+    "latein": "fuga, ae f.",
     "deutsch": [
       "die Flucht"
     ],
@@ -3105,7 +3105,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l23-4",
     "lektion": 23,
-    "latein": "*commovēre, commoveō, commōvī, commōtum",
+    "latein": "commovēre, commoveō, commōvī, commōtum",
     "deutsch": [
       "bewegen, antreiben",
       "erregen"
@@ -3162,7 +3162,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l23-9",
     "lektion": 23,
-    "latein": "*cōnficere, cōnficiō, cōnfēcī, cōnfectum",
+    "latein": "cōnficere, cōnficiō, cōnfēcī, cōnfectum",
     "deutsch": [
       "zustande bringen, vollenden",
       "schwächen"
@@ -3224,7 +3224,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l23-14",
     "lektion": 23,
-    "latein": "*īnfēlīx, īnfēlīcis",
+    "latein": "īnfēlīx, īnfēlīcis",
     "deutsch": [
       "unglücklich"
     ],
@@ -3234,7 +3234,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l23-15",
     "lektion": 23,
-    "latein": "*cōnspicere, cōnspiciō, cōnspexī, cōnspectum",
+    "latein": "cōnspicere, cōnspiciō, cōnspexī, cōnspectum",
     "deutsch": [
       "erblicken, ansehen"
     ],
@@ -3254,7 +3254,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l24-1",
     "lektion": 24,
-    "latein": "*quaerere, quaerō, quaesīvī, quaesītum",
+    "latein": "quaerere, quaerō, quaesīvī, quaesītum",
     "deutsch": [
       "suchen",
       "fragen"
@@ -3267,7 +3267,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l24-2",
     "lektion": 24,
-    "latein": "*pūnīre, pūniō, pūnīvī, pūnītum",
+    "latein": "pūnīre, pūniō, pūnīvī, pūnītum",
     "deutsch": [
       "bestrafen"
     ],
@@ -3341,7 +3341,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l24-9",
     "lektion": 24,
-    "latein": "*iniūria, ae f.",
+    "latein": "iniūria, ae f.",
     "deutsch": [
       "das Unrecht, die Beleidigung"
     ],
@@ -3351,7 +3351,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l24-10",
     "lektion": 24,
-    "latein": "*repetere, repetō, repetīvī, repetitum",
+    "latein": "repetere, repetō, repetīvī, repetitum",
     "deutsch": [
       "wiederholen",
       "zurückholen"
@@ -3362,7 +3362,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l24-11",
     "lektion": 24,
-    "latein": "*vincere, vincō, vīcī, victum",
+    "latein": "vincere, vincō, vīcī, victum",
     "deutsch": [
       "(be)siegen, übertreffen"
     ],
@@ -3384,7 +3384,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l24-13",
     "lektion": 24,
-    "latein": "*homō, hominis m.",
+    "latein": "homō, hominis m.",
     "deutsch": [
       "der Mensch"
     ],
@@ -3394,7 +3394,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l24-14",
     "lektion": 24,
-    "latein": "*incendere, incendō, incendī, incēnsum",
+    "latein": "incendere, incendō, incendī, incēnsum",
     "deutsch": [
       "anzünden, entflammen"
     ],
@@ -3517,7 +3517,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l25-5",
     "lektion": 25,
-    "latein": "*cūstōs, cūstōdis m./f.",
+    "latein": "cūstōs, cūstōdis m./f.",
     "deutsch": [
       "der Wächter/die Wächterin"
     ],
@@ -3527,7 +3527,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l25-6",
     "lektion": 25,
-    "latein": "*iubēre, iubeō, iussī, iussum (mit Akk.)",
+    "latein": "iubēre, iubeō, iussī, iussum (mit Akk.)",
     "deutsch": [
       "(jemandem) befehlen"
     ],
@@ -3550,7 +3550,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l25-8",
     "lektion": 25,
-    "latein": "*interficere, interficiō, interfēcī, interfectum",
+    "latein": "interficere, interficiō, interfēcī, interfectum",
     "deutsch": [
       "töten"
     ],
@@ -3576,7 +3576,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l25-10",
     "lektion": 25,
-    "latein": "*vetāre, vetō, vetuī, vetitum",
+    "latein": "vetāre, vetō, vetuī, vetitum",
     "deutsch": [
       "verbieten"
     ],
@@ -3586,7 +3586,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l25-11",
     "lektion": 25,
-    "latein": "*lēx, lēgis f.",
+    "latein": "lēx, lēgis f.",
     "deutsch": [
       "das Gesetz",
       "die Bedingung"
@@ -3609,7 +3609,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l25-13",
     "lektion": 25,
-    "latein": "*lēgem statuere",
+    "latein": "lēgem statuere",
     "deutsch": [
       "ein Gesetz erlassen"
     ],
@@ -3685,7 +3685,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l25-20",
     "lektion": 25,
-    "latein": "*mors, mortis f.",
+    "latein": "mors, mortis f.",
     "deutsch": [
       "der Tod"
     ],
@@ -3717,7 +3717,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l26-2",
     "lektion": 26,
-    "latein": "*reprehendere, reprehendō, reprehendī, reprehēnsum",
+    "latein": "reprehendere, reprehendō, reprehendī, reprehēnsum",
     "deutsch": [
       "zurückhalten",
       "kritisieren"
@@ -3741,7 +3741,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l26-4",
     "lektion": 26,
-    "latein": "*plūs (Adv.)",
+    "latein": "plūs (Adv.)",
     "deutsch": [
       "mehr"
     ],
@@ -3753,7 +3753,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l26-5",
     "lektion": 26,
-    "latein": "*plūs valēre (quam)",
+    "latein": "plūs valēre (quam)",
     "deutsch": [
       "mehr gelten (als), mehr Einfluss haben (als)"
     ],
@@ -3765,7 +3765,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l26-6",
     "lektion": 26,
-    "latein": "*cupiditās, cupiditātis f.",
+    "latein": "cupiditās, cupiditātis f.",
     "deutsch": [
       "die Begierde, das Verlangen"
     ],
@@ -3848,7 +3848,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l26-14",
     "lektion": 26,
-    "latein": "*appellāre, appellō, appellāvī, appellātum",
+    "latein": "appellāre, appellō, appellāvī, appellātum",
     "deutsch": [
       "ansprechen",
       "mit dopp. Akk.: jemanden … nennen, jemanden als … bezeichnen"
@@ -3871,7 +3871,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l26-16",
     "lektion": 26,
-    "latein": "*canis, canis m.",
+    "latein": "canis, canis m.",
     "deutsch": [
       "der Hund"
     ],
@@ -3927,7 +3927,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l26-21",
     "lektion": 26,
-    "latein": "*intellegere, intellegō, intellēxī, intellēctum",
+    "latein": "intellegere, intellegō, intellēxī, intellēctum",
     "deutsch": [
       "erkennen, begreifen"
     ],
@@ -3939,7 +3939,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l27-1",
     "lektion": 27,
-    "latein": "*auctor, auctōris m.",
+    "latein": "auctor, auctōris m.",
     "deutsch": [
       "der Urheber",
       "der Schriftsteller"
@@ -3950,7 +3950,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l27-2",
     "lektion": 27,
-    "latein": "*memoria, ae f.",
+    "latein": "memoria, ae f.",
     "deutsch": [
       "das Gedächtnis, die Erinnerung"
     ],
@@ -4009,7 +4009,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l27-7",
     "lektion": 27,
-    "latein": "*dignitās, dignitātis f.",
+    "latein": "dignitās, dignitātis f.",
     "deutsch": [
       "die Würde",
       "die Pracht"
@@ -4091,7 +4091,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l27-14",
     "lektion": 27,
-    "latein": "*animal, animālis n.",
+    "latein": "animal, animālis n.",
     "deutsch": [
       "das Lebewesen, Tier"
     ],
@@ -4185,7 +4185,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l27-22",
     "lektion": 27,
-    "latein": "*clārus, a, um",
+    "latein": "clārus, a, um",
     "deutsch": [
       "hell, klar",
       "angesehen, berühmt"
@@ -4196,7 +4196,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l27-23",
     "lektion": 27,
-    "latein": "*exstinguere, exstinguō, exstīnxī, exstīnctum",
+    "latein": "exstinguere, exstinguō, exstīnxī, exstīnctum",
     "deutsch": [
       "auslöschen, vernichten"
     ],
@@ -4206,7 +4206,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l27-24",
     "lektion": 27,
-    "latein": "*parere, pariō, peperī, partum",
+    "latein": "parere, pariō, peperī, partum",
     "deutsch": [
       "gebären, hervorbringen"
     ],
@@ -4216,7 +4216,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l28-1",
     "lektion": 28,
-    "latein": "*tempestās, tempestātis f.",
+    "latein": "tempestās, tempestātis f.",
     "deutsch": [
       "der Sturm, das Unwetter"
     ],
@@ -4228,7 +4228,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l28-2",
     "lektion": 28,
-    "latein": "*iactāre, iactō, iactāvī, iactātum",
+    "latein": "iactāre, iactō, iactāvī, iactātum",
     "deutsch": [
       "(hin und her) werfen",
       "(mit etwas) prahlen"
@@ -4239,7 +4239,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l28-3",
     "lektion": 28,
-    "latein": "*nauta, ae m.",
+    "latein": "nauta, ae m.",
     "deutsch": [
       "der Seemann, Matrose"
     ],
@@ -4282,7 +4282,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l28-7",
     "lektion": 28,
-    "latein": "*fidem dare",
+    "latein": "fidem dare",
     "deutsch": [
       "ein Versprechen geben"
     ],
@@ -4317,7 +4317,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l28-10",
     "lektion": 28,
-    "latein": "*salvus, a, um",
+    "latein": "salvus, a, um",
     "deutsch": [
       "gesund, unverletzt"
     ],
@@ -4349,7 +4349,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l28-13",
     "lektion": 28,
-    "latein": "*īnfestus, a, um",
+    "latein": "īnfestus, a, um",
     "deutsch": [
       "feindlich, bedrohlich"
     ],
@@ -4477,7 +4477,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l29-4",
     "lektion": 29,
-    "latein": "*sententia, ae f.",
+    "latein": "sententia, ae f.",
     "deutsch": [
       "die Meinung, Ansicht",
       "der Satz"
@@ -4513,7 +4513,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l29-7",
     "lektion": 29,
-    "latein": "*inīre, ineō, iniī, initum",
+    "latein": "inīre, ineō, iniī, initum",
     "deutsch": [
       "hineingehen",
       "beginnen"
@@ -4544,7 +4544,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l29-10",
     "lektion": 29,
-    "latein": "*mōs, mōris m.",
+    "latein": "mōs, mōris m.",
     "deutsch": [
       "der Brauch, die Sitte",
       "Pl.: der Charakter"
@@ -4565,7 +4565,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l29-12",
     "lektion": 29,
-    "latein": "*mōrēs māiōrum",
+    "latein": "mōrēs māiōrum",
     "deutsch": [
       "die Sitten der Vorfahren"
     ],
@@ -4575,7 +4575,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l29-13",
     "lektion": 29,
-    "latein": "*scrībere, scrībō, scrīpsī, scrīptum",
+    "latein": "scrībere, scrībō, scrīpsī, scrīptum",
     "deutsch": [
       "schreiben"
     ],
@@ -4732,7 +4732,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l30-8",
     "lektion": 30,
-    "latein": "*stāre, stō, stetī, –",
+    "latein": "stāre, stō, stetī, –",
     "deutsch": [
       "stehen, sich befinden"
     ],
@@ -4752,7 +4752,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l30-10",
     "lektion": 30,
-    "latein": "*scientia, ae f.",
+    "latein": "scientia, ae f.",
     "deutsch": [
       "das Wissen, die Kenntnis"
     ],
@@ -4805,7 +4805,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l30-15",
     "lektion": 30,
-    "latein": "*imperātor, imperātōris m.",
+    "latein": "imperātor, imperātōris m.",
     "deutsch": [
       "der Feldherr",
       "der Kaiser, Herrscher"
@@ -4841,7 +4841,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l30-18",
     "lektion": 30,
-    "latein": "*perspicere, perspiciō, perspexī, perspectum",
+    "latein": "perspicere, perspiciō, perspexī, perspectum",
     "deutsch": [
       "genau betrachten, durchschauen, erkennen"
     ],
@@ -4875,7 +4875,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l30-21",
     "lektion": 30,
-    "latein": "*gladius, ī m.",
+    "latein": "gladius, ī m.",
     "deutsch": [
       "das Schwert"
     ],
@@ -4899,7 +4899,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l30-23",
     "lektion": 30,
-    "latein": "*dux, ducis m. (und f.)",
+    "latein": "dux, ducis m. (und f.)",
     "deutsch": [
       "der Führer, Anführer"
     ],
@@ -4909,7 +4909,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l30-24",
     "lektion": 30,
-    "latein": "*indicāre, indicō, indicāvī, indicātum",
+    "latein": "indicāre, indicō, indicāvī, indicātum",
     "deutsch": [
       "anzeigen, sagen"
     ],
@@ -4933,7 +4933,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-1",
     "lektion": 31,
-    "latein": "*proelium, ī n.",
+    "latein": "proelium, ī n.",
     "deutsch": [
       "die Schlacht, das Gefecht"
     ],
@@ -4945,7 +4945,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-2",
     "lektion": 31,
-    "latein": "*proelium facere",
+    "latein": "proelium facere",
     "deutsch": [
       "sich eine Schlacht liefern"
     ],
@@ -4957,7 +4957,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-3",
     "lektion": 31,
-    "latein": "*victōria, ae f.",
+    "latein": "victōria, ae f.",
     "deutsch": [
       "der Sieg"
     ],
@@ -4969,7 +4969,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-4",
     "lektion": 31,
-    "latein": "*victōriam ferre",
+    "latein": "victōriam ferre",
     "deutsch": [
       "den Sieg davontragen, erringen"
     ],
@@ -5029,7 +5029,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-9",
     "lektion": 31,
-    "latein": "*nūntius, ī m.",
+    "latein": "nūntius, ī m.",
     "deutsch": [
       "der Bote",
       "die Botschaft"
@@ -5040,7 +5040,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-10",
     "lektion": 31,
-    "latein": "*afferre, afferō, attulī, allātum",
+    "latein": "afferre, afferō, attulī, allātum",
     "deutsch": [
       "herbeitragen, hinzufügen"
     ],
@@ -5050,7 +5050,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-11",
     "lektion": 31,
-    "latein": "*nūntium afferre (perferre)",
+    "latein": "nūntium afferre (perferre)",
     "deutsch": [
       "melden, berichten"
     ],
@@ -5074,7 +5074,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-13",
     "lektion": 31,
-    "latein": "*potestās, potestātis f.",
+    "latein": "potestās, potestātis f.",
     "deutsch": [
       "die Macht, Herrschaft"
     ],
@@ -5084,7 +5084,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-14",
     "lektion": 31,
-    "latein": "*in potestāte tenēre",
+    "latein": "in potestāte tenēre",
     "deutsch": [
       "in seiner Gewalt haben"
     ],
@@ -5094,7 +5094,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-15",
     "lektion": 31,
-    "latein": "*dē salūte dēspērāre",
+    "latein": "dē salūte dēspērāre",
     "deutsch": [
       "die Hoffnung auf Rettung aufgeben"
     ],
@@ -5104,7 +5104,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-16",
     "lektion": 31,
-    "latein": "*discrīmen, discrīminis n.",
+    "latein": "discrīmen, discrīminis n.",
     "deutsch": [
       "der Unterschied",
       "die Gefahr"
@@ -5115,7 +5115,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l31-17",
     "lektion": 31,
-    "latein": "*rēs in summō discrīmine est",
+    "latein": "rēs in summō discrīmine est",
     "deutsch": [
       "die Lage ist in größter Gefahr"
     ],
@@ -5232,7 +5232,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-2",
     "lektion": 32,
-    "latein": "*flūctus, flūctūs m.",
+    "latein": "flūctus, flūctūs m.",
     "deutsch": [
       "die Flut, Welle"
     ],
@@ -5253,7 +5253,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-4",
     "lektion": 32,
-    "latein": "*cōnspectus, cōnspectūs m.",
+    "latein": "cōnspectus, cōnspectūs m.",
     "deutsch": [
       "der Anblick",
       "das Blickfeld"
@@ -5264,7 +5264,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-5",
     "lektion": 32,
-    "latein": "*in cōnspectum venīre",
+    "latein": "in cōnspectum venīre",
     "deutsch": [
       "zum Vorschein kommen, erscheinen"
     ],
@@ -5276,7 +5276,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-6",
     "lektion": 32,
-    "latein": "*metus, metūs m.",
+    "latein": "metus, metūs m.",
     "deutsch": [
       "die Angst, Furcht"
     ],
@@ -5298,7 +5298,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-8",
     "lektion": 32,
-    "latein": "*cursus, cursūs m.",
+    "latein": "cursus, cursūs m.",
     "deutsch": [
       "der Lauf",
       "die Laufbahn",
@@ -5312,7 +5312,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-9",
     "lektion": 32,
-    "latein": "*impetus, impetūs m.",
+    "latein": "impetus, impetūs m.",
     "deutsch": [
       "der Angriff",
       "der Schwung"
@@ -5325,7 +5325,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-10",
     "lektion": 32,
-    "latein": "*impetum facere",
+    "latein": "impetum facere",
     "deutsch": [
       "angreifen"
     ],
@@ -5423,7 +5423,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l32-19",
     "lektion": 32,
-    "latein": "*versus, versūs m.",
+    "latein": "versus, versūs m.",
     "deutsch": [
       "der Vers, die Zeile"
     ],
@@ -5464,7 +5464,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l33-4",
     "lektion": 33,
-    "latein": "*efficere, efficiō, effēcī, effectum",
+    "latein": "efficere, efficiō, effēcī, effectum",
     "deutsch": [
       "bewirken, zustande bringen, schaffen"
     ],
@@ -5476,7 +5476,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l33-5",
     "lektion": 33,
-    "latein": "*domus, domūs f.",
+    "latein": "domus, domūs f.",
     "deutsch": [
       "das Haus"
     ],
@@ -5488,7 +5488,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l33-6",
     "lektion": 33,
-    "latein": "*rēgīna, ae f.",
+    "latein": "rēgīna, ae f.",
     "deutsch": [
       "die Königin"
     ],
@@ -5513,7 +5513,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l33-8",
     "lektion": 33,
-    "latein": "*rapere, rapiō, rapuī, raptum",
+    "latein": "rapere, rapiō, rapuī, raptum",
     "deutsch": [
       "rauben, wegreißen"
     ],
@@ -5548,7 +5548,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l33-11",
     "lektion": 33,
-    "latein": "*superbia, ae f.",
+    "latein": "superbia, ae f.",
     "deutsch": [
       "der Stolz, Hochmut"
     ],
@@ -5625,7 +5625,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l33-18",
     "lektion": 33,
-    "latein": "*lībertās, lībertātis f.",
+    "latein": "lībertās, lībertātis f.",
     "deutsch": [
       "die Freiheit"
     ],
@@ -5661,7 +5661,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-1",
     "lektion": 34,
-    "latein": "*nescīre, nesciō, nescīvī (nesciī), –",
+    "latein": "nescīre, nesciō, nescīvī (nesciī), –",
     "deutsch": [
       "nicht wissen, nicht verstehen"
     ],
@@ -5683,7 +5683,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-3",
     "lektion": 34,
-    "latein": "*senātus, senātūs m.",
+    "latein": "senātus, senātūs m.",
     "deutsch": [
       "der Senat"
     ],
@@ -5715,7 +5715,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-6",
     "lektion": 34,
-    "latein": "*cōnsul, cōnsulis m.",
+    "latein": "cōnsul, cōnsulis m.",
     "deutsch": [
       "der Konsul"
     ],
@@ -5738,7 +5738,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-8",
     "lektion": 34,
-    "latein": "*iter, itineris n.",
+    "latein": "iter, itineris n.",
     "deutsch": [
       "die Reise, der Weg, der Marsch"
     ],
@@ -5772,7 +5772,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-11",
     "lektion": 34,
-    "latein": "*bellum īnferre (mit Dat.)",
+    "latein": "bellum īnferre (mit Dat.)",
     "deutsch": [
       "gegen jmd. einen Krieg beginnen, jmd. angreifen"
     ],
@@ -5832,7 +5832,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-16",
     "lektion": 34,
-    "latein": "*terror, terrōris m.",
+    "latein": "terror, terrōris m.",
     "deutsch": [
       "der Schrecken"
     ],
@@ -5842,7 +5842,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-17",
     "lektion": 34,
-    "latein": "*umquam (Adv.)",
+    "latein": "umquam (Adv.)",
     "deutsch": [
       "jemals, irgendwann einmal"
     ],
@@ -5884,7 +5884,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l34-21",
     "lektion": 34,
-    "latein": "*adventus, adventūs m.",
+    "latein": "adventus, adventūs m.",
     "deutsch": [
       "die Ankunft"
     ],
@@ -5927,7 +5927,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l35-2",
     "lektion": 35,
-    "latein": "*vāstus, a, um",
+    "latein": "vāstus, a, um",
     "deutsch": [
       "leer",
       "verwüstet",
@@ -5950,7 +5950,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l35-4",
     "lektion": 35,
-    "latein": "*pervenīre, perveniō, pervēnī, perventum",
+    "latein": "pervenīre, perveniō, pervēnī, perventum",
     "deutsch": [
       "(hin)gelangen, ankommen"
     ],
@@ -5960,7 +5960,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l35-5",
     "lektion": 35,
-    "latein": "*acerbus, a, um",
+    "latein": "acerbus, a, um",
     "deutsch": [
       "bitter",
       "scharf, schmerzlich"
@@ -6069,7 +6069,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l35-14",
     "lektion": 35,
-    "latein": "*continēre, contineō, continuī, contentum",
+    "latein": "continēre, contineō, continuī, contentum",
     "deutsch": [
       "zusammenhalten, festhalten",
       "enthalten"
@@ -6093,7 +6093,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l35-16",
     "lektion": 35,
-    "latein": "*aciēs, aciēī f.",
+    "latein": "aciēs, aciēī f.",
     "deutsch": [
       "die Schärfe",
       "das (zur Schlacht bereite) Heer"
@@ -6148,7 +6148,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l35-21",
     "lektion": 35,
-    "latein": "*attingere, attingō, attigī, attāctum",
+    "latein": "attingere, attingō, attigī, attāctum",
     "deutsch": [
       "berühren",
       "erreichen"
@@ -6181,7 +6181,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l35-24",
     "lektion": 35,
-    "latein": "*armātus, a, um",
+    "latein": "armātus, a, um",
     "deutsch": [
       "bewaffnet, gerüstet"
     ],
@@ -6191,7 +6191,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l36-1",
     "lektion": 36,
-    "latein": "*exilium, ī n.",
+    "latein": "exilium, ī n.",
     "deutsch": [
       "die Verbannung, das Exil"
     ],
@@ -6201,7 +6201,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l36-2",
     "lektion": 36,
-    "latein": "*expellere, expellō, expulī, expulsum",
+    "latein": "expellere, expellō, expulī, expulsum",
     "deutsch": [
       "hinaustreiben, vertreiben"
     ],
@@ -6245,7 +6245,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l36-6",
     "lektion": 36,
-    "latein": "*reditus, reditūs m.",
+    "latein": "reditus, reditūs m.",
     "deutsch": [
       "die Rückkehr"
     ],
@@ -6277,7 +6277,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l36-9",
     "lektion": 36,
-    "latein": "*aquaeductus, aquaeductūs m.",
+    "latein": "aquaeductus, aquaeductūs m.",
     "deutsch": [
       "die Wasserleitung, der Aquädukt"
     ],
@@ -6325,7 +6325,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-1",
     "lektion": 37,
-    "latein": "*fīnis, fīnis m.",
+    "latein": "fīnis, fīnis m.",
     "deutsch": [
       "die Grenze",
       "das Ende",
@@ -6337,7 +6337,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-2",
     "lektion": 37,
-    "latein": "*pācāre, pācō, pācāvī, pācātum",
+    "latein": "pācāre, pācō, pācāvī, pācātum",
     "deutsch": [
       "friedlich machen, beruhigen"
     ],
@@ -6358,7 +6358,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-4",
     "lektion": 37,
-    "latein": "*iūstitia, ae f.",
+    "latein": "iūstitia, ae f.",
     "deutsch": [
       "die Gerechtigkeit"
     ],
@@ -6368,7 +6368,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-5",
     "lektion": 37,
-    "latein": "*pietās, pietātis f.",
+    "latein": "pietās, pietātis f.",
     "deutsch": [
       "das Pflichtbewusstsein",
       "die Liebe",
@@ -6382,7 +6382,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-6",
     "lektion": 37,
-    "latein": "*causa, ae f.",
+    "latein": "causa, ae f.",
     "deutsch": [
       "der Grund",
       "die Angelegenheit",
@@ -6479,7 +6479,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-15",
     "lektion": 37,
-    "latein": "*līberāre, līberō, līberāvī, līberātum",
+    "latein": "līberāre, līberō, līberāvī, līberātum",
     "deutsch": [
       "befreien"
     ],
@@ -6509,7 +6509,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-18",
     "lektion": 37,
-    "latein": "*amīcitia, ae f.",
+    "latein": "amīcitia, ae f.",
     "deutsch": [
       "die Freundschaft"
     ],
@@ -6563,7 +6563,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-23",
     "lektion": 37,
-    "latein": "*advenīre, adveniō, advēnī, adventum",
+    "latein": "advenīre, adveniō, advēnī, adventum",
     "deutsch": [
       "herankommen",
       "ankommen"
@@ -6574,7 +6574,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-24",
     "lektion": 37,
-    "latein": "*proelium committere",
+    "latein": "proelium committere",
     "deutsch": [
       "eine Schlacht beginnen"
     ],
@@ -6596,7 +6596,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-26",
     "lektion": 37,
-    "latein": "*in aciē pūgnāre",
+    "latein": "in aciē pūgnāre",
     "deutsch": [
       "in der Schlachtformation kämpfen"
     ],
@@ -6642,7 +6642,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l37-30",
     "lektion": 37,
-    "latein": "*sibi mortem dare",
+    "latein": "sibi mortem dare",
     "deutsch": [
       "Selbstmord begehen"
     ],
@@ -6652,7 +6652,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l38-1",
     "lektion": 38,
-    "latein": "*cārus, a, um",
+    "latein": "cārus, a, um",
     "deutsch": [
       "lieb, teuer"
     ],
@@ -6674,7 +6674,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l38-3",
     "lektion": 38,
-    "latein": "*precēs, precum f. Pl.",
+    "latein": "precēs, precum f. Pl.",
     "deutsch": [
       "die Bitten"
     ],
@@ -6720,7 +6720,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l38-7",
     "lektion": 38,
-    "latein": "*obsecrāre, obsecrō, obsecrāvī, obsecrātum",
+    "latein": "obsecrāre, obsecrō, obsecrāvī, obsecrātum",
     "deutsch": [
       "(er)bitten, (an)flehen"
     ],
@@ -6805,7 +6805,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l38-14",
     "lektion": 38,
-    "latein": "*cor, cordis n.",
+    "latein": "cor, cordis n.",
     "deutsch": [
       "das Herz",
       "die Stimmung",
@@ -6844,7 +6844,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l38-17",
     "lektion": 38,
-    "latein": "*lūdibrium, ī n.",
+    "latein": "lūdibrium, ī n.",
     "deutsch": [
       "der Spott",
       "das Spiel"
@@ -6921,7 +6921,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-4",
     "lektion": 39,
-    "latein": "*voluptās, voluptātis f.",
+    "latein": "voluptās, voluptātis f.",
     "deutsch": [
       "die Lust, das Vergnügen"
     ],
@@ -6953,7 +6953,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-7",
     "lektion": 39,
-    "latein": "*ōs, ōris n.",
+    "latein": "ōs, ōris n.",
     "deutsch": [
       "der Mund",
       "das Gesicht"
@@ -6966,7 +6966,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-8",
     "lektion": 39,
-    "latein": "*digitus, ī m.",
+    "latein": "digitus, ī m.",
     "deutsch": [
       "der Finger"
     ],
@@ -6978,7 +6978,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-9",
     "lektion": 39,
-    "latein": "*pēs, pedis m.",
+    "latein": "pēs, pedis m.",
     "deutsch": [
       "der Fuß"
     ],
@@ -7001,7 +7001,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-11",
     "lektion": 39,
-    "latein": "*auris, auris f.",
+    "latein": "auris, auris f.",
     "deutsch": [
       "das Ohr"
     ],
@@ -7049,7 +7049,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-15",
     "lektion": 39,
-    "latein": "*pauper, pauperis",
+    "latein": "pauper, pauperis",
     "deutsch": [
       "arm"
     ],
@@ -7059,7 +7059,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-16",
     "lektion": 39,
-    "latein": "*dīves, dīvitis",
+    "latein": "dīves, dīvitis",
     "deutsch": [
       "reich"
     ],
@@ -7121,7 +7121,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l39-22",
     "lektion": 39,
-    "latein": "*vetus, veteris",
+    "latein": "vetus, veteris",
     "deutsch": [
       "alt"
     ],
@@ -7165,7 +7165,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l40-5",
     "lektion": 40,
-    "latein": "*mātrimōnium, ī n.",
+    "latein": "mātrimōnium, ī n.",
     "deutsch": [
       "die Ehe"
     ],
@@ -7177,7 +7177,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l40-6",
     "lektion": 40,
-    "latein": "*in mātrimōnium dūcere",
+    "latein": "in mātrimōnium dūcere",
     "deutsch": [
       "(eine Frau) heiraten"
     ],
@@ -7187,7 +7187,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l40-7",
     "lektion": 40,
-    "latein": "*crēscere, crēscō, crēvī, crētum",
+    "latein": "crēscere, crēscō, crēvī, crētum",
     "deutsch": [
       "wachsen",
       "sich steigern"
@@ -7198,7 +7198,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l40-8",
     "lektion": 40,
-    "latein": "*sermō, sermōnis m.",
+    "latein": "sermō, sermōnis m.",
     "deutsch": [
       "das Gespräch, die Unterhaltung"
     ],
@@ -7208,7 +7208,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l40-9",
     "lektion": 40,
-    "latein": "*sermōnem habēre",
+    "latein": "sermōnem habēre",
     "deutsch": [
       "ein Gespräch führen, sich unterhalten"
     ],
@@ -7218,7 +7218,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l40-10",
     "lektion": 40,
-    "latein": "*ōsculum, ī n.",
+    "latein": "ōsculum, ī n.",
     "deutsch": [
       "der Kuss"
     ],
@@ -7412,7 +7412,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-1",
     "lektion": 41,
-    "latein": "*mundus, ī m.",
+    "latein": "mundus, ī m.",
     "deutsch": [
       "die Welt, das Weltall"
     ],
@@ -7447,7 +7447,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-4",
     "lektion": 41,
-    "latein": "*āēr, āeris m.",
+    "latein": "āēr, āeris m.",
     "deutsch": [
       "die Luft"
     ],
@@ -7479,7 +7479,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-7",
     "lektion": 41,
-    "latein": "*ventus, ī m.",
+    "latein": "ventus, ī m.",
     "deutsch": [
       "der Wind"
     ],
@@ -7526,7 +7526,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-11",
     "lektion": 41,
-    "latein": "*nātūra rērum",
+    "latein": "nātūra rērum",
     "deutsch": [
       "die Beschaffenheit der Dinge",
       "der Aufbau der Welt"
@@ -7537,7 +7537,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-12",
     "lektion": 41,
-    "latein": "*īnspicere, īnspiciō, īnspexī, īnspectum",
+    "latein": "īnspicere, īnspiciō, īnspexī, īnspectum",
     "deutsch": [
       "anschauen",
       "untersuchen"
@@ -7588,7 +7588,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-17",
     "lektion": 41,
-    "latein": "*sapiēns, sapientis",
+    "latein": "sapiēns, sapientis",
     "deutsch": [
       "weise",
       "Subst.: der Weise"
@@ -7623,7 +7623,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-20",
     "lektion": 41,
-    "latein": "*glōria, ae f.",
+    "latein": "glōria, ae f.",
     "deutsch": [
       "der Ruhm, die Ehre"
     ],
@@ -7645,7 +7645,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l41-22",
     "lektion": 41,
-    "latein": "*studiōsus, a, um (mit Gen.)",
+    "latein": "studiōsus, a, um (mit Gen.)",
     "deutsch": [
       "(bei einer Tätigkeit) eifrig",
       "gelehrt"
@@ -7706,7 +7706,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l42-17",
     "lektion": 42,
-    "latein": "*cōgnitiō, cōgnitiōnis f.",
+    "latein": "cōgnitiō, cōgnitiōnis f.",
     "deutsch": [
       "die Erkenntnis",
       "die Untersuchung"
@@ -7808,7 +7808,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l42-5",
     "lektion": 42,
-    "latein": "*accūsāre, accūsō, accūsāvī, accūsātum",
+    "latein": "accūsāre, accūsō, accūsāvī, accūsātum",
     "deutsch": [
       "anklagen"
     ],
@@ -7838,7 +7838,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l42-8",
     "lektion": 42,
-    "latein": "*corrumpere, corrumpō, corrūpī, corruptum",
+    "latein": "corrumpere, corrumpō, corrūpī, corruptum",
     "deutsch": [
       "verderben",
       "bestechen"
@@ -7849,7 +7849,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l42-9",
     "lektion": 42,
-    "latein": "*crīmen, crīminis n.",
+    "latein": "crīmen, crīminis n.",
     "deutsch": [
       "der Vorwurf, die Anklage",
       "das Verbrechen"
@@ -7860,7 +7860,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l42-10",
     "lektion": 42,
-    "latein": "*ōrāculum, ī n.",
+    "latein": "ōrāculum, ī n.",
     "deutsch": [
       "der Götterspruch, das Orakel"
     ],
@@ -7892,7 +7892,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l43-1",
     "lektion": 43,
-    "latein": "*philosophia, ae f.",
+    "latein": "philosophia, ae f.",
     "deutsch": [
       "die Philosophie"
     ],
@@ -7950,7 +7950,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l43-6",
     "lektion": 43,
-    "latein": "*voluptātem capere (ē/ex mit Abl.)",
+    "latein": "voluptātem capere (ē/ex mit Abl.)",
     "deutsch": [
       "(an etw.) Vergnügen haben"
     ],
@@ -7997,7 +7997,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l43-10",
     "lektion": 43,
-    "latein": "*spērāre, spērō, spērāvī, spērātum",
+    "latein": "spērāre, spērō, spērāvī, spērātum",
     "deutsch": [
       "hoffen, erhoffen"
     ],
@@ -8052,7 +8052,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l43-15",
     "lektion": 43,
-    "latein": "*odiō esse",
+    "latein": "odiō esse",
     "deutsch": [
       "gehasst werden"
     ],
@@ -8096,7 +8096,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l43-19",
     "lektion": 43,
-    "latein": "*gaudium, ī n.",
+    "latein": "gaudium, ī n.",
     "deutsch": [
       "die Freude"
     ],
@@ -8106,7 +8106,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l43-20",
     "lektion": 43,
-    "latein": "*gaudiō esse",
+    "latein": "gaudiō esse",
     "deutsch": [
       "Freude bereiten, Spaß machen"
     ],
@@ -8171,7 +8171,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l44-3",
     "lektion": 44,
-    "latein": "*libenter (Adv.)",
+    "latein": "libenter (Adv.)",
     "deutsch": [
       "gern"
     ],
@@ -8183,7 +8183,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l44-4",
     "lektion": 44,
-    "latein": "*ad rem pūblicam accēdere",
+    "latein": "ad rem pūblicam accēdere",
     "deutsch": [
       "die politische Laufbahn einschlagen, sich um öffentliche Ämter bewerben"
     ],
@@ -8195,7 +8195,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l44-5",
     "lektion": 44,
-    "latein": "*commūnis, commūne",
+    "latein": "commūnis, commūne",
     "deutsch": [
       "gemeinsam, gemeinschaftlich"
     ],
@@ -8205,7 +8205,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l44-6",
     "lektion": 44,
-    "latein": "*salūs commūnis",
+    "latein": "salūs commūnis",
     "deutsch": [
       "das Gemeinwohl",
       "das Wohl der Gemeinschaft"
@@ -8252,7 +8252,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l44-10",
     "lektion": 44,
-    "latein": "*cōgitātiō, cōgitātiōnis f.",
+    "latein": "cōgitātiō, cōgitātiōnis f.",
     "deutsch": [
       "der Gedanke, die Überlegung"
     ],
@@ -8276,7 +8276,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l44-12",
     "lektion": 44,
-    "latein": "*recēdere, recēdō, recessī, recessūrus (ā mit Abl.)",
+    "latein": "recēdere, recēdō, recessī, recessūrus (ā mit Abl.)",
     "deutsch": [
       "zurückweichen (vor), sich zurückziehen"
     ],
@@ -8308,7 +8308,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l44-15",
     "lektion": 44,
-    "latein": "*officium, ī n.",
+    "latein": "officium, ī n.",
     "deutsch": [
       "die Pflicht, der Dienst, die Aufgabe"
     ],
@@ -8390,7 +8390,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l45-1",
     "lektion": 45,
-    "latein": "*domesticus, a, um",
+    "latein": "domesticus, a, um",
     "deutsch": [
       "häuslich, zum Haus/zur Familie gehörend"
     ],
@@ -8425,7 +8425,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l45-4",
     "lektion": 45,
-    "latein": "*miscēre, misceō, miscuī, mixtum",
+    "latein": "miscēre, misceō, miscuī, mixtum",
     "deutsch": [
       "mischen, vermischen"
     ],
@@ -8468,7 +8468,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l45-8",
     "lektion": 45,
-    "latein": "*tamquam (Adv.)",
+    "latein": "tamquam (Adv.)",
     "deutsch": [
       "(eben)so wie, wie"
     ],
@@ -8502,7 +8502,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l45-11",
     "lektion": 45,
-    "latein": "*ratiō, ratiōnis f.",
+    "latein": "ratiō, ratiōnis f.",
     "deutsch": [
       "die Vernunft",
       "die Überlegung",
@@ -8538,7 +8538,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l46-3",
     "lektion": 46,
-    "latein": "*imitārī, imitor, imitātus sum",
+    "latein": "imitārī, imitor, imitātus sum",
     "deutsch": [
       "nachahmen"
     ],
@@ -8561,7 +8561,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l46-5",
     "lektion": 46,
-    "latein": "*hortārī, hortor, hortātus sum",
+    "latein": "hortārī, hortor, hortātus sum",
     "deutsch": [
       "ermuntern, auffordern"
     ],
@@ -8583,7 +8583,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l46-7",
     "lektion": 46,
-    "latein": "*orīrī, orior, ortus sum",
+    "latein": "orīrī, orior, ortus sum",
     "deutsch": [
       "sich erheben",
       "entstehen",
@@ -8595,7 +8595,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l46-8",
     "lektion": 46,
-    "latein": "*suspicārī, suspicor, suspicātus sum",
+    "latein": "suspicārī, suspicor, suspicātus sum",
     "deutsch": [
       "verdächtigen",
       "vermuten"
@@ -8616,7 +8616,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l46-10",
     "lektion": 46,
-    "latein": "*cōnfitērī, cōnfiteor, cōnfessus sum",
+    "latein": "cōnfitērī, cōnfiteor, cōnfessus sum",
     "deutsch": [
       "gestehen, bekennen"
     ],
@@ -8658,7 +8658,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l46-14",
     "lektion": 46,
-    "latein": "*cōnārī, cōnor, cōnātus sum",
+    "latein": "cōnārī, cōnor, cōnātus sum",
     "deutsch": [
       "versuchen"
     ],
@@ -8759,7 +8759,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l47-8",
     "lektion": 47,
-    "latein": "*loquī, loquor, locūtus sum",
+    "latein": "loquī, loquor, locūtus sum",
     "deutsch": [
       "sprechen, sagen"
     ],
@@ -8771,7 +8771,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l47-9",
     "lektion": 47,
-    "latein": "*sequī, sequor, secūtus sum (mit Akk.)",
+    "latein": "sequī, sequor, secūtus sum (mit Akk.)",
     "deutsch": [
       "(jemandem) folgen, (jemanden/etwas) befolgen"
     ],
@@ -8806,7 +8806,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l47-12",
     "lektion": 47,
-    "latein": "*patī, patior, passus sum",
+    "latein": "patī, patior, passus sum",
     "deutsch": [
       "leiden",
       "aushalten, erdulden"
@@ -8937,7 +8937,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l48-9",
     "lektion": 48,
-    "latein": "*cōnstāre, cōnstō, cōnstitī, cōnstātūrus",
+    "latein": "cōnstāre, cōnstō, cōnstitī, cōnstātūrus",
     "deutsch": [
       "feststehen",
       "standhaft sein"
@@ -8982,7 +8982,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l48-13",
     "lektion": 48,
-    "latein": "*claudere, claudō, clausī, clausum",
+    "latein": "claudere, claudō, clausī, clausum",
     "deutsch": [
       "(ab)schließen",
       "versperren"
@@ -8993,7 +8993,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l48-14",
     "lektion": 48,
-    "latein": "*colloquium, ī n.",
+    "latein": "colloquium, ī n.",
     "deutsch": [
       "die Unterredung, das Gespräch"
     ],
@@ -9033,7 +9033,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l48-18",
     "lektion": 48,
-    "latein": "*institūtum, ī n.",
+    "latein": "institūtum, ī n.",
     "deutsch": [
       "die Einrichtung",
       "die Anweisung"
@@ -9044,7 +9044,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l48-19",
     "lektion": 48,
-    "latein": "*cultus, cultūs m.",
+    "latein": "cultus, cultūs m.",
     "deutsch": [
       "die Pflege",
       "die Verehrung",
@@ -9162,7 +9162,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l49-23",
     "lektion": 49,
-    "latein": "*cupidus, a, um (mit Gen.)",
+    "latein": "cupidus, a, um (mit Gen.)",
     "deutsch": [
       "(be)gierig (nach etwas)"
     ],
@@ -9186,7 +9186,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l49-25",
     "lektion": 49,
-    "latein": "*stultitia, ae f.",
+    "latein": "stultitia, ae f.",
     "deutsch": [
       "die Dummheit"
     ],
@@ -9252,7 +9252,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l49-6",
     "lektion": 49,
-    "latein": "*perpetuō (Adv.)",
+    "latein": "perpetuō (Adv.)",
     "deutsch": [
       "auf ewig"
     ],
@@ -9272,7 +9272,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l49-8",
     "lektion": 49,
-    "latein": "*iūdicāre, iūdicō, iūdicāvī, iūdicātum",
+    "latein": "iūdicāre, iūdicō, iūdicāvī, iūdicātum",
     "deutsch": [
       "Recht sprechen, (be)urteilen"
     ],
@@ -9286,7 +9286,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l49-9",
     "lektion": 49,
-    "latein": "*certus, a, um",
+    "latein": "certus, a, um",
     "deutsch": [
       "sicher, gewiss",
       "bestimmt"
@@ -9307,7 +9307,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l49-11",
     "lektion": 49,
-    "latein": "*genus, generis n.",
+    "latein": "genus, generis n.",
     "deutsch": [
       "die Art, Abstammung",
       "das Geschlecht"
@@ -9355,7 +9355,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l50-21",
     "lektion": 50,
-    "latein": "*triumphus, ī m.",
+    "latein": "triumphus, ī m.",
     "deutsch": [
       "der Triumph, Triumphzug"
     ],
@@ -9365,7 +9365,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l50-22",
     "lektion": 50,
-    "latein": "*multitūdō, multitūdinis f.",
+    "latein": "multitūdō, multitūdinis f.",
     "deutsch": [
       "die Menge, große Anzahl"
     ],
@@ -9378,7 +9378,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l50-1",
     "lektion": 50,
-    "latein": "*currus, currūs m.",
+    "latein": "currus, currūs m.",
     "deutsch": [
       "der Wagen, Streitwagen"
     ],
@@ -9422,7 +9422,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l50-5",
     "lektion": 50,
-    "latein": "*victōriam parere",
+    "latein": "victōriam parere",
     "deutsch": [
       "einen Sieg erringen"
     ],
@@ -9480,7 +9480,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l50-10",
     "lektion": 50,
-    "latein": "*currere, currō, cucurrī, cursūrus",
+    "latein": "currere, currō, cucurrī, cursūrus",
     "deutsch": [
       "laufen, eilen"
     ],
@@ -9492,7 +9492,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l50-11",
     "lektion": 50,
-    "latein": "*victor, victōris",
+    "latein": "victor, victōris",
     "deutsch": [
       "siegreich",
       "Substantiv: der Sieger"
@@ -9846,7 +9846,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l52-3",
     "lektion": 52,
-    "latein": "*prōgredī, prōgredior, prōgressus sum",
+    "latein": "prōgredī, prōgredior, prōgressus sum",
     "deutsch": [
       "vorrücken",
       "vorgehen"
@@ -9857,7 +9857,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l52-4",
     "lektion": 52,
-    "latein": "*fatērī, fateor, fassus sum",
+    "latein": "fatērī, fateor, fassus sum",
     "deutsch": [
       "bekennen, gestehen, zugeben"
     ],
@@ -9880,7 +9880,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l52-6",
     "lektion": 52,
-    "latein": "*flāgitium, ī n.",
+    "latein": "flāgitium, ī n.",
     "deutsch": [
       "die Schandtat",
       "die Schande"
@@ -9941,7 +9941,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l52-11",
     "lektion": 52,
-    "latein": "*dēnique (Adv.)",
+    "latein": "dēnique (Adv.)",
     "deutsch": [
       "zuletzt",
       "und außerdem"
@@ -9962,7 +9962,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l52-13",
     "lektion": 52,
-    "latein": "*ante/anteā (Adv.)",
+    "latein": "ante/anteā (Adv.)",
     "deutsch": [
       "vorher, früher"
     ],
@@ -9972,7 +9972,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l52-14",
     "lektion": 52,
-    "latein": "*dēsinere, dēsinō, dēsiī, dēsitum",
+    "latein": "dēsinere, dēsinō, dēsiī, dēsitum",
     "deutsch": [
       "(mit etwas) aufhören"
     ],
@@ -10051,7 +10051,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l53-3",
     "lektion": 53,
-    "latein": "*fortitūdō, fortitūdinis f.",
+    "latein": "fortitūdō, fortitūdinis f.",
     "deutsch": [
       "die Tapferkeit, der Mut"
     ],
@@ -10118,7 +10118,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l53-9",
     "lektion": 53,
-    "latein": "*ēdūcere, ēdūcō, ēdūxī, ēductum",
+    "latein": "ēdūcere, ēdūcō, ēdūxī, ēductum",
     "deutsch": [
       "herausführen"
     ],
@@ -10150,7 +10150,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l53-12",
     "lektion": 53,
-    "latein": "*cūstōdia, ae f.",
+    "latein": "cūstōdia, ae f.",
     "deutsch": [
       "die Bewachung",
       "die Haft"
@@ -10161,7 +10161,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l53-13",
     "lektion": 53,
-    "latein": "*ēgredī, ēgredior, ēgressus sum",
+    "latein": "ēgredī, ēgredior, ēgressus sum",
     "deutsch": [
       "herausgehen, verlassen"
     ],
@@ -10171,7 +10171,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l53-14",
     "lektion": 53,
-    "latein": "*dēmittere, dēmittō, dēmīsī, dēmissum",
+    "latein": "dēmittere, dēmittō, dēmīsī, dēmissum",
     "deutsch": [
       "hinabwerfen",
       "wegwerfen"
@@ -10205,7 +10205,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l54-3",
     "lektion": 53,
-    "latein": "*impellere, impellō, impulī, impulsum",
+    "latein": "impellere, impellō, impulī, impulsum",
     "deutsch": [
       "antreiben",
       "veranlassen"
@@ -10274,7 +10274,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l54-9",
     "lektion": 53,
-    "latein": "*voluntās, voluntātis f.",
+    "latein": "voluntās, voluntātis f.",
     "deutsch": [
       "der Wille, Wunsch, die Absicht"
     ],
@@ -10295,7 +10295,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l54-11",
     "lektion": 54,
-    "latein": "*magnitūdō, magnitūdinis f.",
+    "latein": "magnitūdō, magnitūdinis f.",
     "deutsch": [
       "die Größe"
     ],
@@ -10307,7 +10307,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l54-12",
     "lektion": 54,
-    "latein": "*noctū (Adv.)",
+    "latein": "noctū (Adv.)",
     "deutsch": [
       "nachts, in der Nacht"
     ],
@@ -10362,7 +10362,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l55-2",
     "lektion": 55,
-    "latein": "*dubitātiō, dubitātiōnis f.",
+    "latein": "dubitātiō, dubitātiōnis f.",
     "deutsch": [
       "der Zweifel, die Ungewissheit"
     ],
@@ -10394,7 +10394,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l55-5",
     "lektion": 55,
-    "latein": "*scrīptor, scrīptōris m.",
+    "latein": "scrīptor, scrīptōris m.",
     "deutsch": [
       "der Schreiber, Schriftsteller"
     ],
@@ -10406,7 +10406,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l55-6",
     "lektion": 55,
-    "latein": "*nōscere, nōscō, nōvī, nōtum",
+    "latein": "nōscere, nōscō, nōvī, nōtum",
     "deutsch": [
       "kennenlernen, erfahren",
       "Perfekt: kennen, wissen"
@@ -10419,7 +10419,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l55-7",
     "lektion": 55,
-    "latein": "*dignus, a, um (mit Abl.)",
+    "latein": "dignus, a, um (mit Abl.)",
     "deutsch": [
       "(einer Sache) wert, würdig, angemessen"
     ],
@@ -10483,7 +10483,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l55-13",
     "lektion": 55,
-    "latein": "*ōrātor, ōrātōris m.",
+    "latein": "ōrātor, ōrātōris m.",
     "deutsch": [
       "der Redner"
     ],
@@ -10534,7 +10534,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l55-18",
     "lektion": 55,
-    "latein": "*quiēscere, quiēscō, quiēvī, quiētūrus",
+    "latein": "quiēscere, quiēscō, quiēvī, quiētūrus",
     "deutsch": [
       "ruhen, schlafen"
     ],
@@ -10564,7 +10564,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l55-21",
     "lektion": 55,
-    "latein": "*miserērī, misereor, miseritus/misertus sum (mit Gen.)",
+    "latein": "miserērī, misereor, miseritus/misertus sum (mit Gen.)",
     "deutsch": [
       "(mit jemandem/etwas) Mitleid haben"
     ],
@@ -10586,7 +10586,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-14",
     "lektion": 56,
-    "latein": "*tantum … quantum",
+    "latein": "tantum … quantum",
     "deutsch": [
       "so viel … wie (viel)"
     ],
@@ -10630,7 +10630,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-18",
     "lektion": 56,
-    "latein": "*audēre, audeō, ausus sum",
+    "latein": "audēre, audeō, ausus sum",
     "deutsch": [
       "(etwas) wagen"
     ],
@@ -10640,7 +10640,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-19",
     "lektion": 56,
-    "latein": "*solēre, soleō, solitus sum",
+    "latein": "solēre, soleō, solitus sum",
     "deutsch": [
       "gewohnt sein, (etwas zu tun) pflegen"
     ],
@@ -10650,7 +10650,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-20",
     "lektion": 56,
-    "latein": "*quotiēns (Adv.)",
+    "latein": "quotiēns (Adv.)",
     "deutsch": [
       "wie oft"
     ],
@@ -10662,7 +10662,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-21",
     "lektion": 56,
-    "latein": "*totiēns (Adv.)",
+    "latein": "totiēns (Adv.)",
     "deutsch": [
       "so oft"
     ],
@@ -10674,7 +10674,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-22",
     "lektion": 56,
-    "latein": "*totiēns … quotiēns",
+    "latein": "totiēns … quotiēns",
     "deutsch": [
       "so oft … wie (oft)"
     ],
@@ -10696,7 +10696,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-2",
     "lektion": 56,
-    "latein": "*cōnfīdere, cōnfīdō, cōnfīsus sum (mit Dat./Abl.)",
+    "latein": "cōnfīdere, cōnfīdō, cōnfīsus sum (mit Dat./Abl.)",
     "deutsch": [
       "vertrauen, sich (auf jemanden/etwas) verlassen"
     ],
@@ -10706,7 +10706,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-3",
     "lektion": 56,
-    "latein": "*quot",
+    "latein": "quot",
     "deutsch": [
       "wie viele"
     ],
@@ -10718,7 +10718,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-4",
     "lektion": 56,
-    "latein": "*tot … quot",
+    "latein": "tot … quot",
     "deutsch": [
       "so viele … wie (viele)"
     ],
@@ -10740,7 +10740,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-6",
     "lektion": 56,
-    "latein": "*revertī, revertor, revertī, reversus",
+    "latein": "revertī, revertor, revertī, reversus",
     "deutsch": [
       "zurückkehren"
     ],
@@ -10794,7 +10794,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-11",
     "lektion": 56,
-    "latein": "*quālis, quāle",
+    "latein": "quālis, quāle",
     "deutsch": [
       "wie beschaffen"
     ],
@@ -10804,7 +10804,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l56-12",
     "lektion": 56,
-    "latein": "*tālis … quālis",
+    "latein": "tālis … quālis",
     "deutsch": [
       "so beschaffen … wie (beschaffen)"
     ],
@@ -10814,7 +10814,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l57-1",
     "lektion": 57,
-    "latein": "*ūtī, ūtor, ūsus sum (mit Abl.)",
+    "latein": "ūtī, ūtor, ūsus sum (mit Abl.)",
     "deutsch": [
       "(etwas) benutzen, gebrauchen"
     ],
@@ -10890,7 +10890,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l57-8",
     "lektion": 57,
-    "latein": "*accendere, accendō, accendī, accēnsum",
+    "latein": "accendere, accendō, accendī, accēnsum",
     "deutsch": [
       "anzünden, anfeuern, erregen"
     ],
@@ -10944,7 +10944,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l57-13",
     "lektion": 57,
-    "latein": "*necessitās, necessitātis f.",
+    "latein": "necessitās, necessitātis f.",
     "deutsch": [
       "die Not, Notwendigkeit"
     ],
@@ -10978,7 +10978,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l57-16",
     "lektion": 57,
-    "latein": "*āvertere, āvertō, āvertī, āversum",
+    "latein": "āvertere, āvertō, āvertī, āversum",
     "deutsch": [
       "abwenden, vertreiben"
     ],
@@ -10988,7 +10988,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l57-17",
     "lektion": 57,
-    "latein": "*error, errōris m.",
+    "latein": "error, errōris m.",
     "deutsch": [
       "der Irrtum",
       "die Irrfahrt"
@@ -11019,7 +11019,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l57-20",
     "lektion": 57,
-    "latein": "*terga vertere",
+    "latein": "terga vertere",
     "deutsch": [
       "sich umdrehen",
       "fliehen"
@@ -11032,7 +11032,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l57-21",
     "lektion": 57,
-    "latein": "*cēdere, cēdō, cessī, cessūrus",
+    "latein": "cēdere, cēdō, cessī, cessūrus",
     "deutsch": [
       "gehen, sich zurückziehen"
     ],
@@ -11044,7 +11044,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-5",
     "lektion": 58,
-    "latein": "*beneficium, ī n.",
+    "latein": "beneficium, ī n.",
     "deutsch": [
       "die Wohltat, der Gefallen"
     ],
@@ -11065,7 +11065,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-7",
     "lektion": 58,
-    "latein": "*diversus, a, um",
+    "latein": "diversus, a, um",
     "deutsch": [
       "verschieden",
       "entgegengesetzt"
@@ -11088,7 +11088,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-9",
     "lektion": 58,
-    "latein": "*ēloquentia, ae f.",
+    "latein": "ēloquentia, ae f.",
     "deutsch": [
       "die Redegewandtheit",
       "die Rhetorik"
@@ -11099,7 +11099,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-10",
     "lektion": 58,
-    "latein": "*exprimere, exprimō, expressī, expressum",
+    "latein": "exprimere, exprimō, expressī, expressum",
     "deutsch": [
       "ausdrücken, schildern"
     ],
@@ -11109,7 +11109,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-11",
     "lektion": 58,
-    "latein": "*patrius, a, um",
+    "latein": "patrius, a, um",
     "deutsch": [
       "väterlich, heimatlich"
     ],
@@ -11131,7 +11131,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-13",
     "lektion": 58,
-    "latein": "*cōnsūmere, cōnsūmō, cōnsūmpsī, cōnsūmptum",
+    "latein": "cōnsūmere, cōnsūmō, cōnsūmpsī, cōnsūmptum",
     "deutsch": [
       "verwenden, verbrauchen"
     ],
@@ -11188,7 +11188,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-18",
     "lektion": 58,
-    "latein": "*succēdere, succēdō, successī, successūrus",
+    "latein": "succēdere, succēdō, successī, successūrus",
     "deutsch": [
       "nachfolgen",
       "gelingen"
@@ -11222,7 +11222,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l58-21",
     "lektion": 58,
-    "latein": "*necessārius, a, um",
+    "latein": "necessārius, a, um",
     "deutsch": [
       "notwendig"
     ],
@@ -11298,7 +11298,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l59-2",
     "lektion": 59,
-    "latein": "*magistrātus, magistrātūs m.",
+    "latein": "magistrātus, magistrātūs m.",
     "deutsch": [
       "das Amt",
       "der Beamte"
@@ -11311,7 +11311,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l59-3",
     "lektion": 59,
-    "latein": "*obtinēre, obtineō, obtinuī, obtentum",
+    "latein": "obtinēre, obtineō, obtinuī, obtentum",
     "deutsch": [
       "festhalten, besitzen"
     ],
@@ -11351,7 +11351,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l59-7",
     "lektion": 59,
-    "latein": "*nex, necis f.",
+    "latein": "nex, necis f.",
     "deutsch": [
       "der Tod",
       "der Mord"
@@ -11364,7 +11364,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l59-8",
     "lektion": 59,
-    "latein": "*necem īnferre (mit Dat.)",
+    "latein": "necem īnferre (mit Dat.)",
     "deutsch": [
       "(jemanden) eines gewaltsamen Todes sterben lassen, ermorden"
     ],
@@ -11376,7 +11376,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l59-9",
     "lektion": 59,
-    "latein": "*ōdisse, ōdī, ōsūrus",
+    "latein": "ōdisse, ōdī, ōsūrus",
     "deutsch": [
       "hassen"
     ],
@@ -11458,7 +11458,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-2",
     "lektion": 60,
-    "latein": "*quodsī (und quod sī)",
+    "latein": "quodsī (und quod sī)",
     "deutsch": [
       "wenn also, wenn nun, wenn aber"
     ],
@@ -11468,7 +11468,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-3",
     "lektion": 60,
-    "latein": "*grandis, grande",
+    "latein": "grandis, grande",
     "deutsch": [
       "groß, großartig"
     ],
@@ -11480,7 +11480,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-4",
     "lektion": 60,
-    "latein": "*meminisse, meminī (mit Gen.)",
+    "latein": "meminisse, meminī (mit Gen.)",
     "deutsch": [
       "sich erinnern, im Gedächtnis behalten"
     ],
@@ -11518,7 +11518,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-7",
     "lektion": 60,
-    "latein": "*vēritās, vēritātis f.",
+    "latein": "vēritās, vēritātis f.",
     "deutsch": [
       "die Wahrheit"
     ],
@@ -11538,7 +11538,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-9",
     "lektion": 60,
-    "latein": "*aliter (Adv.) ac",
+    "latein": "aliter (Adv.) ac",
     "deutsch": [
       "anders als"
     ],
@@ -11612,7 +11612,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-16",
     "lektion": 60,
-    "latein": "*mortālis, mortāle",
+    "latein": "mortālis, mortāle",
     "deutsch": [
       "sterblich"
     ],
@@ -11622,7 +11622,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-17",
     "lektion": 60,
-    "latein": "*(Pl.) mortālēs, mortālium m.",
+    "latein": "(Pl.) mortālēs, mortālium m.",
     "deutsch": [
       "die Menschen"
     ],
@@ -11666,7 +11666,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-21",
     "lektion": 60,
-    "latein": "*iuventūs, iuventūtis f.",
+    "latein": "iuventūs, iuventūtis f.",
     "deutsch": [
       "die Jugend"
     ],
@@ -11687,7 +11687,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-23",
     "lektion": 60,
-    "latein": "*innocēns, innocentis",
+    "latein": "innocēns, innocentis",
     "deutsch": [
       "unschuldig"
     ],
@@ -11697,7 +11697,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-24",
     "lektion": 60,
-    "latein": "*probus, a, um",
+    "latein": "probus, a, um",
     "deutsch": [
       "tüchtig, anständig"
     ],
@@ -11707,7 +11707,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-25",
     "lektion": 60,
-    "latein": "*discipulus, ī m.",
+    "latein": "discipulus, ī m.",
     "deutsch": [
       "der Schüler"
     ],
@@ -11719,7 +11719,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-26",
     "lektion": 60,
-    "latein": "*iniūstus, a, um",
+    "latein": "iniūstus, a, um",
     "deutsch": [
       "ungerecht",
       "unverdient"
@@ -11763,7 +11763,7 @@ export const EXTRA_VOCAB: Vocab[] = [
   {
     "id": "l60-30",
     "lektion": 60,
-    "latein": "*revocāre, revocō, revocāvī, revocātum",
+    "latein": "revocāre, revocō, revocāvī, revocātum",
     "deutsch": [
       "zurückrufen",
       "(wieder) erwähnen",

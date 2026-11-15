@@ -42,6 +42,11 @@ export function joinDeutsch(meanings: readonly string[]): string {
   return meanings.join("; ");
 }
 
+/** Textbook lists mark some lemmas with a leading star. It is not part of the word. */
+export function plainLatin(text: string): string {
+  return text.replace(/^\*\s*/, "").trim();
+}
+
 export function sameStrings(left: readonly string[], right: readonly string[]): boolean {
   return left.length === right.length && left.every((item, index) => item === right[index]);
 }
@@ -55,7 +60,7 @@ export function completeVocab(input: VocabInput & { id: string }): Vocab {
   return {
     id: input.id,
     lektion: input.lektion,
-    latein: input.latein,
+    latein: plainLatin(input.latein),
     deutsch: input.deutsch,
     wortart: input.wortart ?? "wendung",
     cluster: input.cluster ?? [],

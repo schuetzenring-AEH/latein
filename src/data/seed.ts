@@ -64,7 +64,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l1-6",
     "lektion": 1,
-    "latein": "*servus",
+    "latein": "servus",
     "deutsch": [
       "der Sklave"
     ],
@@ -207,7 +207,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l1-19",
     "lektion": 1,
-    "latein": "*dominus",
+    "latein": "dominus",
     "deutsch": [
       "der Herr, Hausherr"
     ],
@@ -217,7 +217,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l1-20",
     "lektion": 1,
-    "latein": "*domina",
+    "latein": "domina",
     "deutsch": [
       "die Herrin, Ehefrau"
     ],
@@ -239,7 +239,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l1-22",
     "lektion": 1,
-    "latein": "*serva",
+    "latein": "serva",
     "deutsch": [
       "die Sklavin"
     ],
@@ -262,7 +262,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l1-24",
     "lektion": 1,
-    "latein": "*filia",
+    "latein": "filia",
     "deutsch": [
       "die Tochter"
     ],
@@ -274,7 +274,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l1-25",
     "lektion": 1,
-    "latein": "*filius",
+    "latein": "filius",
     "deutsch": [
       "der Sohn"
     ],
@@ -408,7 +408,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l2-12",
     "lektion": 2,
-    "latein": "*labōrāre",
+    "latein": "labōrāre",
     "deutsch": [
       "arbeiten, sich anstrengen"
     ],
@@ -418,7 +418,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l2-13",
     "lektion": 2,
-    "latein": "*dormīre",
+    "latein": "dormīre",
     "deutsch": [
       "schlafen"
     ],
@@ -473,7 +473,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l2-18",
     "lektion": 2,
-    "latein": "*rīdēre",
+    "latein": "rīdēre",
     "deutsch": [
       "lachen",
       "über etw. lachen"
@@ -529,7 +529,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l2-23",
     "lektion": 2,
-    "latein": "*vocāre",
+    "latein": "vocāre",
     "deutsch": [
       "rufen, nennen"
     ],
@@ -563,7 +563,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l3-1",
     "lektion": 3,
-    "latein": "*forum",
+    "latein": "forum",
     "deutsch": [
       "der Marktplatz (das Forum)"
     ],
@@ -597,7 +597,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l3-4",
     "lektion": 3,
-    "latein": "*cūria",
+    "latein": "cūria",
     "deutsch": [
       "die Kurie (Versammlungsort des Senats)"
     ],
@@ -649,7 +649,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l3-9",
     "lektion": 3,
-    "latein": "*monumentum",
+    "latein": "monumentum",
     "deutsch": [
       "das Denkmal"
     ],
@@ -659,7 +659,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l3-10",
     "lektion": 3,
-    "latein": "*templum",
+    "latein": "templum",
     "deutsch": [
       "der Tempel"
     ],
@@ -694,7 +694,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l3-13",
     "lektion": 3,
-    "latein": "*statua",
+    "latein": "statua",
     "deutsch": [
       "das Standbild, die Statue"
     ],
@@ -716,7 +716,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l3-15",
     "lektion": 3,
-    "latein": "*basilica",
+    "latein": "basilica",
     "deutsch": [
       "die Gerichtshalle, Markthalle"
     ],
@@ -840,7 +840,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l4-1",
     "lektion": 4,
-    "latein": "*Rōmānus",
+    "latein": "Rōmānus",
     "deutsch": [
       "der Römer"
     ],
@@ -864,7 +864,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l4-3",
     "lektion": 4,
-    "latein": "*populus",
+    "latein": "populus",
     "deutsch": [
       "das Volk"
     ],
@@ -876,7 +876,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l4-4",
     "lektion": 4,
-    "latein": "*amphitheātrum",
+    "latein": "amphitheātrum",
     "deutsch": [
       "das Amphitheater"
     ],
@@ -896,7 +896,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l4-6",
     "lektion": 4,
-    "latein": "*spectāculum",
+    "latein": "spectāculum",
     "deutsch": [
       "das Schauspiel"
     ],
@@ -1015,7 +1015,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l4-17",
     "lektion": 4,
-    "latein": "*arēna",
+    "latein": "arēna",
     "deutsch": [
       "der Sand",
       "die Arena, der Kampfplatz"
@@ -1028,7 +1028,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l4-18",
     "lektion": 4,
-    "latein": "*pūgnāre, pūgnō",
+    "latein": "pūgnāre, pūgnō",
     "deutsch": [
       "kämpfen, streiten"
     ],
@@ -1135,7 +1135,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l5-3",
     "lektion": 5,
-    "latein": "*deus",
+    "latein": "deus",
     "deutsch": [
       "der Gott, die Gottheit"
     ],
@@ -1277,7 +1277,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l5-16",
     "lektion": 5,
-    "latein": "*turba",
+    "latein": "turba",
     "deutsch": [
       "die Menschenmenge",
       "die Unordnung",
@@ -1311,7 +1311,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l5-19",
     "lektion": 5,
-    "latein": "*āra",
+    "latein": "āra",
     "deutsch": [
       "der Altar"
     ],
@@ -1321,7 +1321,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l5-20",
     "lektion": 5,
-    "latein": "*hostia",
+    "latein": "hostia",
     "deutsch": [
       "das Opfer, Opfertier"
     ],
@@ -1333,7 +1333,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l5-21",
     "lektion": 5,
-    "latein": "*sacrificāre, sacrificō",
+    "latein": "sacrificāre, sacrificō",
     "deutsch": [
       "opfern"
     ],
@@ -1416,7 +1416,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l5-29",
     "lektion": 5,
-    "latein": "*sacrificium",
+    "latein": "sacrificium",
     "deutsch": [
       "das Opfer"
     ],
@@ -1468,7 +1468,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l6-5",
     "lektion": 6,
-    "latein": "*porta, ae f.",
+    "latein": "porta, ae f.",
     "deutsch": [
       "die Tür, das Tor, der Eingang"
     ],
@@ -1480,7 +1480,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l6-6",
     "lektion": 6,
-    "latein": "*Tartarus, ī m.",
+    "latein": "Tartarus, ī m.",
     "deutsch": [
       "die Unterwelt",
       "der Tartarus"
@@ -1514,7 +1514,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l6-9",
     "lektion": 6,
-    "latein": "*mōnstrum, ī n.",
+    "latein": "mōnstrum, ī n.",
     "deutsch": [
       "das Ungeheuer"
     ],
@@ -1567,7 +1567,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l6-14",
     "lektion": 6,
-    "latein": "*rēgnāre, rēgnō",
+    "latein": "rēgnāre, rēgnō",
     "deutsch": [
       "König sein, herrschen"
     ],
@@ -1642,7 +1642,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l6-21",
     "lektion": 6,
-    "latein": "*temptāre, temptō",
+    "latein": "temptāre, temptō",
     "deutsch": [
       "angreifen",
       "versuchen, prüfen"
@@ -1653,7 +1653,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l6-22",
     "lektion": 6,
-    "latein": "*superāre, superō",
+    "latein": "superāre, superō",
     "deutsch": [
       "übertreffen, überwinden, besiegen"
     ],
@@ -1685,7 +1685,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l6-25",
     "lektion": 6,
-    "latein": "*timēre, timeō",
+    "latein": "timēre, timeō",
     "deutsch": [
       "(sich) fürchten, Angst haben"
     ],
@@ -1697,7 +1697,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l7-1",
     "lektion": 7,
-    "latein": "*māgnus, a, um",
+    "latein": "māgnus, a, um",
     "deutsch": [
       "groß"
     ],
@@ -1719,7 +1719,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l7-3",
     "lektion": 7,
-    "latein": "*plūrimī, ae, a",
+    "latein": "plūrimī, ae, a",
     "deutsch": [
       "die meisten, sehr viele"
     ],
@@ -1765,7 +1765,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l7-7",
     "lektion": 7,
-    "latein": "*timidus, a, um",
+    "latein": "timidus, a, um",
     "deutsch": [
       "ängstlich, feige"
     ],
@@ -1962,7 +1962,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l7-25",
     "lektion": 7,
-    "latein": "*saevus, a, um",
+    "latein": "saevus, a, um",
     "deutsch": [
       "wütend, schrecklich"
     ],
@@ -1983,7 +1983,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l8-1",
     "lektion": 8,
-    "latein": "*ferus, a, um",
+    "latein": "ferus, a, um",
     "deutsch": [
       "wild"
     ],
@@ -1993,7 +1993,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l8-2",
     "lektion": 8,
-    "latein": "*saxum, ī n.",
+    "latein": "saxum, ī n.",
     "deutsch": [
       "der Fels, Felsblock"
     ],
@@ -2074,7 +2074,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l8-10",
     "lektion": 8,
-    "latein": "*aqua, ae f.",
+    "latein": "aqua, ae f.",
     "deutsch": [
       "das Wasser"
     ],
@@ -2096,7 +2096,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l8-12",
     "lektion": 8,
-    "latein": "*praeda, ae f.",
+    "latein": "praeda, ae f.",
     "deutsch": [
       "die Beute"
     ],
@@ -2106,7 +2106,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l8-13",
     "lektion": 8,
-    "latein": "*captīvus, ī m.",
+    "latein": "captīvus, ī m.",
     "deutsch": [
       "der Gefangene"
     ],
@@ -2208,7 +2208,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l8-23",
     "lektion": 8,
-    "latein": "*oculus, ī m.",
+    "latein": "oculus, ī m.",
     "deutsch": [
       "das Auge"
     ],
@@ -2230,7 +2230,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-1",
     "lektion": 9,
-    "latein": "*puer, puerī m.",
+    "latein": "puer, puerī m.",
     "deutsch": [
       "der Junge, der Bub",
       "das Kind"
@@ -2279,7 +2279,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-5",
     "lektion": 9,
-    "latein": "*magister, magistrī m.",
+    "latein": "magister, magistrī m.",
     "deutsch": [
       "der Lehrer"
     ],
@@ -2301,7 +2301,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-7",
     "lektion": 9,
-    "latein": "*pulcher, pulchra, pulchrum",
+    "latein": "pulcher, pulchra, pulchrum",
     "deutsch": [
       "schön"
     ],
@@ -2313,7 +2313,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-8",
     "lektion": 9,
-    "latein": "*in (Präp. mit Abl.)",
+    "latein": "in (Präp. mit Abl.)",
     "deutsch": [
       "in, an, auf (Frage: Wo?)"
     ],
@@ -2333,7 +2333,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-10",
     "lektion": 9,
-    "latein": "*miser, misera, miserum",
+    "latein": "miser, misera, miserum",
     "deutsch": [
       "arm, elend, unglücklich"
     ],
@@ -2343,7 +2343,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-11",
     "lektion": 9,
-    "latein": "*ē, ex (Präp. mit Abl.)",
+    "latein": "ē, ex (Präp. mit Abl.)",
     "deutsch": [
       "aus, aus … heraus"
     ],
@@ -2353,7 +2353,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-12",
     "lektion": 9,
-    "latein": "*in (Präp. mit Akk.)",
+    "latein": "in (Präp. mit Akk.)",
     "deutsch": [
       "in … hinein, nach, gegen(über) (Frage: Wohin?)"
     ],
@@ -2383,7 +2383,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-15",
     "lektion": 9,
-    "latein": "*cum (Präp. mit Abl.)",
+    "latein": "cum (Präp. mit Abl.)",
     "deutsch": [
       "mit, zusammen mit"
     ],
@@ -2393,7 +2393,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-16",
     "lektion": 9,
-    "latein": "*ante (Präp. mit Akk.)",
+    "latein": "ante (Präp. mit Akk.)",
     "deutsch": [
       "vor"
     ],
@@ -2433,7 +2433,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l9-20",
     "lektion": 9,
-    "latein": "*ā, ab (Präp. mit Abl.)",
+    "latein": "ā, ab (Präp. mit Abl.)",
     "deutsch": [
       "von, von … her, von … an"
     ],
@@ -2495,7 +2495,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-1",
     "lektion": 10,
-    "latein": "*abesse, absum",
+    "latein": "abesse, absum",
     "deutsch": [
       "abwesend sein, entfernt sein, fehlen"
     ],
@@ -2505,7 +2505,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-2",
     "lektion": 10,
-    "latein": "*ego",
+    "latein": "ego",
     "deutsch": [
       "ich"
     ],
@@ -2525,7 +2525,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-4",
     "lektion": 10,
-    "latein": "*adesse, adsum",
+    "latein": "adesse, adsum",
     "deutsch": [
       "da sein",
       "mit Dativ: (jemandem) helfen"
@@ -2558,7 +2558,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-7",
     "lektion": 10,
-    "latein": "*occultus, a, um",
+    "latein": "occultus, a, um",
     "deutsch": [
       "verborgen, geheim"
     ],
@@ -2624,7 +2624,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-13",
     "lektion": 10,
-    "latein": "*terrēre, terreō",
+    "latein": "terrēre, terreō",
     "deutsch": [
       "erschrecken, in Schrecken versetzen"
     ],
@@ -2676,7 +2676,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-18",
     "lektion": 10,
-    "latein": "*prīmum (Adv.)",
+    "latein": "prīmum (Adv.)",
     "deutsch": [
       "zuerst",
       "erstens",
@@ -2688,7 +2688,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-19",
     "lektion": 10,
-    "latein": "*impius, a, um",
+    "latein": "impius, a, um",
     "deutsch": [
       "gewissenlos, gottlos"
     ],
@@ -2736,7 +2736,7 @@ export const SEED_VOCAB: Vocab[] = [
   {
     "id": "l10-23",
     "lektion": 10,
-    "latein": "*terra, ae f.",
+    "latein": "terra, ae f.",
     "deutsch": [
       "die Erde, das Land"
     ],

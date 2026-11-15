@@ -3,7 +3,7 @@ import { createId } from "../lib/id";
 import { applyArenaResult, freshArenaRun, openStation } from "../lib/arena";
 import { clearedAfterSuccess, planetById, planetIndex } from "../lib/planets";
 import { hashPassword, nameKey } from "../lib/password";
-import { completeVocab } from "../lib/vocab";
+import { completeVocab, plainLatin } from "../lib/vocab";
 import { review } from "../lib/srs";
 import { flushStats, scheduleStatsPush } from "../lib/sync";
 import {
@@ -345,7 +345,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           ? {
               ...item,
               lektion: input.lektion,
-              latein: input.latein,
+              latein: plainLatin(input.latein),
               deutsch: input.deutsch,
               wortart: input.wortart ?? item.wortart,
               cluster: input.cluster ?? item.cluster,
