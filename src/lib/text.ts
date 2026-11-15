@@ -25,28 +25,36 @@ function withinTolerance(typed: string, expected: string): boolean {
   return false;
 }
 
-function coreGloss(text: string): string {
+function foldGloss(text: string): string {
   return text
     .replace(/\([^)]*\)/g, " ")
-    .replace(/[„“”«»"]/g, " ")
+    .replace(/[„“”«»"']/g, " ")
     .replace(/\b(der|die|das)\b/gi, " ")
     .toLowerCase()
-    .replace(/[^a-zäöüß\s-]/g, " ")
+    .replace(/ä/g, "ae")
+    .replace(/ö/g, "oe")
+    .replace(/ü/g, "ue")
+    .replace(/ß/g, "ss")
+    .replace(/[^a-z\s-]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
 
+function sortedWords(text: string): string {
+  return text.split(" ").filter(Boolean).sort().join(" ");
+}
+
 export function matchesGloss(typed: string, gloss: string): boolean {
-  const input = coreGloss(typed);
+  const input = foldGloss(typed);
   if (!input) return false;
   const stripped = gloss.replace(/\([^)]*\)/g, " ");
-  const pieces = [stripped, ...stripped.split(/[,;/]/)];
+  const pieces = [stripped, ...stripped.split(/[,;/!?…:.]+/)];
   const seen = new Set<string>();
   for (const piece of pieces) {
-    const expected = coreGloss(piece);
+    const expected = foldGloss(piece);
     if (!expected || seen.has(expected)) continue;
     seen.add(expected);
-    if (withinTolerance(input, expected)) return true;
+    if (withinTolerance(input, expected) || withinTolerance(sortedWords(input), sortedWords(expected))) return true;
   }
   return false;
 }
