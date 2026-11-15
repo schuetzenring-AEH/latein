@@ -110,8 +110,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     const send = () => {
       void flushStats();
     };
+    const onHide = () => {
+      if (document.visibilityState === "hidden") send();
+    };
     window.addEventListener("pagehide", send);
-    return () => window.removeEventListener("pagehide", send);
+    document.addEventListener("visibilitychange", onHide);
+    return () => {
+      window.removeEventListener("pagehide", send);
+      document.removeEventListener("visibilitychange", onHide);
+    };
   }, []);
 
   function note(saved: boolean) {
