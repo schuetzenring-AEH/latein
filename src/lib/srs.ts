@@ -26,7 +26,7 @@ export function isDue(entry: ProgressEntry | undefined, now = new Date()): boole
   return Date.parse(entry.nextDue) <= now.getTime();
 }
 
-/** The last answer was wrong, so the word is still one of the player's misses. */
+/** Still in Meteoriten until it has been right three times since the last miss. A new miss starts that count over. */
 export function isMissed(entry: ProgressEntry | undefined): boolean {
-  return entry !== undefined && entry.wrong > 0 && entry.box === 1;
+  return entry !== undefined && entry.wrong > 0 && entry.box < 4;
 }

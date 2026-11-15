@@ -109,7 +109,7 @@ export function SetupPage() {
         }}
       >
         <span className="font-semibold">Meteoriten</span>
-        <span className="mt-0.5 text-sm text-stone-500 dark:text-stone-400">Nur die Wörter, die du zuletzt falsch hattest. Jedes kommt einmal.</span>
+        <span className="mt-0.5 text-sm text-stone-500 dark:text-stone-400">Ein falsches Wort bleibt, bis es drei Mal richtig ist. Ein Fehler holt es zurück.</span>
       </button>
 
       <fieldset className="mt-6">
@@ -171,7 +171,7 @@ export function SetupPage() {
         <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">{wordCount(dueWords.length)} fällig von {wordCount(selectedWords.length)}.</p>
       )}
       {meteorOn && missedWords.length === 0 && (
-        <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">Keine Meteoriten. Gerade ist kein Wort falsch.</p>
+        <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">Keine Meteoriten. Kein Wort wartet noch auf drei richtige Antworten.</p>
       )}
 
       <div className="mt-6">
