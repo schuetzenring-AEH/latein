@@ -101,7 +101,13 @@ function Round({ setup }: { setup: SetupState }) {
   function settle(value: string, correct: boolean) {
     if (!item || lock.current || phase !== "question") return;
     lock.current = true;
-    recordAnswer(profileId.current, item.vocab.id, correct);
+    recordAnswer(profileId.current, item.vocab.id, correct, {
+      prompt: item.prompt,
+      given: value,
+      expected: item.answer,
+      mode: "quiz",
+      ...(setup.arena ? { station: setup.arena.station } : {}),
+    });
     if (!correct) misses.current = [...misses.current, item.vocab.id];
     const nextStreak = correct ? streak + 1 : 0;
     setPicked(value);

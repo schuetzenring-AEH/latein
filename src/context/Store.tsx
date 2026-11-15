@@ -5,14 +5,17 @@ import { clearedAfterSuccess, planetById, planetIndex } from "../lib/planets";
 import { hashPassword, nameKey } from "../lib/password";
 import { completeVocab } from "../lib/vocab";
 import { review } from "../lib/srs";
+import { flushStats, scheduleStatsPush } from "../lib/sync";
 import {
   freshSeed,
   GUEST_PROFILE_ID,
+  loadMistakes,
   loadPlayState,
   loadProgress,
   loadTheme,
   loadVocab,
   saveActiveProfile,
+  saveMistakes,
   saveProgress,
   saveProfiles,
   saveSession,
@@ -22,7 +25,7 @@ import {
   type PlayMode,
   type ThemeChoice,
 } from "../lib/storage";
-import type { Profile, ProgressMap, Vocab, VocabInput } from "../types";
+import type { Mistake, Profile, ProgressMap, Vocab, VocabInput } from "../types";
 
 type StoreValue = {
   vocab: Vocab[];
@@ -49,7 +52,7 @@ type StoreValue = {
   deleteVocab: (id: string) => void;
   importVocab: (rows: VocabInput[], mode: "append" | "replace") => void;
   reloadSeed: () => void;
-  recordAnswer: (profileId: string, vocabId: string, correct: boolean) => void;
+  recordAnswer: (profileId: string, vocabId: string, correct: boolean, detail?: Omit<Mistake, "at" | "profileId" | "vocabId">) => void;
 };
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -78,14 +81,38 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [activeProfileId, setActiveProfileId] = useState(boot.activeId);
   const [playMode, setPlayMode] = useState<PlayMode>(boot.playMode);
   const [progress, setProgress] = useState<ProgressMap>(() => loadProgress());
+  const [mistakes, setMistakes] = useState<Mistake[]>(() => loadMistakes());
   const [theme, setTheme] = useState<ThemeChoice>(() => loadTheme());
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const profilesRef = useRef(profiles);
+  const progressRef = useRef(progress);
+  const vocabRef = useRef(vocab);
+  const mistakesRef = useRef(mistakes);
   profilesRef.current = profiles;
+  progressRef.current = progress;
+  vocabRef.current = vocab;
+  mistakesRef.current = mistakes;
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
+
+  useEffect(() => {
+    scheduleStatsPush(() => ({
+      profiles: profilesRef.current,
+      progress: progressRef.current,
+      vocab: vocabRef.current,
+      mistakes: mistakesRef.current,
+    }));
+  }, [profiles, progress, vocab, mistakes]);
+
+  useEffect(() => {
+    const send = () => {
+      void flushStats();
+    };
+    window.addEventListener("pagehide", send);
+    return () => window.removeEventListener("pagehide", send);
+  }, []);
 
   function note(saved: boolean) {
     if (!saved) setStorageWarning(STORAGE_WARNING);
@@ -329,7 +356,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         return pruned;
       });
     },
-    recordAnswer(profileId, vocabId, correct) {
+    recordAnswer(profileId, vocabId, correct, detail) {
       setProgress((current) => {
         const entry = review(current[profileId]?.[vocabId], correct);
         const next = {
@@ -337,6 +364,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           [profileId]: { ...(current[profileId] ?? {}), [vocabId]: entry },
         };
         note(saveProgress(next));
+        return next;
+      });
+      if (correct || !detail) return;
+      setMistakes((current) => {
+        const next = [...current, {
+          at: new Date().toISOString(),
+          profileId,
+          vocabId,
+          prompt: detail.prompt,
+          given: detail.given,
+          expected: detail.expected,
+          mode: detail.mode,
+          ...(detail.station ? { station: detail.station } : {}),
+        }].slice(-300);
+        note(saveMistakes(next));
         return next;
       });
     },

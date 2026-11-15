@@ -37,6 +37,18 @@ export type ProgressEntry = {
   updatedAt: string;
 };
 
+/** A wrong answer kept beside the score. It does not replace the score. */
+export type Mistake = {
+  at: string;
+  profileId: string;
+  vocabId: string;
+  prompt: string;
+  given: string;
+  expected: string;
+  mode: "quiz" | "weltraum";
+  station?: string;
+};
+
 export type ProgressMap = Record<string, Record<string, ProgressEntry>>;
 
 export const ARENA_STATIONS = ["recognize", "reverse", "write", "boss-l2d", "boss-d2l", "boss-write"] as const;

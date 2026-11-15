@@ -2,7 +2,7 @@ import { SEED_VOCAB } from "../data/seed";
 import { PLANETS } from "./planets";
 import { isWortart, sameStrings, splitDeutsch } from "./vocab";
 import { readArenaRun } from "./arena";
-import type { Profile, ProgressEntry, ProgressMap, Vocab, Wortart } from "../types";
+import type { Mistake, Profile, ProgressEntry, ProgressMap, Vocab, Wortart } from "../types";
 
 /* All durable state goes through this module.
    A later cloud adapter can replace these functions without changing the pages. */
@@ -15,6 +15,7 @@ const KEYS = {
   theme: "latein.theme",
   seedRevision: "latein.seedRevision",
   session: "latein.session",
+  mistakes: "latein.mistakes",
 } as const;
 
 export const GUEST_PROFILE_ID = "guest";
@@ -215,6 +216,34 @@ export function loadProgress(): ProgressMap {
 
 export function saveProgress(progress: ProgressMap): boolean {
   return writeStored(KEYS.progress, JSON.stringify(progress));
+}
+
+function isMistake(value: unknown): value is Mistake {
+  if (!value || typeof value !== "object") return false;
+  const item = value as Partial<Mistake>;
+  return typeof item.at === "string"
+    && typeof item.profileId === "string"
+    && typeof item.vocabId === "string"
+    && typeof item.prompt === "string"
+    && typeof item.given === "string"
+    && typeof item.expected === "string"
+    && (item.mode === "quiz" || item.mode === "weltraum");
+}
+
+export function loadMistakes(): Mistake[] {
+  const raw = read(KEYS.mistakes);
+  if (!raw) return [];
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(isMistake);
+  } catch {
+    return [];
+  }
+}
+
+export function saveMistakes(mistakes: readonly Mistake[]): boolean {
+  return writeStored(KEYS.mistakes, JSON.stringify(mistakes));
 }
 
 export function loadTheme(): ThemeChoice {

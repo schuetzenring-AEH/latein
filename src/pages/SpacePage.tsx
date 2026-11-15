@@ -150,6 +150,7 @@ function SpaceRound({ setup }: { setup: SetupState }) {
       profileId={profileId.current}
       onEnd={onEnd}
       rule={rule}
+      station={setup.arena?.station}
       banner={planet ? `${planet.latin} · ${planet.deutsch}` : undefined}
     />
   );
@@ -161,6 +162,7 @@ function Play({
   profileId,
   onEnd,
   rule,
+  station,
   banner,
 }: {
   items: readonly SpaceItem[];
@@ -168,6 +170,7 @@ function Play({
   profileId: string;
   onEnd: (end: SpaceEnd) => void;
   rule: "free" | "lesson" | "boss";
+  station?: string;
   banner?: string;
 }) {
   const { recordAnswer } = useStore();
@@ -199,11 +202,15 @@ function Play({
       items,
       onHud: setHud,
       onBeat: setBeat,
-      onAnswer: (vocabId, correct) => recordRef.current(profileRef.current, vocabId, correct),
+      onAnswer: (vocabId, correct, detail) => recordRef.current(profileRef.current, vocabId, correct, {
+        ...detail,
+        mode: "weltraum",
+        ...(station ? { station } : {}),
+      }),
       onEnd,
       rule,
     });
-  }, [items, onEnd, rule]);
+  }, [items, onEnd, rule, station]);
 
   useEffect(() => {
     if (beat.id > 0 && beat.mode === "ask" && beat.prompt && beat.promptLang) speakText(beat.prompt, beat.promptLang);

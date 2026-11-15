@@ -176,7 +176,7 @@ export function startWeltraum(options: {
   items: readonly SpaceItem[];
   onHud: (hud: SpaceHud) => void;
   onBeat: (beat: SpaceBeat) => void;
-  onAnswer: (vocabId: string, correct: boolean) => void;
+  onAnswer: (vocabId: string, correct: boolean, detail: { prompt: string; given: string; expected: string }) => void;
   onEnd: (end: SpaceEnd) => void;
   /** Lesson rounds play every word. Boss rounds end on the second miss or an empty hull. */
   rule?: "free" | "lesson" | "boss";
@@ -392,7 +392,11 @@ export function startWeltraum(options: {
         answer: current.answer,
       });
     }
-    onAnswer(current.vocabId, correct);
+    onAnswer(current.vocabId, correct, {
+      prompt: current.prompt,
+      given: hit?.label ?? "",
+      expected: current.answer,
+    });
     outcome = kind;
     phase = "feedback";
     feedbackLeft = FEEDBACK_TIME;
