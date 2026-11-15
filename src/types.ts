@@ -85,4 +85,6 @@ export type RoundSetup = {
   direction: Direction;
   variant: Variant;
   dueOnly: boolean;
+  /** Meteoriten: only the words this player last got wrong. */
+  source?: "meteor";
 };

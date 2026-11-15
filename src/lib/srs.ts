@@ -25,3 +25,8 @@ export function isDue(entry: ProgressEntry | undefined, now = new Date()): boole
   if (!entry) return true;
   return Date.parse(entry.nextDue) <= now.getTime();
 }
+
+/** The last answer was wrong, so the word is still one of the player's misses. */
+export function isMissed(entry: ProgressEntry | undefined): boolean {
+  return entry !== undefined && entry.wrong > 0 && entry.box === 1;
+}

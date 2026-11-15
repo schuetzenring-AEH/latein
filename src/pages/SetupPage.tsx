@@ -1,8 +1,9 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStore } from "../context/Store";
+import { shuffle } from "../lib/quiz";
 import { wordCount } from "../lib/messages";
-import { isDue } from "../lib/srs";
+import { isDue, isMissed } from "../lib/srs";
 import { lessonNumbers, parseLessonInput } from "../lib/vocab";
 import type { Direction, Variant } from "../types";
 import { Button, cx } from "../components/ui";
@@ -16,17 +17,23 @@ export function SetupPage() {
   const [direction, setDirection] = useState<Direction>("l2d");
   const [variant, setVariant] = useState<Variant>("mc");
   const [dueOnly, setDueOnly] = useState(false);
+  const [meteorOn, setMeteorOn] = useState(false);
 
-  const parsed = allOn ? null : parseLessonInput(lessonText);
+  const parsed = allOn || meteorOn ? null : parseLessonInput(lessonText);
   const requested = allOn ? lessons : parsed && "lessons" in parsed ? parsed.lessons : [];
   const known = useMemo(() => new Set(lessons), [lessons]);
-  const missing = requested.filter((lektion) => !known.has(lektion));
+  const missing = meteorOn ? [] : requested.filter((lektion) => !known.has(lektion));
   const selected = requested.filter((lektion) => known.has(lektion));
 
+  const profileProgress = progress[activeProfileId];
+  const missedWords = useMemo(
+    () => vocab.filter((item) => isMissed(profileProgress?.[item.id])),
+    [vocab, profileProgress],
+  );
   const selectedWords = vocab.filter((item) => selected.includes(item.lektion));
-  const dueWords = selectedWords.filter((item) => isDue(progress[activeProfileId]?.[item.id]));
-  const fallback = dueOnly && selectedWords.length > 0 && dueWords.length === 0;
-  const roundCount = dueOnly && dueWords.length > 0 ? dueWords.length : selectedWords.length;
+  const dueWords = selectedWords.filter((item) => isDue(profileProgress?.[item.id]));
+  const fallback = !meteorOn && dueOnly && selectedWords.length > 0 && dueWords.length === 0;
+  const roundCount = meteorOn ? missedWords.length : dueOnly && dueWords.length > 0 ? dueWords.length : selectedWords.length;
 
   function chooseDirection(next: Direction) {
     setDirection(next);
@@ -58,6 +65,7 @@ export function SetupPage() {
             )}
             aria-pressed={allOn}
             onClick={() => {
+              setMeteorOn(false);
               setAllOn((current) => !current);
               setLessonText("");
             }}
@@ -70,12 +78,13 @@ export function SetupPage() {
           type="text"
           inputMode="text"
           autoComplete="off"
-          disabled={allOn}
+          disabled={allOn || meteorOn}
           value={lessonText}
           placeholder="z. B. 12, 3, 12 oder 12-15"
           aria-describedby="lektion-hilfe"
           onChange={(event) => {
             setAllOn(false);
+            setMeteorOn(false);
             setLessonText(event.target.value);
           }}
           className="min-h-14 w-full rounded-xl border border-stone-300 bg-white px-3 text-lg font-semibold text-stone-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 disabled:opacity-50 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
@@ -84,6 +93,24 @@ export function SetupPage() {
           Eine Nummer, mehrere mit Komma oder ein Bereich. Gespeichert sind Vokabeln bis Lektion {lessons.length > 0 ? lessons[lessons.length - 1] : "–"}.
         </p>
       </div>
+
+      <button
+        type="button"
+        className={cx(
+          "mt-4 flex min-h-12 w-full flex-col items-start justify-center rounded-xl border px-3 py-3 text-left",
+          meteorOn
+            ? "border-teal-800 bg-teal-50 dark:border-teal-400 dark:bg-teal-950"
+            : "border-stone-300 bg-white dark:border-stone-700 dark:bg-stone-900",
+        )}
+        aria-pressed={meteorOn}
+        onClick={() => {
+          setMeteorOn((current) => !current);
+          setAllOn(false);
+        }}
+      >
+        <span className="font-semibold">Meteoriten</span>
+        <span className="mt-0.5 text-sm text-stone-500 dark:text-stone-400">Nur die Wörter, die du zuletzt falsch hattest. Jedes kommt einmal.</span>
+      </button>
 
       <fieldset className="mt-6">
         <legend className="text-sm font-semibold uppercase tracking-wide text-stone-500">Richtung</legend>
@@ -111,6 +138,7 @@ export function SetupPage() {
         )}
       </fieldset>
 
+      {!meteorOn && (
       <label className="mt-6 flex min-h-12 items-center gap-3 rounded-xl border border-stone-300 bg-white px-3 dark:border-stone-700 dark:bg-stone-900">
         <input
           type="checkbox"
@@ -123,11 +151,12 @@ export function SetupPage() {
           <span className="mt-0.5 block text-sm text-stone-500 dark:text-stone-400">Neue Wörter und fällige Wiederholungen. Sonst die ganze Auswahl.</span>
         </span>
       </label>
+      )}
 
-      {!allOn && parsed && "error" in parsed && parsed.error === "empty" && (
+      {!meteorOn && !allOn && parsed && "error" in parsed && parsed.error === "empty" && (
         <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">Gib eine Lektionsnummer ein.</p>
       )}
-      {!allOn && parsed && "error" in parsed && parsed.error === "invalid" && (
+      {!meteorOn && !allOn && parsed && "error" in parsed && parsed.error === "invalid" && (
         <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">Bitte eine Nummer eingeben, zum Beispiel 12, 3, 12 oder 12-15.</p>
       )}
       {missing.length > 0 && (
@@ -138,8 +167,11 @@ export function SetupPage() {
         </p>
       )}
       {fallback && <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">Nichts fällig. Die Runde nimmt alle Wörter der Auswahl.</p>}
-      {dueOnly && dueWords.length > 0 && (
+      {!meteorOn && dueOnly && dueWords.length > 0 && (
         <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">{wordCount(dueWords.length)} fällig von {wordCount(selectedWords.length)}.</p>
+      )}
+      {meteorOn && missedWords.length === 0 && (
+        <p className="mt-4 text-sm text-stone-600 dark:text-stone-300">Keine Meteoriten. Gerade ist kein Wort falsch.</p>
       )}
 
       <div className="mt-6">
@@ -147,13 +179,23 @@ export function SetupPage() {
           className="w-full"
           disabled={roundCount === 0 || missing.length > 0}
           onClick={() => navigate(variant === "space" ? "/weltraum" : "/quiz", {
-            state: {
-              lektionIds: [...selected].sort((a, b) => a - b),
-              direction,
-              variant,
-              dueOnly,
-              nonce: Date.now(),
-            },
+            state: meteorOn
+              ? {
+                  lektionIds: [...new Set(missedWords.map((item) => item.lektion))].sort((a, b) => a - b),
+                  direction,
+                  variant,
+                  dueOnly: false,
+                  source: "meteor" as const,
+                  wordIds: shuffle(missedWords).map((item) => item.id),
+                  nonce: Date.now(),
+                }
+              : {
+                  lektionIds: [...selected].sort((a, b) => a - b),
+                  direction,
+                  variant,
+                  dueOnly,
+                  nonce: Date.now(),
+                },
           })}
         >
           {roundCount === 0 ? "Starten" : `Starten · ${wordCount(roundCount)}`}

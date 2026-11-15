@@ -29,6 +29,7 @@ function readSetup(state: unknown): SetupState | null {
     variant: value.variant,
     dueOnly: Boolean(value.dueOnly),
     nonce: typeof value.nonce === "number" ? value.nonce : 0,
+    ...(value.source === "meteor" ? { source: "meteor" as const } : {}),
     ...(wordIds ? { wordIds } : {}),
     ...(arena ? { arena } : {}),
   };
@@ -200,7 +201,7 @@ function Round({ setup }: { setup: SetupState }) {
       >
         <div className="h-full rounded-full bg-teal-800 dark:bg-teal-400" style={{ width: `${((index + 1) / total) * 100}%` }} />
       </div>
-      <p className="mt-4 text-sm text-stone-500 dark:text-stone-400">Lektion {item.vocab.lektion} · {directionLabel(setup.direction)} · {variantLabel(setup.variant)}</p>
+      <p className="mt-4 text-sm text-stone-500 dark:text-stone-400">{setup.source === "meteor" ? "Meteoriten · " : ""}Lektion {item.vocab.lektion} · {directionLabel(setup.direction)} · {variantLabel(setup.variant)}</p>
       <div className="mt-3 flex items-start justify-between gap-3 rounded-2xl border border-stone-200 bg-white p-4 dark:border-stone-800 dark:bg-stone-900">
         <p lang={item.promptLang} className="min-w-0 flex-1 text-3xl font-semibold tracking-tight [overflow-wrap:anywhere]">{item.prompt}</p>
         {showSpeak && (

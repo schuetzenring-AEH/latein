@@ -29,6 +29,7 @@ function readSetup(state: unknown): SetupState | null {
     dueOnly: Boolean(value.dueOnly),
     nonce: typeof value.nonce === "number" ? value.nonce : 0,
     ...(arenaId ? { arenaId } : {}),
+    ...(value.source === "meteor" ? { source: "meteor" as const } : {}),
     ...(wordIds ? { wordIds } : {}),
     ...(arena ? { arena } : {}),
   };
@@ -151,7 +152,7 @@ function SpaceRound({ setup }: { setup: SetupState }) {
       onEnd={onEnd}
       rule={rule}
       station={setup.arena?.station}
-      banner={planet ? `${planet.latin} · ${planet.deutsch}` : undefined}
+      banner={planet ? `${planet.latin} · ${planet.deutsch}` : setup.source === "meteor" ? "Meteoriten" : undefined}
     />
   );
 }
