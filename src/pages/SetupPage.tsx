@@ -90,7 +90,9 @@ export function SetupPage() {
           className="min-h-14 w-full rounded-xl border border-stone-300 bg-white px-3 text-lg font-semibold text-stone-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-700 disabled:opacity-50 dark:border-stone-700 dark:bg-stone-900 dark:text-stone-100"
         />
         <p id="lektion-hilfe" className="mt-2 text-sm text-stone-500 dark:text-stone-400">
-          Eine Nummer, mehrere mit Komma oder ein Bereich. Gespeichert sind Vokabeln bis Lektion {lessons.length > 0 ? lessons[lessons.length - 1] : "–"}.
+          {meteorOn
+            ? "Meteoriten nimmt immer alle Lektionen. Die Nummer oben gilt dann nicht."
+            : `Eine Nummer, mehrere mit Komma oder ein Bereich. Gespeichert sind Vokabeln bis Lektion ${lessons.length > 0 ? lessons[lessons.length - 1] : "–"}.`}
         </p>
       </div>
 
@@ -109,7 +111,7 @@ export function SetupPage() {
         }}
       >
         <span className="font-semibold">Meteoriten</span>
-        <span className="mt-0.5 text-sm text-stone-500 dark:text-stone-400">Ein falsches Wort bleibt, bis es drei Mal richtig ist. Ein Fehler holt es zurück.</span>
+        <span className="mt-0.5 text-sm text-stone-500 dark:text-stone-400">Immer alle Lektionen. Ein falsches Wort bleibt, bis es drei Mal richtig ist. Ein Fehler holt es zurück.</span>
       </button>
 
       <fieldset className="mt-6">
@@ -181,7 +183,7 @@ export function SetupPage() {
           onClick={() => navigate(variant === "space" ? "/weltraum" : "/quiz", {
             state: meteorOn
               ? {
-                  lektionIds: [...new Set(missedWords.map((item) => item.lektion))].sort((a, b) => a - b),
+                  lektionIds: lessons,
                   direction,
                   variant,
                   dueOnly: false,

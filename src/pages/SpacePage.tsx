@@ -152,7 +152,7 @@ function SpaceRound({ setup }: { setup: SetupState }) {
       onEnd={onEnd}
       rule={rule}
       station={setup.arena?.station}
-      banner={planet ? `${planet.latin} · ${planet.deutsch}` : setup.source === "meteor" ? "Meteoriten" : undefined}
+      banner={planet ? `${planet.latin} · ${planet.deutsch}` : setup.source === "meteor" ? "Meteoriten · alle Lektionen" : undefined}
     />
   );
 }
