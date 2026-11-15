@@ -379,7 +379,7 @@ function Result({ end, total, setup, cleared }: { end: SpaceEnd; total: number; 
       )}
       <div className="mt-8 grid gap-3">
         {arenaBack ? (
-          <Button onClick={() => navigate("/arena", { state: arenaBack })}>Weiter in der Arena</Button>
+          <Button onClick={() => navigate("/arena", { state: arenaBack })}>{link && !passed && isLessonStation(link.station) ? "Nochmal" : "Weiter in der Arena"}</Button>
         ) : (
           <>
             <Button onClick={() => navigate("/weltraum", { replace: true, state: { ...setup, nonce: Date.now() } })}>Nochmal</Button>

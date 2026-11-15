@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useStore } from "../context/Store";
-import { arenaPracticeState, arenaResultText, readArenaLink, runOnce, stationPassed, type ArenaRoundLink } from "../lib/arena";
+import { arenaPracticeState, arenaResultText, isLessonStation, readArenaLink, runOnce, stationPassed, type ArenaRoundLink } from "../lib/arena";
 import { buildRound, type RoundItem } from "../lib/quiz";
 import { endMessage, streakMessage } from "../lib/messages";
 import { isDue } from "../lib/srs";
@@ -164,7 +164,7 @@ function Round({ setup }: { setup: SetupState }) {
         <div className="mt-8 grid gap-3">
           {back ? (
             <Button onClick={() => navigate(arena?.station === "boss-write" && passed && !arena.practice ? "/planeten" : back.pathname, { state: arena?.station === "boss-write" && passed && !arena.practice ? undefined : back.state })}>
-              {arena?.station === "boss-write" && passed && !arena.practice ? "Zum Planetenpfad" : "Weiter in der Arena"}
+              {arena?.station === "boss-write" && passed && !arena.practice ? "Zum Planetenpfad" : !passed && arena && isLessonStation(arena.station) ? "Nochmal" : "Weiter in der Arena"}
             </Button>
           ) : (
             <>

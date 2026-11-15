@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui";
 import { useStore } from "../context/Store";
-import { freshArenaRun, isLessonStation, lessonStars, readArenaRun, runOnce, stationTitle, wordsForStation } from "../lib/arena";
+import { freshArenaRun, isLessonStation, lessonStars, openStation, readArenaRun, runOnce, stationTitle, wordsForStation } from "../lib/arena";
 import { LessonStars } from "../components/LessonStars";
 import { arenaStatus, planetById, planetIndex, planetLessons } from "../lib/planets";
 import type { ArenaRun, ArenaStationId, Direction, Variant } from "../types";
@@ -40,7 +40,8 @@ export function ArenaPage() {
   if (status === "locked") return <Navigate to="/planeten" replace />;
 
   const practice = status === "done";
-  const run = practice ? incoming.practiceRun : profile.arenaRun?.planetId === planet.id ? profile.arenaRun : undefined;
+  const stored = practice ? incoming.practiceRun : profile.arenaRun?.planetId === planet.id ? profile.arenaRun : undefined;
+  const run = !practice && stored ? openStation(stored, planet, store.vocab) : stored;
 
   return (
     <ArenaStep
@@ -178,8 +179,8 @@ function ArenaStep({
 }
 
 function ruleCopy(station: ArenaStationId): string {
-  if (station === "write") return "Artikel, Klammern und Satzzeichen zählen nicht. Ab drei Fehlern fehlt der Stern.";
-  return "Ab drei Fehlern fehlt der Stern. Die Runde wird trotzdem zu Ende gespielt.";
+  if (station === "write") return "Artikel, Klammern und Satzzeichen zählen nicht. Ab drei Fehlern wird diese Übung wiederholt.";
+  return "Ab drei Fehlern wird diese Übung wiederholt. Die Runde wird trotzdem zu Ende gespielt.";
 }
 
 function bossCopy(station: ArenaStationId, count: number): string {

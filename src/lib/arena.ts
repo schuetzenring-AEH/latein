@@ -110,6 +110,25 @@ function stepForward(run: ArenaRun): ArenaRun | "clear" {
   return next;
 }
 
+function isEarlier(gap: ArenaRun, next: ArenaRun): boolean {
+  if (!isLessonStation(next.station)) return true;
+  if (gap.lessonIndex !== next.lessonIndex) return gap.lessonIndex < next.lessonIndex;
+  const order = LESSON_STATIONS.indexOf(gap.station as (typeof LESSON_STATIONS)[number]);
+  const current = LESSON_STATIONS.indexOf(next.station as (typeof LESSON_STATIONS)[number]);
+  return order >= 0 && current >= 0 && order < current;
+}
+
+function settle(next: ArenaRun, planet: Planet, vocab: readonly Vocab[]): ArenaRun {
+  const gap = firstOpenLesson(next, planet, vocab);
+  if (!gap || !isEarlier(gap, next)) return next;
+  return { ...next, lessonIndex: gap.lessonIndex, station: gap.station };
+}
+
+/** The next exercise. A failed station stays, and the final test waits until every lesson is passed. */
+export function openStation(run: ArenaRun, planet: Planet, vocab: readonly Vocab[]): ArenaRun {
+  return settle(run, planet, vocab);
+}
+
 function firstOpenLesson(run: ArenaRun, planet: Planet, vocab: readonly Vocab[]): ArenaRun | null {
   const lessons = planetLessons(planet);
   for (let index = 0; index < lessons.length; index += 1) {
@@ -147,18 +166,15 @@ export function applyArenaResult(
   const withMisses = { ...run, missedIds: missed };
   if (isLessonStation(withMisses.station)) {
     const credited = withStationCredit(withMisses, passed);
+    if (!passed) return settle(credited, planet, vocab);
     const stepped = stepForward(credited);
     if (stepped === "clear") return "clear";
     const next = skipEmpty(stepped, planet, vocab);
-    if (next === "clear" || isLessonStation(next.station)) return next;
-    const gap = firstOpenLesson(next, planet, vocab);
-    return gap ?? next;
+    return next === "clear" ? "clear" : settle(next, planet, vocab);
   }
-  if (!passed) return withMisses;
-  const gap = firstOpenLesson(withMisses, planet, vocab);
-  if (gap) return gap;
+  if (!passed) return settle(withMisses, planet, vocab);
   const next = step(withMisses);
-  return next === "clear" ? "clear" : next;
+  return next === "clear" ? "clear" : settle(next, planet, vocab);
 }
 
 export function wordsForStation(vocab: readonly Vocab[], planet: Planet, run: ArenaRun): Vocab[] {
@@ -207,7 +223,7 @@ export function stationPassed(station: ArenaStationId, missedCount: number, spac
 }
 
 export function arenaResultText(station: ArenaStationId, passed: boolean, practice = false): string {
-  if (!passed && isLessonStation(station)) return "Drei Fehler. Die Runde ist zu Ende, der Stern für diese Lektion fehlt noch.";
+  if (!passed && isLessonStation(station)) return "Nicht bestanden. Diese Übung kannst du noch einmal spielen.";
   if (!passed) return "Mehr als ein Fehler. Die Probe beginnt neu.";
   if (isLessonStation(station)) return "Bestanden.";
   if (practice) return "Diese Station ist geschafft. Der Pfad bleibt, wo er ist.";

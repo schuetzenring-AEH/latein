@@ -65,6 +65,7 @@ function chipState(
     if (lessonIndex < active.lessonIndex || (lessonIndex === active.lessonIndex && order < currentOrder)) return "open";
     return "wait";
   }
+  if (!isLessonStation(station) && !examReady(run, planetId)) return "wait";
   if (!isLessonStation(active.station)) {
     const probeOrder = station === "boss-l2d" ? 0 : station === "boss-d2l" ? 1 : 2;
     const currentProbe = active.station === "boss-l2d" ? 0 : active.station === "boss-d2l" ? 1 : 2;
@@ -72,6 +73,16 @@ function chipState(
     if (probeOrder === currentProbe) return "here";
   }
   return "wait";
+}
+
+function examReady(run: ArenaRun | undefined, planetId: string): boolean {
+  if (!run || run.planetId !== planetId) return false;
+  for (let index = 0; index < 6; index += 1) {
+    for (const station of LESSON_CHIPS) {
+      if (!(run.passedStations ?? []).includes(stationKey(index, station.id))) return false;
+    }
+  }
+  return true;
 }
 
 function Chip({ state, short, title }: { state: ChipState; short: string; title: string }) {
@@ -205,7 +216,12 @@ export function PlanetPath({
                       <span className={cx("mt-1 grid grid-cols-[2.2rem_1fr_1fr_1fr] items-center gap-1", states.includes("here") && "pt-6")}>
                         <span className="text-[10px] font-semibold uppercase tracking-wide text-stone-500">Probe</span>
                         {PROBE_CHIPS.map((chip, chipIndex) => (
-                          <Chip key={chip.id} short={chip.short} title={chip.title} state={states[chipIndex]} />
+                          <Chip
+                            key={chip.id}
+                            short={chip.short}
+                            title={examReady(run, planet.id) || status === "done" || finished ? chip.title : "Endprüfung, wenn alle Übungen bestanden sind"}
+                            state={states[chipIndex]}
+                          />
                         ))}
                       </span>
                     );

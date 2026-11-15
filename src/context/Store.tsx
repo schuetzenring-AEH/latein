@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { createId } from "../lib/id";
-import { applyArenaResult, freshArenaRun } from "../lib/arena";
+import { applyArenaResult, freshArenaRun, openStation } from "../lib/arena";
 import { clearedAfterSuccess, planetById, planetIndex } from "../lib/planets";
 import { hashPassword, nameKey } from "../lib/password";
 import { completeVocab } from "../lib/vocab";
@@ -96,6 +96,30 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
+
+  useEffect(() => {
+    const profile = profilesRef.current.find((item) => item.id === activeProfileId);
+    const run = profile?.arenaRun;
+    if (playMode !== "named" || !profile?.passwordHash || !run) return;
+    if ((profile.arenasCleared ?? 0) !== planetIndex(run.planetId)) return;
+    const planet = planetById(run.planetId);
+    if (!planet) return;
+    const nextRun = openStation(run, planet, vocab);
+    if (nextRun.lessonIndex === run.lessonIndex && nextRun.station === run.station) return;
+    setProfiles((current) => {
+      let changed = false;
+      const next = current.map((item) => {
+        if (item.id !== profile.id || !item.arenaRun || item.arenaRun.planetId !== run.planetId) return item;
+        if (item.arenaRun.lessonIndex === nextRun.lessonIndex && item.arenaRun.station === nextRun.station) return item;
+        changed = true;
+        return { ...item, arenaRun: { ...item.arenaRun, lessonIndex: nextRun.lessonIndex, station: nextRun.station } };
+      });
+      if (!changed) return current;
+      profilesRef.current = next;
+      note(saveProfiles(next));
+      return next;
+    });
+  }, [vocab, activeProfileId, playMode]);
 
   useEffect(() => {
     scheduleStatsPush(() => ({
@@ -293,7 +317,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         const next = current.map((profile) => {
           if (profile.id !== profileId || !profile.passwordHash) return profile;
           if ((profile.arenasCleared ?? 0) !== index) return profile;
-          const run = profile.arenaRun?.planetId === planetId ? profile.arenaRun : freshArenaRun(planetId);
+          const saved = profile.arenaRun?.planetId === planetId ? profile.arenaRun : freshArenaRun(planetId);
+          const run = openStation(saved, planet, vocab);
           const result = applyArenaResult(run, planet, vocab, missedIds, passed);
           changed = true;
           if (result === "clear") {
