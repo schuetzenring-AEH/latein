@@ -1,9 +1,11 @@
 import type { ArenaRun, ArenaStationId, Mistake, Profile, ProgressMap, Vocab } from "../types";
 import { ARENA_STATIONS } from "../types";
+import { nameKey } from "./password";
 
 /**
  * A copy of the scores is sent away from the device and kept.
- * Nothing here reads a server copy back over the local stand.
+ * Another device may take that copy when the name is not already there.
+ * A stand that is already on the device is never replaced by the copy.
  */
 const INDEX_PAGE = "latein-schuetzen-9f3a2c7b";
 const EDIT_CODE = "7f3a9c2e5b8d1046a7c3e9f2b6d8a1c4";
@@ -35,12 +37,21 @@ type ProfileCopy = {
   v: 1;
   id: string;
   name: string;
+  /** Same check the device already stores. The password itself is never sent. */
+  passwordHash?: string;
   arenasCleared: number;
   arenaRun: ArenaRun | null;
   updatedAt: string;
   words: WordCopy[];
   mistakes: Mistake[];
 };
+
+export type RemoteAccount =
+  | { status: "match"; profile: ProfileCopy }
+  | { status: "missing" }
+  | { status: "wrong" }
+  | { status: "unconfirmed" }
+  | { status: "unavailable" };
 
 type IndexEntry = {
   id: string;
@@ -113,12 +124,14 @@ function localProfiles(input: StatsInput): ProfileCopy[] {
     const words = wordStats(input.vocab, input.progress[profile.id]);
     const mistakes = input.mistakes.filter((item) => item.profileId === profile.id).slice(-MISTAKE_LIMIT);
     const arenasCleared = profile.arenasCleared ?? 0;
-    if (words.length === 0 && mistakes.length === 0 && arenasCleared === 0 && !profile.arenaRun) return [];
+    const passwordHash = isHash(profile.passwordHash) ? profile.passwordHash : undefined;
+    if (words.length === 0 && mistakes.length === 0 && arenasCleared === 0 && !profile.arenaRun && !passwordHash) return [];
     const times = [...words.map((word) => word.updatedAt), ...mistakes.map((item) => item.at)];
     return [{
       v: 1 as const,
       id: profile.id,
       name: profile.name,
+      ...(passwordHash ? { passwordHash } : {}),
       arenasCleared,
       arenaRun: copyRun(profile.arenaRun),
       updatedAt: times.sort().at(-1) ?? new Date().toISOString(),
@@ -251,10 +264,12 @@ function mergeProfile(current: ProfileCopy | null, local: ProfileCopy): ProfileC
     return true;
   }).sort((a, b) => a.at.localeCompare(b.at)).slice(-MISTAKE_LIMIT);
   const arenasCleared = Math.max(current.arenasCleared, local.arenasCleared);
+  const passwordHash = isHash(local.passwordHash) ? local.passwordHash : isHash(current.passwordHash) ? current.passwordHash : undefined;
   return {
     v: 1,
     id: local.id,
     name: local.name || current.name,
+    ...(passwordHash ? { passwordHash } : {}),
     arenasCleared,
     arenaRun: mergeRun(current.arenaRun, local.arenaRun, current.arenasCleared, local.arenasCleared),
     updatedAt: current.updatedAt > local.updatedAt ? current.updatedAt : local.updatedAt,
@@ -322,10 +337,12 @@ function readProfile(text: string): ProfileCopy | null {
   if (!parsed || parsed.v !== 1 || typeof parsed.id !== "string") return null;
   const words = Array.isArray(parsed.words) ? parsed.words.flatMap(readWord) : [];
   const mistakes = Array.isArray(parsed.mistakes) ? parsed.mistakes.flatMap(readMistake) : [];
+  const passwordHash = isHash(parsed.passwordHash) ? parsed.passwordHash : undefined;
   return {
     v: 1,
     id: parsed.id,
     name: typeof parsed.name === "string" ? parsed.name : "",
+    ...(passwordHash ? { passwordHash } : {}),
     arenasCleared: typeof parsed.arenasCleared === "number" ? parsed.arenasCleared : 0,
     arenaRun: readRun(parsed.arenaRun),
     updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : "",
@@ -406,4 +423,41 @@ function parseJson(text: string): Record<string, unknown> | null {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isHash(value: unknown): value is string {
+  return typeof value === "string" && /^[a-f0-9]{64}$/.test(value);
+}
+
+/** Looks up a name on the copy. Does not write anything. */
+export async function findRemoteAccount(name: string, passwordHash: string): Promise<RemoteAccount> {
+  const key = nameKey(name);
+  if (!key || !isHash(passwordHash)) return { status: "unavailable" };
+  try {
+    const fetched = await rentry(`fetch/${INDEX_PAGE}`, { edit_code: EDIT_CODE });
+    if (fetched.status !== "200") return { status: "unavailable" };
+    const index = readIndex(pageText(fetched).trim() || "{\"v\":1,\"profiles\":[]}");
+    if (!index) return { status: "unavailable" };
+    const hits = index.profiles.filter((entry) => entry.id !== "guest" && nameKey(entry.name) === key);
+    if (hits.length === 0) return { status: "missing" };
+    let sawHash = false;
+    let sawUnconfirmed = false;
+    for (const hit of hits) {
+      const page = await rentry(`fetch/${hit.page}`, { edit_code: EDIT_CODE });
+      if (page.status !== "200") continue;
+      const profile = readProfile(pageText(page));
+      if (!profile || nameKey(profile.name) !== key) continue;
+      if (!isHash(profile.passwordHash)) {
+        sawUnconfirmed = true;
+        continue;
+      }
+      sawHash = true;
+      if (profile.passwordHash === passwordHash) return { status: "match", profile };
+    }
+    if (sawHash) return { status: "wrong" };
+    if (sawUnconfirmed) return { status: "unconfirmed" };
+    return { status: "missing" };
+  } catch {
+    return { status: "unavailable" };
+  }
 }

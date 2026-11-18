@@ -3,7 +3,7 @@ import { ARENA_STATIONS } from "../types";
 import { shuffle } from "./quiz";
 import { planetById, planetLessons, type Planet } from "./planets";
 
-export const BOSS_SHOOT_COUNT = 50;
+export const BOSS_SHOOT_COUNT = 30;
 export const BOSS_WRITE_COUNT = 30;
 export const LESSON_MISS_LIMIT = 3;
 export const BOSS_MISS_LIMIT = 1;

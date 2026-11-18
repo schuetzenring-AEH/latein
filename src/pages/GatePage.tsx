@@ -5,7 +5,7 @@ import { useStore } from "../context/Store";
 
 type Panel = "choose" | "login" | "register";
 
-const LOCAL_NOTE = "Name und Passwort bleiben nur auf diesem Gerät. Das Passwort wird nicht im Klartext gespeichert.";
+const LOCAL_NOTE = "Dasselbe Konto gilt auch auf einem anderen Gerät. Das Passwort wird nicht im Klartext gespeichert.";
 
 export function GatePage() {
   const store = useStore();

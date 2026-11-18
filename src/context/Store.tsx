@@ -4,8 +4,8 @@ import { applyArenaResult, freshArenaRun, openStation } from "../lib/arena";
 import { clearedAfterSuccess, planetById, planetIndex } from "../lib/planets";
 import { hashPassword, nameKey } from "../lib/password";
 import { completeVocab, plainLatin } from "../lib/vocab";
-import { review } from "../lib/srs";
-import { flushStats, scheduleStatsPush } from "../lib/sync";
+import { dueAfter, review } from "../lib/srs";
+import { findRemoteAccount, flushStats, scheduleStatsPush, type RemoteAccount } from "../lib/sync";
 import {
   freshSeed,
   GUEST_PROFILE_ID,
@@ -25,7 +25,7 @@ import {
   type PlayMode,
   type ThemeChoice,
 } from "../lib/storage";
-import type { Mistake, Profile, ProgressMap, Vocab, VocabInput } from "../types";
+import type { Mistake, Profile, ProgressEntry, ProgressMap, Vocab, VocabInput } from "../types";
 
 type StoreValue = {
   vocab: Vocab[];
@@ -154,6 +154,71 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     note(saveSession(null));
   }
 
+  function adoptRemoteAccount(copy: Extract<RemoteAccount, { status: "match" }>["profile"], hash: string) {
+    const already = profilesRef.current.find((profile) => profile.id === copy.id);
+    if (already) {
+      if (already.passwordHash !== hash) return;
+      setActiveProfileId(already.id);
+      setPlayMode("named");
+      note(saveActiveProfile(already.id) && saveSession({ mode: "named", profileId: already.id }));
+      return;
+    }
+    const profile: Profile = {
+      id: copy.id,
+      name: copy.name,
+      passwordHash: hash,
+      arenasCleared: copy.arenasCleared,
+      ...(copy.arenaRun ? { arenaRun: copy.arenaRun } : {}),
+    };
+    const nextProfiles = [...profilesRef.current, profile];
+    const entries: Record<string, ProgressEntry> = { ...(progressRef.current[copy.id] ?? {}) };
+    for (const word of copy.words) {
+      const box = word.box >= 1 && word.box <= 5 ? Math.floor(word.box) : 1;
+      const updatedAt = word.updatedAt || new Date().toISOString();
+      const incoming: ProgressEntry = {
+        correct: Math.max(0, word.correct),
+        wrong: Math.max(0, word.wrong),
+        box,
+        nextDue: dueAfter(box, updatedAt),
+        updatedAt,
+      };
+      const current = entries[word.id];
+      entries[word.id] = current
+        ? {
+          correct: Math.max(current.correct, incoming.correct),
+          wrong: Math.max(current.wrong, incoming.wrong),
+          box: incoming.updatedAt >= current.updatedAt ? incoming.box : current.box,
+          nextDue: incoming.updatedAt >= current.updatedAt ? incoming.nextDue : current.nextDue,
+          updatedAt: incoming.updatedAt >= current.updatedAt ? incoming.updatedAt : current.updatedAt,
+        }
+        : incoming;
+    }
+    const nextProgress = { ...progressRef.current, [copy.id]: entries };
+    const seen = new Set<string>();
+    const mine = [...mistakesRef.current.filter((item) => item.profileId === copy.id), ...copy.mistakes].filter((item) => {
+      const key = `${item.at}|${item.vocabId}|${item.given}|${item.expected}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).slice(-300);
+    const nextMistakes = [...mistakesRef.current.filter((item) => item.profileId !== copy.id), ...mine];
+    profilesRef.current = nextProfiles;
+    progressRef.current = nextProgress;
+    mistakesRef.current = nextMistakes;
+    setProfiles(nextProfiles);
+    setProgress(nextProgress);
+    setMistakes(nextMistakes);
+    setActiveProfileId(copy.id);
+    setPlayMode("named");
+    note(
+      saveProfiles(nextProfiles)
+      && saveActiveProfile(copy.id)
+      && saveSession({ mode: "named", profileId: copy.id })
+      && saveProgress(nextProgress)
+      && saveMistakes(nextMistakes),
+    );
+  }
+
   const value: StoreValue = {
     vocab,
     profiles,
@@ -231,6 +296,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const current = profilesRef.current;
       const existing = current.find((profile) => profile.id !== GUEST_PROFILE_ID && nameKey(profile.name) === nameKey(trimmed));
       if (existing?.passwordHash) return "Dieser Name ist schon vergeben.";
+      const remote = await findRemoteAccount(trimmed, hash);
+      if (remote.status === "match" || remote.status === "wrong" || remote.status === "unconfirmed") {
+        return "Dieser Name ist schon vergeben. Bitte anmelden.";
+      }
       const id = existing?.id ?? createId("profile");
       const next = existing
         ? current.map((profile) => (
@@ -249,20 +318,30 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     async loginAccount(name, password) {
       const trimmed = name.trim();
       if (!trimmed || password.length === 0) return "Bitte Name und Passwort eingeben.";
-      const match = profilesRef.current.find((profile) => profile.id !== GUEST_PROFILE_ID && nameKey(profile.name) === nameKey(trimmed));
-      if (!match) return "Diesen Namen gibt es hier noch nicht.";
-      if (!match.passwordHash) return "Für diesen Namen fehlt noch ein Passwort.";
       let hash: string;
       try {
         hash = await hashPassword(password);
       } catch {
         return "Das Passwort konnte hier nicht geprüft werden.";
       }
-      if (hash !== match.passwordHash) return "Das Passwort stimmt nicht.";
-      setActiveProfileId(match.id);
-      setPlayMode("named");
-      note(saveActiveProfile(match.id) && saveSession({ mode: "named", profileId: match.id }));
-      return null;
+      const match = profilesRef.current.find((profile) => profile.id !== GUEST_PROFILE_ID && nameKey(profile.name) === nameKey(trimmed));
+      if (match) {
+        if (!match.passwordHash) return "Für diesen Namen fehlt noch ein Passwort.";
+        if (hash !== match.passwordHash) return "Das Passwort stimmt nicht.";
+        setActiveProfileId(match.id);
+        setPlayMode("named");
+        note(saveActiveProfile(match.id) && saveSession({ mode: "named", profileId: match.id }));
+        return null;
+      }
+      const remote = await findRemoteAccount(trimmed, hash);
+      if (remote.status === "match") {
+        adoptRemoteAccount(remote.profile, hash);
+        return null;
+      }
+      if (remote.status === "wrong") return "Das Passwort stimmt nicht.";
+      if (remote.status === "unconfirmed") return "Dieser Name liegt auf einem anderen Gerät. Öffne dort einmal die Seite, dann klappt die Anmeldung hier.";
+      if (remote.status === "unavailable") return "Die Anmeldung ist gerade nicht erreichbar. Auf diesem Gerät gibt es den Namen noch nicht.";
+      return "Diesen Namen gibt es hier noch nicht.";
     },
     logout: exitToGate,
     completeArena(arenaId) {

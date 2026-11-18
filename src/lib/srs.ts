@@ -21,6 +21,14 @@ export function review(prev: ProgressEntry | undefined, correct: boolean, now = 
   };
 }
 
+export function dueAfter(box: number, updatedAt: string): string {
+  const safe = box >= 1 && box <= 5 ? Math.floor(box) : 1;
+  const days = INTERVAL_DAYS[safe] ?? 0;
+  const start = Date.parse(updatedAt);
+  const base = Number.isFinite(start) ? start : Date.now();
+  return new Date(base + days * 24 * 60 * 60 * 1000).toISOString();
+}
+
 export function isDue(entry: ProgressEntry | undefined, now = new Date()): boolean {
   if (!entry) return true;
   return Date.parse(entry.nextDue) <= now.getTime();
