@@ -51,6 +51,15 @@ export type Mistake = {
 
 export type ProgressMap = Record<string, Record<string, ProgressEntry>>;
 
+/** One local calendar day of practice. Counts only grow. */
+export type DayStat = {
+  date: string;
+  seconds: number;
+  words: number;
+  correct: number;
+  wrong: number;
+};
+
 export const ARENA_STATIONS = ["recognize", "reverse", "write", "boss-l2d", "boss-d2l", "boss-write"] as const;
 
 export type ArenaStationId = (typeof ARENA_STATIONS)[number];

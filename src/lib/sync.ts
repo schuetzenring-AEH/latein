@@ -1,5 +1,6 @@
-import type { ArenaRun, ArenaStationId, Mistake, Profile, ProgressMap, Vocab } from "../types";
+import type { ArenaRun, ArenaStationId, DayStat, Mistake, Profile, ProgressMap, Vocab } from "../types";
 import { ARENA_STATIONS } from "../types";
+import { cleanDays, mergeDays, type DayLogMap } from "./daylog";
 import { nameKey } from "./password";
 
 /**
@@ -19,6 +20,7 @@ export type StatsInput = {
   progress: ProgressMap;
   vocab: readonly Vocab[];
   mistakes: readonly Mistake[];
+  days: DayLogMap;
 };
 
 type StatsReader = () => StatsInput;
@@ -44,6 +46,7 @@ type ProfileCopy = {
   updatedAt: string;
   words: WordCopy[];
   mistakes: Mistake[];
+  days: DayStat[];
 };
 
 export type RemoteAccount =
@@ -70,7 +73,7 @@ type RentryBody = {
   content?: string | { text?: string };
 };
 
-let reader: StatsReader = () => ({ profiles: [], progress: {}, vocab: [], mistakes: [] });
+let reader: StatsReader = () => ({ profiles: [], progress: {}, vocab: [], mistakes: [], days: {} });
 let timer = 0;
 let sending = false;
 let pending = false;
@@ -137,6 +140,7 @@ function localProfiles(input: StatsInput): ProfileCopy[] {
       updatedAt: times.sort().at(-1) ?? new Date().toISOString(),
       words,
       mistakes,
+      days: input.days[profile.id] ?? [],
     }];
   });
 }
@@ -245,6 +249,9 @@ function fit(profile: ProfileCopy): ProfileCopy {
   while (JSON.stringify(copy).length > TEXT_LIMIT && copy.mistakes.length > 0) {
     copy = { ...copy, mistakes: copy.mistakes.slice(1) };
   }
+  while (JSON.stringify(copy).length > TEXT_LIMIT && copy.days.length > 1) {
+    copy = { ...copy, days: copy.days.slice(1) };
+  }
   return copy;
 }
 
@@ -275,6 +282,7 @@ function mergeProfile(current: ProfileCopy | null, local: ProfileCopy): ProfileC
     updatedAt: current.updatedAt > local.updatedAt ? current.updatedAt : local.updatedAt,
     words: [...words.values()],
     mistakes,
+    days: mergeDays(current.days, local.days),
   };
 }
 
@@ -348,6 +356,7 @@ function readProfile(text: string): ProfileCopy | null {
     updatedAt: typeof parsed.updatedAt === "string" ? parsed.updatedAt : "",
     words,
     mistakes,
+    days: cleanDays(parsed.days),
   };
 }
 

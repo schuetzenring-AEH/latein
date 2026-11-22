@@ -7,4 +7,5 @@ IMG_7120.mov
 .env
 .env.*
 *.local
+verlauf.log
 .DS_Store

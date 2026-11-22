@@ -4,17 +4,20 @@ import { applyArenaResult, freshArenaRun, openStation } from "../lib/arena";
 import { clearedAfterSuccess, planetById, planetIndex } from "../lib/planets";
 import { hashPassword, nameKey } from "../lib/password";
 import { completeVocab, plainLatin } from "../lib/vocab";
+import { addDay, localDay, mergeDays, type DayLogMap } from "../lib/daylog";
 import { dueAfter, review } from "../lib/srs";
 import { findRemoteAccount, flushStats, scheduleStatsPush, type RemoteAccount } from "../lib/sync";
 import {
   freshSeed,
   GUEST_PROFILE_ID,
+  loadDayLog,
   loadMistakes,
   loadPlayState,
   loadProgress,
   loadTheme,
   loadVocab,
   saveActiveProfile,
+  saveDayLog,
   saveMistakes,
   saveProgress,
   saveProfiles,
@@ -88,10 +91,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const progressRef = useRef(progress);
   const vocabRef = useRef(vocab);
   const mistakesRef = useRef(mistakes);
+  const daylogRef = useRef<DayLogMap>(loadDayLog());
+  const playModeRef = useRef(playMode);
+  const activeIdRef = useRef(activeProfileId);
   profilesRef.current = profiles;
   progressRef.current = progress;
   vocabRef.current = vocab;
   mistakesRef.current = mistakes;
+  playModeRef.current = playMode;
+  activeIdRef.current = activeProfileId;
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
@@ -121,13 +129,25 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     });
   }, [vocab, activeProfileId, playMode]);
 
-  useEffect(() => {
-    scheduleStatsPush(() => ({
+  function readStats() {
+    return {
       profiles: profilesRef.current,
       progress: progressRef.current,
       vocab: vocabRef.current,
       mistakes: mistakesRef.current,
-    }));
+      days: daylogRef.current,
+    };
+  }
+
+  function rememberDay(profileId: string, add: { seconds?: number; words?: number; correct?: number; wrong?: number }) {
+    const next = addDay(loadDayLog(), profileId, localDay(), add);
+    daylogRef.current = next;
+    note(saveDayLog(next));
+    scheduleStatsPush(readStats);
+  }
+
+  useEffect(() => {
+    scheduleStatsPush(readStats);
   }, [profiles, progress, vocab, mistakes]);
 
   useEffect(() => {
@@ -139,9 +159,31 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     };
     window.addEventListener("pagehide", send);
     document.addEventListener("visibilitychange", onHide);
+    let lastInput = Date.now();
+    let lastTick = Date.now();
+    const mark = () => {
+      lastInput = Date.now();
+    };
+    window.addEventListener("pointerdown", mark);
+    window.addEventListener("keydown", mark);
+    const clock = window.setInterval(() => {
+      const now = Date.now();
+      const elapsed = Math.round((now - lastTick) / 1000);
+      lastTick = now;
+      if (elapsed <= 0) return;
+      if (document.visibilityState !== "visible") return;
+      if (playModeRef.current === "gate") return;
+      if (now - lastInput > 5 * 60 * 1000) return;
+      const profileId = activeIdRef.current;
+      if (!profileId) return;
+      rememberDay(profileId, { seconds: Math.min(elapsed, 15) });
+    }, 5000);
     return () => {
+      window.clearInterval(clock);
       window.removeEventListener("pagehide", send);
       document.removeEventListener("visibilitychange", onHide);
+      window.removeEventListener("pointerdown", mark);
+      window.removeEventListener("keydown", mark);
     };
   }, []);
 
@@ -202,9 +244,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       return true;
     }).slice(-300);
     const nextMistakes = [...mistakesRef.current.filter((item) => item.profileId !== copy.id), ...mine];
+    const nextDays = { ...daylogRef.current, [copy.id]: mergeDays(daylogRef.current[copy.id] ?? [], copy.days) };
     profilesRef.current = nextProfiles;
     progressRef.current = nextProgress;
     mistakesRef.current = nextMistakes;
+    daylogRef.current = nextDays;
     setProfiles(nextProfiles);
     setProgress(nextProgress);
     setMistakes(nextMistakes);
@@ -215,7 +259,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       && saveActiveProfile(copy.id)
       && saveSession({ mode: "named", profileId: copy.id })
       && saveProgress(nextProgress)
-      && saveMistakes(nextMistakes),
+      && saveMistakes(nextMistakes)
+      && saveDayLog(daylogRef.current),
     );
   }
 
@@ -468,6 +513,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       });
     },
     recordAnswer(profileId, vocabId, correct, detail) {
+      rememberDay(profileId, correct ? { words: 1, correct: 1 } : { words: 1, wrong: 1 });
       setProgress((current) => {
         const entry = review(current[profileId]?.[vocabId], correct);
         const next = {

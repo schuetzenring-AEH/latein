@@ -2,6 +2,7 @@ import { SEED_VOCAB } from "../data/seed";
 import { PLANETS } from "./planets";
 import { isWortart, plainLatin, sameStrings, splitDeutsch } from "./vocab";
 import { readArenaRun } from "./arena";
+import { cleanDays, type DayLogMap } from "./daylog";
 import type { Mistake, Profile, ProgressEntry, ProgressMap, Vocab, Wortart } from "../types";
 
 /* All durable state goes through this module.
@@ -16,6 +17,7 @@ const KEYS = {
   seedRevision: "latein.seedRevision",
   session: "latein.session",
   mistakes: "latein.mistakes",
+  daylog: "latein.daylog",
 } as const;
 
 export const GUEST_PROFILE_ID = "guest";
@@ -246,6 +248,27 @@ export function loadMistakes(): Mistake[] {
 
 export function saveMistakes(mistakes: readonly Mistake[]): boolean {
   return writeStored(KEYS.mistakes, JSON.stringify(mistakes));
+}
+
+export function loadDayLog(): DayLogMap {
+  const raw = read(KEYS.daylog);
+  if (!raw) return {};
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    const map: DayLogMap = {};
+    for (const [profileId, days] of Object.entries(parsed)) {
+      const clean = cleanDays(days);
+      if (clean.length > 0) map[profileId] = clean;
+    }
+    return map;
+  } catch {
+    return {};
+  }
+}
+
+export function saveDayLog(days: DayLogMap): boolean {
+  return writeStored(KEYS.daylog, JSON.stringify(days));
 }
 
 export function loadTheme(): ThemeChoice {
