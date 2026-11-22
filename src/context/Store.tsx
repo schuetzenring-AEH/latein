@@ -196,14 +196,19 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     note(saveSession(null));
   }
 
-  function adoptRemoteAccount(copy: Extract<RemoteAccount, { status: "match" }>["profile"], hash: string) {
+  function adoptRemoteAccount(copy: Extract<RemoteAccount, { status: "match" }>["profile"], hash: string): boolean {
     const already = profilesRef.current.find((profile) => profile.id === copy.id);
     if (already) {
-      if (already.passwordHash !== hash) return;
+      if (already.passwordHash && already.passwordHash !== hash) return false;
+      const nextProfiles = already.passwordHash === hash
+        ? profilesRef.current
+        : profilesRef.current.map((profile) => (profile.id === already.id ? { ...profile, passwordHash: hash } : profile));
+      profilesRef.current = nextProfiles;
+      setProfiles(nextProfiles);
       setActiveProfileId(already.id);
       setPlayMode("named");
-      note(saveActiveProfile(already.id) && saveSession({ mode: "named", profileId: already.id }));
-      return;
+      note(saveProfiles(nextProfiles) && saveActiveProfile(already.id) && saveSession({ mode: "named", profileId: already.id }));
+      return true;
     }
     const profile: Profile = {
       id: copy.id,
@@ -262,6 +267,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       && saveMistakes(nextMistakes)
       && saveDayLog(daylogRef.current),
     );
+    return true;
   }
 
   const value: StoreValue = {
@@ -369,10 +375,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       } catch {
         return "Das Passwort konnte hier nicht geprüft werden.";
       }
-      const match = profilesRef.current.find((profile) => profile.id !== GUEST_PROFILE_ID && nameKey(profile.name) === nameKey(trimmed));
-      if (match) {
-        if (!match.passwordHash) return "Für diesen Namen fehlt noch ein Passwort.";
-        if (hash !== match.passwordHash) return "Das Passwort stimmt nicht.";
+      const locals = profilesRef.current.filter((profile) => profile.id !== GUEST_PROFILE_ID && nameKey(profile.name) === nameKey(trimmed));
+      const accounts = locals.filter((profile) => profile.passwordHash);
+      if (accounts.length > 0) {
+        const match = accounts.find((profile) => profile.passwordHash === hash);
+        if (!match) return "Das Passwort stimmt nicht.";
         setActiveProfileId(match.id);
         setPlayMode("named");
         note(saveActiveProfile(match.id) && saveSession({ mode: "named", profileId: match.id }));
@@ -380,12 +387,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       }
       const remote = await findRemoteAccount(trimmed, hash);
       if (remote.status === "match") {
-        adoptRemoteAccount(remote.profile, hash);
+        if (!adoptRemoteAccount(remote.profile, hash)) return "Das Passwort stimmt nicht.";
         return null;
       }
       if (remote.status === "wrong") return "Das Passwort stimmt nicht.";
       if (remote.status === "unconfirmed") return "Dieser Name liegt auf einem anderen Gerät. Öffne dort einmal die Seite, dann klappt die Anmeldung hier.";
       if (remote.status === "unavailable") return "Die Anmeldung ist gerade nicht erreichbar. Auf diesem Gerät gibt es den Namen noch nicht.";
+      if (locals.length > 0) return "Für diesen Namen fehlt noch ein Passwort.";
       return "Diesen Namen gibt es hier noch nicht.";
     },
     logout: exitToGate,
