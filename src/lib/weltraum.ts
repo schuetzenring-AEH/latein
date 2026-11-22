@@ -1,3 +1,5 @@
+import { playBling, playDood, playShot, unlockSpaceSound } from "./sounds";
+
 export const HULL_MAX = 10;
 export const LIVES_MAX = 3;
 
@@ -414,6 +416,8 @@ export function startWeltraum(options: {
     else if (right) burst(right.x, right.y, "#fde68a");
     publishHud();
     publishBeat();
+    if (correct) playBling();
+    else playDood();
   }
 
   function spawnAsteroid() {
@@ -450,6 +454,7 @@ export function startWeltraum(options: {
       alive: true,
     });
     burst(ship.x, ship.y - 16, "#fef9c3");
+    playShot();
   }
 
   function localPoint(event: PointerEvent) {
@@ -467,6 +472,7 @@ export function startWeltraum(options: {
 
   function onDown(event: PointerEvent) {
     if (ended || event.button !== 0) return;
+    unlockSpaceSound();
     if (event.cancelable) event.preventDefault();
     const point = localPoint(event);
     gesture = {
